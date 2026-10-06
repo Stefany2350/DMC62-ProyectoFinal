@@ -16,8 +16,9 @@ st.sidebar.markdown("""
 modulos = st.sidebar.selectbox(
     "Seleccione la sección a consultar",
     [
-        "Modulo 1: Home",
-        "Modulo 2: Carga del Dataset",
+        "Home",
+        "Carga del Dataset",
+        "Análisis Exploratorio de Datos",
            ]
 )
 
@@ -25,7 +26,7 @@ modulos = st.sidebar.selectbox(
 # MODULO 1: HOME
 # ==========================================
 
-if modulos == "Modulo 1: Home":
+if modulos == "Home":
 
     st.sidebar.markdown("---")
 
@@ -91,7 +92,7 @@ if modulos == "Modulo 1: Home":
 # MODULO 2: CARGA DEL DATASET
 # ==========================================
 
-elif modulos == "Modulo 2: Carga del Dataset":
+elif modulos == "Carga del Dataset":
 
     st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
 
@@ -187,3 +188,62 @@ elif modulos == "Modulo 2: Carga del Dataset":
             "ℹ️ Debes cargar el archivo "
             "para continuar con el análisis."
         )
+
+# ==========================================
+# MODULO 3: Análisis Exploratorio de Datos
+# ==========================================
+
+elif modulos == "Análisis Exploratorio de Datos":
+
+st.subheader("Item 1: Información general del dataset")
+
+st.markdown("""
+En este ítem se analiza la estructura general del dataset, los tipos de datos de
+las variables y el conteo de valores nulos.
+""")
+
+# ==========================================================
+# 1. INFO()
+# ==========================================================
+
+st.markdown("### 🔹 1. Información general")
+
+buffer = io.StringIO()
+df.info(buf=buffer)
+
+st.code(buffer.getvalue(), language="text")
+
+
+# ==========================================================
+# 2. TIPOS DE DATOS
+# ==========================================================
+
+st.markdown("### 🔹 2. Tipos de datos")
+
+st.dataframe(
+    df.dtypes.rename("Tipo de dato").reset_index().rename(
+        columns={"index": "Columna"}
+    ),
+    use_container_width=True,
+    hide_index=True
+)
+
+
+# ==========================================================
+# 3. VALORES NULOS
+# ==========================================================
+
+st.markdown("### 🔹 3. Conteo de valores nulos")
+
+nulos = df.isnull().sum().reset_index()
+nulos.columns = ["Columna", "Valores nulos"]
+
+st.dataframe(
+    nulos,
+    use_container_width=True,
+    hide_index=True
+)
+
+
+
+
