@@ -17,12 +17,9 @@ st.sidebar.markdown("""
 modulos = st.sidebar.selectbox(
     "Seleccione la sección a consultar",
     [
-        "Home",
-        "Ejercicio 1",
-        "Ejercicio 2",
-        "Ejercicio 3",
-        "Ejercicio 4"
-    ]
+        "Modulo 1: Home",
+        "Modulo 2: Carga del Dataset",
+           ]
 )
 
 # ==========================================
@@ -40,35 +37,37 @@ if modulos == "Home":
 
     st.markdown("""
         <div class="custom-data-title">
-            <h1>Proyecto Aplicado en Streamlit – Fundamentos de Programación </h1>
+            <h1>Aplicación interactiva en Streamlit orientada al Análisis Exploratorio de Datos (EDA) </h1>
         </div>
     """, unsafe_allow_html=True)
 
-    col_info1, col_info2, col_info3 = st.columns(3)
-
-    with col_info1:
-        st.write("**Módulo:** Python Fundamentals")
-
-    with col_info2:
-        st.write("**Estudiante:** Stefany Salazar Espinoza")
-
-    with col_info3:
-        st.write("**Año:** 2026")
-
-
     st.markdown("---")
+    st.markdown("""
+    ### 💡 Objeto de Análisis
 
+    El objetivo principal es analizar los factores que influyen en la renovación de una 
+    póliza de seguro, utilizando la variable renewal como variable objetivo. Este 
+    conjunto de datos permite aplicar análisis exploratorio, visualización de datos y 
+    modelos predictivos para identificar patrones de clientes que renuevan o no su 
+    seguro""")
 
     st.markdown("""
-    ### 💡 Descripción del Proyecto
+    ### 💡 Datos del Autor
 
-    El presente proyecto tiene como objetivo aplicar los conocimientos
-    adquiridos en el módulo **Python Fundamentals**, mediante el desarrollo
-    de diferentes ejercicios utilizando estructuras de datos, funciones,
-    clases y una interfaz interactiva desarrollada con Streamlit.
+    * Nombre completo: Stefany Salazar Espinoza 
+    * Curso / Especialización: Especialización en Python for Analytics  
+    * Año: 2026 """)
 
-    ### 🛠️ Tecnologías utilizadas  """)
+     st.markdown("""
+    ### 💡 Explicación del Dataset
 
+     Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
+    una compañía de seguros. Incluye variables demográficas, económicas, historial de 
+    pagos, comportamiento de morosidad, canal de captación, tipo de residencia, valor 
+    de la prima y puntaje de evaluación del cliente
+
+    ### 🛠️ Tecnologías utilizadas  """) 
+    
     col1, col2 = st.columns(2)
 
     with col1:
