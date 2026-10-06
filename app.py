@@ -4,6 +4,22 @@ import pandas as pd
 import io
 
 # ==========================================
+# CONFIGURACIÓN DE LA PÁGINA
+# ==========================================
+
+st.set_page_config(
+    page_title="Análisis Exploratorio de Datos",
+    layout="wide"
+)
+
+# ==========================================
+# INICIALIZAR SESSION STATE
+# ==========================================
+
+if "df" not in st.session_state:
+    st.session_state.df = None
+
+# ==========================================
 # BARRA LATERAL
 # ==========================================
 
@@ -13,14 +29,13 @@ st.sidebar.markdown("""
     </div>
 """, unsafe_allow_html=True)
 
-
 modulos = st.sidebar.selectbox(
     "Seleccione la sección a consultar",
     [
         "Home",
         "Carga del Dataset",
         "Análisis Exploratorio de Datos",
-           ]
+    ]
 )
 
 # ==========================================
@@ -38,11 +53,12 @@ if modulos == "Home":
 
     st.markdown("""
         <div class="custom-data-title">
-            <h1>Aplicación interactiva en Streamlit orientada al Análisis Exploratorio de Datos (EDA) </h1>
+            <h1>Aplicación interactiva en Streamlit orientada al Análisis Exploratorio de Datos (EDA)</h1>
         </div>
     """, unsafe_allow_html=True)
 
     st.markdown("---")
+
     st.markdown("""
     ### 💡 Objeto de Análisis
 
@@ -50,25 +66,28 @@ if modulos == "Home":
     póliza de seguro, utilizando la variable renewal como variable objetivo. Este 
     conjunto de datos permite aplicar análisis exploratorio, visualización de datos y 
     modelos predictivos para identificar patrones de clientes que renuevan o no su 
-    seguro""")
+    seguro.
+    """)
 
     st.markdown("""
     ### 📝 Datos del Autor
 
     * Nombre completo: Stefany Salazar Espinoza 
     * Curso: Especialización en Python for Analytics  
-    * Año: 2026 """)
+    * Año: 2026
+    """)
 
     st.markdown("""
     ### 👨‍🏫 Explicación del Dataset
 
-     Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
+    Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
     una compañía de seguros. Incluye variables demográficas, económicas, historial de 
     pagos, comportamiento de morosidad, canal de captación, tipo de residencia, valor 
-    de la prima y puntaje de evaluación del cliente
+    de la prima y puntaje de evaluación del cliente.
 
-    ### 🛠️ Tecnologías utilizadas  """) 
-    
+    ### 🛠️ Tecnologías utilizadas
+    """)
+
     col1, col2 = st.columns(2)
 
     with col1:
@@ -119,6 +138,7 @@ elif modulos == "Carga del Dataset":
     if archivo is not None:
 
         try:
+
             # Leer el archivo CSV
             df = pd.read_csv(archivo)
 
@@ -130,7 +150,13 @@ elif modulos == "Carga del Dataset":
                     "pero el dataset no contiene registros."
                 )
 
+                # Limpiar session state
+                st.session_state.df = None
+
             else:
+
+                # Guardar dataset en session_state
+                st.session_state.df = df
 
                 # Mensaje de carga exitosa
                 st.success(
@@ -182,145 +208,203 @@ elif modulos == "Carga del Dataset":
     else:
 
         # ==========================================
-        # MENSAJE CUANDO NO SE HA CARGADO ARCHIVO
+        # SI YA EXISTE UN DATASET CARGADO
         # ==========================================
 
-        st.info(
-            "ℹ️ Debes cargar el archivo "
-            "para continuar con el análisis."
-        )
+        if st.session_state.df is not None:
+
+            st.info(
+                "ℹ️ Ya existe un dataset cargado. "
+                "Puedes continuar con el análisis."
+            )
+
+        else:
+
+            st.info(
+                "ℹ️ Debes cargar el archivo "
+                "para continuar con el análisis."
+            )
+
 
 # ==========================================
-# MODULO 3: Análisis Exploratorio de Datos
+# MODULO 3: ANÁLISIS EXPLORATORIO DE DATOS
 # ==========================================
 
 elif modulos == "Análisis Exploratorio de Datos":
 
-    # ==========================================================
-    # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
-    # ==========================================================
+    # ==========================================
+    # VERIFICAR SI EXISTE DATASET
+    # ==========================================
 
-    st.subheader("Item 1: Información general del dataset")
+    if st.session_state.df is None:
 
-    st.markdown("""
-    En este ítem se analiza la información general del dataset, identificando el número de filas, columnas,
-    valores no nulos, tipos de datos y uso de memoria.
-    """)
-
-    # ==========================================================
-    # 1. INFORMACIÓN GENERAL CON .INFO()
-    # ==========================================================
-
-    st.markdown("### 🔹 1. Resumen de información")
-
-    # Ejecutar DataFrame.info()
-    buffer = io.StringIO()
-    df.info(buf=buffer)
-
-    # Mostrar el resultado de .info()
-    st.code(buffer.getvalue(), language="text")
-
-    # ==========================================================
-    # RESUMEN VISUAL
-    # ==========================================================
-
-    st.markdown("### 🔹 2. Resumen del dataset")
-
-    # Cálculo del uso de memoria
-    memoria_mb = df.memory_usage(deep=True).sum() / (1024 ** 2)
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.metric(
-            "Número de filas",
-            f"{df.shape[0]:,}"
-        )
-
-    with col2:
-        st.metric(
-            "Número de columnas",
-            f"{df.shape[1]:,}"
-        )
-
-    with col3:
-        st.metric(
-            "Uso de memoria",
-            f"{memoria_mb:.2f} MB"
-        )
-
-    # ==========================================================
-    # 3. INFORMACIÓN POR COLUMNA
-    # ==========================================================
-
-    st.markdown("### 🔹 3. Información por columna")
-
-    resumen_columnas = pd.DataFrame({
-        "Columna": df.columns,
-        "Valores no nulos": df.notna().sum().values,
-        "Tipo de dato": df.dtypes.astype(str).values
-    })
-
-    st.dataframe(
-        resumen_columnas,
-        use_container_width=True,
-        hide_index=True
-    )
-
-    # ==========================================================
-    # 4. TIPOS DE DATOS
-    # ==========================================================
-
-    st.markdown("### 🔹 4. Tipos de datos")
-
-    tipos_datos = (
-        df.dtypes
-        .astype(str)
-        .value_counts()
-        .reset_index()
-    )
-
-    tipos_datos.columns = [
-        "Tipo de dato",
-        "Cantidad de columnas"
-    ]
-
-    st.dataframe(
-        tipos_datos,
-        use_container_width=True,
-        hide_index=True
-    )
-
-    # ==========================================================
-    # 5. CONTEO DE VALORES NULOS
-    # ==========================================================
-
-    st.markdown("### 🔹 5. Conteo de valores nulos")
-
-    nulos = df.isnull().sum().reset_index()
-
-    nulos.columns = [
-        "Columna",
-        "Valores nulos"
-    ]
-
-    st.dataframe(
-        nulos,
-        use_container_width=True,
-        hide_index=True
-    )
-
-    # ==========================================================
-    # MENSAJE GENERAL SOBRE VALORES NULOS
-    # ==========================================================
-
-    total_nulos = df.isnull().sum().sum()
-
-    if total_nulos == 0:
-        st.success(
-            "✅ El dataset no contiene valores nulos."
-        )
-    else:
         st.warning(
-            f"⚠️ El dataset contiene {total_nulos:,} valores nulos."
+            "⚠️ Primero debes cargar el dataset "
+            "en la sección 'Carga del Dataset'."
         )
+
+    else:
+
+        # Recuperar dataset
+        df = st.session_state.df
+
+        # ==========================================================
+        # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
+        # ==========================================================
+
+        st.subheader(
+            "📋 Ítem 1: Información general del dataset"
+        )
+
+        st.markdown("""
+        En este ítem se analiza la información general del dataset,
+        identificando el número de filas, columnas, valores no nulos,
+        tipos de datos y uso de memoria.
+        """)
+
+        # ==========================================================
+        # 1. INFORMACIÓN GENERAL CON .INFO()
+        # ==========================================================
+
+        st.markdown(
+            "### 🔹 1. Resumen de información con `.info()`"
+        )
+
+        st.markdown("""
+        El método `.info()` permite obtener un resumen de la estructura
+        del DataFrame, mostrando el número de entradas, las columnas,
+        los valores no nulos, los tipos de datos y el uso de memoria.
+        """)
+
+        # Ejecutar DataFrame.info()
+        buffer = io.StringIO()
+        df.info(buf=buffer)
+
+        # Mostrar resultado de .info()
+        st.code(
+            buffer.getvalue(),
+            language="text"
+        )
+
+        # ==========================================================
+        # 2. RESUMEN VISUAL DEL DATASET
+        # ==========================================================
+
+        st.markdown(
+            "### 🔹 2. Resumen del dataset"
+        )
+
+        memoria_mb = (
+            df.memory_usage(deep=True).sum()
+            / (1024 ** 2)
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        with col1:
+            st.metric(
+                "Número de filas",
+                f"{df.shape[0]:,}"
+            )
+
+        with col2:
+            st.metric(
+                "Número de columnas",
+                f"{df.shape[1]:,}"
+            )
+
+        with col3:
+            st.metric(
+                "Uso de memoria",
+                f"{memoria_mb:.2f} MB"
+            )
+
+        # ==========================================================
+        # 3. INFORMACIÓN POR COLUMNA
+        # ==========================================================
+
+        st.markdown(
+            "### 🔹 3. Información por columna"
+        )
+
+        resumen_columnas = pd.DataFrame({
+            "Columna": df.columns,
+            "Valores no nulos": df.notna().sum().values,
+            "Tipo de dato": df.dtypes.astype(str).values
+        })
+
+        st.dataframe(
+            resumen_columnas,
+            use_container_width=True,
+            hide_index=True
+        )
+
+        # ==========================================================
+        # 4. TIPOS DE DATOS
+        # ==========================================================
+
+        st.markdown(
+            "### 🔹 4. Tipos de datos"
+        )
+
+        tipos_datos = (
+            df.dtypes
+            .astype(str)
+            .value_counts()
+            .reset_index()
+        )
+
+        tipos_datos.columns = [
+            "Tipo de dato",
+            "Cantidad de columnas"
+        ]
+
+        st.dataframe(
+            tipos_datos,
+            use_container_width=True,
+            hide_index=True
+        )
+
+        # ==========================================================
+        # 5. CONTEO DE VALORES NULOS
+        # ==========================================================
+
+        st.markdown(
+            "### 🔹 5. Conteo de valores nulos"
+        )
+
+        nulos = (
+            df.isnull()
+            .sum()
+            .reset_index()
+        )
+
+        nulos.columns = [
+            "Columna",
+            "Valores nulos"
+        ]
+
+        st.dataframe(
+            nulos,
+            use_container_width=True,
+            hide_index=True
+        )
+
+        # ==========================================================
+        # MENSAJE GENERAL SOBRE VALORES NULOS
+        # ==========================================================
+
+        total_nulos = df.isnull().sum().sum()
+
+        if total_nulos == 0:
+
+            st.success(
+                "✅ El dataset no contiene valores nulos."
+            )
+
+        else:
+
+            st.warning(
+                f"⚠️ El dataset contiene "
+                f"{total_nulos:,} valores nulos."
+            )
