@@ -199,11 +199,10 @@ elif modulos == "Análisis Exploratorio de Datos":
     # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
     # ==========================================================
 
-    st.subheader("📋 Ítem 1: Información general del dataset")
+    st.subheader("Item 1: Información general del dataset")
 
     st.markdown("""
-    En este ítem se analiza la información general del dataset mediante
-    el método `.info()`, identificando el número de filas, columnas,
+    En este ítem se analiza la información general del dataset, identificando el número de filas, columnas,
     valores no nulos, tipos de datos y uso de memoria.
     """)
 
@@ -211,7 +210,7 @@ elif modulos == "Análisis Exploratorio de Datos":
     # 1. INFORMACIÓN GENERAL CON .INFO()
     # ==========================================================
 
-    st.markdown("### 🔹 1. Resumen de información con `.info()`")
+    st.markdown("### 🔹 1. Resumen de información")
 
     # Ejecutar DataFrame.info()
     buffer = io.StringIO()
