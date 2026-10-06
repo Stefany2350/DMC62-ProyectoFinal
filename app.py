@@ -252,7 +252,7 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
         # ==========================================================
 
-       with tabs[0]:
+    with tabs[0]:
 
     st.subheader("🔎 Ítem 1: Información general del dataset")
 
