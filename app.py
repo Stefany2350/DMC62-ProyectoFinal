@@ -24,7 +24,7 @@ modulos = st.sidebar.selectbox(
 # HOME
 # ==========================================
 
-if modulos == "Home":
+if modulos == "Modulo 1: Home":
 
     st.sidebar.markdown("---")
 
