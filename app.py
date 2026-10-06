@@ -93,104 +93,97 @@ if modulos == "Modulo 1: Home":
 
 elif modulos == "Modulo 2: Carga del Dataset":
 
-st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
-st.write(
-    "Carga el archivo para iniciar "
-    "el Análisis Exploratorio de Datos (EDA)."
-)
+    st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
 
-# ==========================================
-# CARGA DEL ARCHIVO
-# ==========================================
-
-archivo = st.file_uploader(
-    "Selecciona el archivo CSV",
-    type=["csv"],
-    help="Carga el archivo"
-)
-
-# ==========================================
-# VALIDACIÓN Y LECTURA DEL DATASET
-# ==========================================
-
-if archivo is not None:
-
-    try:
-        # Leer el archivo CSV
-        df = pd.read_csv(archivo)
-
-        # Validar que el dataset tenga información
-        if df.empty:
-
-            st.warning(
-                "⚠️ El archivo fue cargado, pero el dataset no contiene registros."
-            )
-
-        else:
-
-            # Mensaje de carga exitosa
-            st.success(
-                f"✅ El archivo **{archivo.name}** fue cargado correctamente."
-            )
-
-            # ==========================================
-            # DIMENSIONES DEL DATASET
-            # ==========================================
-
-            filas, columnas = df.shape
-
-            st.subheader("Dimensiones del Dataset")
-
-            col1, col2 = st.columns(2)
-
-            with col1:
-                st.metric(
-                    "Filas",
-                    f"{filas:,}"
-                )
-
-            with col2:
-                st.metric(
-                    "📋 Columnas",
-                    f"{columnas:,}"
-                )
-
-            # ==========================================
-            # VISTA PREVIA DEL DATASET
-            # ==========================================
-
-            st.subheader("Vista previa del Dataset")
-
-            st.write("Primeras 5 filas del dataset:")
-
-            st.dataframe(
-                df.head(),
-                use_container_width=True
-            )
-
-    except Exception as e:
-
-        st.error(
-            f"❌ Ocurrió un error al cargar el archivo: {e}"
-        )
-
-else:
-
-    # ==========================================
-    # MENSAJE CUANDO NO SE HA CARGADO ARCHIVO
-    # ==========================================
-
-    st.info(
-        "ℹ️ Debes cargar el archivo"
-        "para continuar con el análisis."
+    st.write(
+        "Carga el archivo para iniciar "
+        "el Análisis Exploratorio de Datos (EDA)."
     )
 
+    # ==========================================
+    # CARGA DEL ARCHIVO
+    # ==========================================
 
+    archivo = st.file_uploader(
+        "Selecciona el archivo CSV",
+        type=["csv"],
+        help="Carga el archivo"
+    )
 
+    # ==========================================
+    # VALIDACIÓN Y LECTURA DEL DATASET
+    # ==========================================
 
+    if archivo is not None:
 
+        try:
+            # Leer el archivo CSV
+            df = pd.read_csv(archivo)
 
+            # Validar que el dataset tenga información
+            if df.empty:
 
+                st.warning(
+                    "⚠️ El archivo fue cargado, "
+                    "pero el dataset no contiene registros."
+                )
 
+            else:
 
+                # Mensaje de carga exitosa
+                st.success(
+                    f"✅ El archivo **{archivo.name}** "
+                    "fue cargado correctamente."
+                )
 
+                # ==========================================
+                # DIMENSIONES DEL DATASET
+                # ==========================================
+
+                filas, columnas = df.shape
+
+                st.subheader("Dimensiones del Dataset")
+
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.metric(
+                        "Filas",
+                        f"{filas:,}"
+                    )
+
+                with col2:
+                    st.metric(
+                        "Columnas",
+                        f"{columnas:,}"
+                    )
+
+                # ==========================================
+                # VISTA PREVIA DEL DATASET
+                # ==========================================
+
+                st.subheader("Vista previa del Dataset")
+
+                st.write("Primeras 5 filas del dataset:")
+
+                st.dataframe(
+                    df.head(),
+                    use_container_width=True
+                )
+
+        except Exception as e:
+
+            st.error(
+                f"❌ Ocurrió un error al cargar el archivo: {e}"
+            )
+
+    else:
+
+        # ==========================================
+        # MENSAJE CUANDO NO SE HA CARGADO ARCHIVO
+        # ==========================================
+
+        st.info(
+            "ℹ️ Debes cargar el archivo "
+            "para continuar con el análisis."
+        )
