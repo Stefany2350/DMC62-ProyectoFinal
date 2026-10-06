@@ -189,61 +189,53 @@ elif modulos == "Carga del Dataset":
             "para continuar con el análisis."
         )
 
-# ==========================================
-# MODULO 3: Análisis Exploratorio de Datos
-# ==========================================
-
 elif modulos == "Análisis Exploratorio de Datos":
 
-st.subheader("Item 1: Información general del dataset")
+    st.subheader("📋 Ítem 1: Información general del dataset")
 
-st.markdown("""
-En este ítem se analiza la estructura general del dataset, los tipos de datos de
-las variables y el conteo de valores nulos.
-""")
+    st.markdown("""
+    En este ítem se analiza la estructura general del dataset, los tipos de datos de
+    las variables y el conteo de valores nulos.
+    """)
 
-# ==========================================================
-# 1. INFO()
-# ==========================================================
+    # ==========================================================
+    # 1. INFO()
+    # ==========================================================
 
-st.markdown("### 🔹 1. Información general")
+    st.markdown("### 🔹 1. Información general")
 
-buffer = io.StringIO()
-df.info(buf=buffer)
+    buffer = io.StringIO()
+    df.info(buf=buffer)
 
-st.code(buffer.getvalue(), language="text")
-
-
-# ==========================================================
-# 2. TIPOS DE DATOS
-# ==========================================================
-
-st.markdown("### 🔹 2. Tipos de datos")
-
-st.dataframe(
-    df.dtypes.rename("Tipo de dato").reset_index().rename(
-        columns={"index": "Columna"}
-    ),
-    use_container_width=True,
-    hide_index=True
-)
+    st.code(buffer.getvalue(), language="text")
 
 
-# ==========================================================
-# 3. VALORES NULOS
-# ==========================================================
+    # ==========================================================
+    # 2. TIPOS DE DATOS
+    # ==========================================================
 
-st.markdown("### 🔹 3. Conteo de valores nulos")
+    st.markdown("### 🔹 2. Tipos de datos")
 
-nulos = df.isnull().sum().reset_index()
-nulos.columns = ["Columna", "Valores nulos"]
-
-st.dataframe(
-    nulos,
-    use_container_width=True,
-    hide_index=True
-)
-
+    st.dataframe(
+        df.dtypes.rename("Tipo de dato").reset_index().rename(
+            columns={"index": "Columna"}
+        ),
+        use_container_width=True,
+        hide_index=True
+    )
 
 
+    # ==========================================================
+    # 3. VALORES NULOS
+    # ==========================================================
 
+    st.markdown("### 🔹 3. Conteo de valores nulos")
+
+    nulos = df.isnull().sum().reset_index()
+    nulos.columns = ["Columna", "Valores nulos"]
+
+    st.dataframe(
+        nulos,
+        use_container_width=True,
+        hide_index=True
+    )
