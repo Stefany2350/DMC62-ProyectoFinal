@@ -266,7 +266,7 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================
 
         tabs = st.tabs([
-            " Item 1"
+            " Item 1: Información general del dataset"
         ])
 
         # ==========================================================
@@ -274,10 +274,6 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================================
 
         with tabs[0]:
-
-            st.subheader(
-                "Información general del dataset"
-            )
 
             st.write(
                 "En este análisis se revisa la estructura general "
