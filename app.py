@@ -95,7 +95,7 @@ elif modulos == "Modulo 2: Carga del Dataset":
 
 st.title("📊 Análisis Exploratorio de Datos - Compañía de Seguros")
 st.write(
-    "Carga el archivo **InsuranceCompany.csv** para iniciar "
+    "Carga el archivo para iniciar "
     "el Análisis Exploratorio de Datos (EDA)."
 )
 
@@ -106,7 +106,7 @@ st.write(
 archivo = st.file_uploader(
     "📁 Selecciona el archivo CSV",
     type=["csv"],
-    help="Carga el archivo InsuranceCompany.csv"
+    help="Carga el archivo"
 )
 
 # ==========================================
@@ -139,7 +139,7 @@ if archivo is not None:
 
             filas, columnas = df.shape
 
-            st.subheader("📐 Dimensiones del Dataset")
+            st.subheader("Dimensiones del Dataset")
 
             col1, col2 = st.columns(2)
 
@@ -159,7 +159,7 @@ if archivo is not None:
             # VISTA PREVIA DEL DATASET
             # ==========================================
 
-            st.subheader("👀 Vista previa del Dataset")
+            st.subheader("Vista previa del Dataset")
 
             st.write("Primeras 5 filas del dataset:")
 
@@ -181,7 +181,7 @@ else:
     # ==========================================
 
     st.info(
-        "ℹ️ Debes cargar el archivo **InsuranceCompany.csv** "
+        "ℹ️ Debes cargar el archivo"
         "para continuar con el análisis."
     )
 
