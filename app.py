@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 
 # ==========================================
 # BARRA LATERAL
@@ -92,37 +93,97 @@ if modulos == "Modulo 1: Home":
 
 elif modulos == "Modulo 2: Carga del Dataset":
 
-    st.sidebar.markdown("---")
+st.title("📊 Análisis Exploratorio de Datos - Compañía de Seguros")
+st.write(
+    "Carga el archivo **InsuranceCompany.csv** para iniciar "
+    "el Análisis Exploratorio de Datos (EDA)."
+)
 
-    st.sidebar.image(
-        "image_ejercicio1.jpg",
-        use_container_width=True
+# ==========================================
+# CARGA DEL ARCHIVO
+# ==========================================
+
+archivo = st.file_uploader(
+    "📁 Selecciona el archivo CSV",
+    type=["csv"],
+    help="Carga el archivo InsuranceCompany.csv"
+)
+
+# ==========================================
+# VALIDACIÓN Y LECTURA DEL DATASET
+# ==========================================
+
+if archivo is not None:
+
+    try:
+        # Leer el archivo CSV
+        df = pd.read_csv(archivo)
+
+        # Validar que el dataset tenga información
+        if df.empty:
+
+            st.warning(
+                "⚠️ El archivo fue cargado, pero el dataset no contiene registros."
+            )
+
+        else:
+
+            # Mensaje de carga exitosa
+            st.success(
+                f"✅ El archivo **{archivo.name}** fue cargado correctamente."
+            )
+
+            # ==========================================
+            # DIMENSIONES DEL DATASET
+            # ==========================================
+
+            filas, columnas = df.shape
+
+            st.subheader("📐 Dimensiones del Dataset")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.metric(
+                    "📊 Filas",
+                    f"{filas:,}"
+                )
+
+            with col2:
+                st.metric(
+                    "📋 Columnas",
+                    f"{columnas:,}"
+                )
+
+            # ==========================================
+            # VISTA PREVIA DEL DATASET
+            # ==========================================
+
+            st.subheader("👀 Vista previa del Dataset")
+
+            st.write("Primeras 5 filas del dataset:")
+
+            st.dataframe(
+                df.head(),
+                use_container_width=True
+            )
+
+    except Exception as e:
+
+        st.error(
+            f"❌ Ocurrió un error al cargar el archivo: {e}"
+        )
+
+else:
+
+    # ==========================================
+    # MENSAJE CUANDO NO SE HA CARGADO ARCHIVO
+    # ==========================================
+
+    st.info(
+        "ℹ️ Debes cargar el archivo **InsuranceCompany.csv** "
+        "para continuar con el análisis."
     )
-
-
-    st.markdown("""
-        <div class="custom-data-title">
-            <h1>💰 Flujo de caja con listas</h1>
-        </div>
-    """, unsafe_allow_html=True)
-
-
-    st.markdown("""
-    ### Descripción del ejercicio
-
-    En este ejercicio se desarrolla un módulo para el registro y control de movimientos de flujo de caja,
-    utilizando listas de Python para almacenar y gestionar la información.
-    Permite registrar ingresos y gastos, indicando el concepto y valor de cada movimiento. 
-    A partir de los registros ingresados, se calculan automáticamente el total de ingresos, total de gastos
-    y saldo final, permitiendo conocer el estado del flujo de caja.
-    """)
-
-
-    
-
-    
-
-
 
 
 
