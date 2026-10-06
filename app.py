@@ -195,25 +195,38 @@ elif modulos == "Carga del Dataset":
 
 elif modulos == "Análisis Exploratorio de Datos":
 
-    st.subheader("Item 1: Información general del dataset")
+    # ==========================================================
+    # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
+    # ==========================================================
+
+    st.subheader("📋 Ítem 1: Información general del dataset")
 
     st.markdown("""
-    En este ítem se presenta un resumen de la estructura del dataset,
-    considerando el número de filas, columnas, valores no nulos,
-    tipos de datos y uso de memoria.
+    En este ítem se analiza la información general del dataset mediante
+    el método `.info()`, identificando el número de filas, columnas,
+    valores no nulos, tipos de datos y uso de memoria.
     """)
 
     # ==========================================================
-    # 1. INFORMACIÓN GENERAL - .info()
+    # 1. INFORMACIÓN GENERAL CON .INFO()
     # ==========================================================
 
-    st.markdown("### 🔹 1. Resumen de la información del dataset")
+    st.markdown("### 🔹 1. Resumen de información con `.info()`")
 
-    # Ejecutar .info() para obtener la información solicitada
+    # Ejecutar DataFrame.info()
     buffer = io.StringIO()
     df.info(buf=buffer)
 
-    # Información general
+    # Mostrar el resultado de .info()
+    st.code(buffer.getvalue(), language="text")
+
+    # ==========================================================
+    # RESUMEN VISUAL
+    # ==========================================================
+
+    st.markdown("### 🔹 2. Resumen del dataset")
+
+    # Cálculo del uso de memoria
     memoria_mb = df.memory_usage(deep=True).sum() / (1024 ** 2)
 
     col1, col2, col3 = st.columns(3)
@@ -236,28 +249,29 @@ elif modulos == "Análisis Exploratorio de Datos":
             f"{memoria_mb:.2f} MB"
         )
 
-    st.markdown("#### 📊 Detalle por columna")
+    # ==========================================================
+    # 3. INFORMACIÓN POR COLUMNA
+    # ==========================================================
 
-    # Resumen equivalente a la información proporcionada por .info()
-    resumen_info = pd.DataFrame({
+    st.markdown("### 🔹 3. Información por columna")
+
+    resumen_columnas = pd.DataFrame({
         "Columna": df.columns,
-        "Valores no nulos": df.notna().sum(),
-        "Valores nulos": df.isna().sum(),
-        "Tipo de dato": df.dtypes.astype(str)
-    }).reset_index(drop=True)
+        "Valores no nulos": df.notna().sum().values,
+        "Tipo de dato": df.dtypes.astype(str).values
+    })
 
     st.dataframe(
-        resumen_info,
+        resumen_columnas,
         use_container_width=True,
         hide_index=True
     )
 
-
     # ==========================================================
-    # 2. TIPOS DE DATOS
+    # 4. TIPOS DE DATOS
     # ==========================================================
 
-    st.markdown("### 🔹 2. Tipos de datos")
+    st.markdown("### 🔹 4. Tipos de datos")
 
     tipos_datos = (
         df.dtypes
@@ -266,7 +280,10 @@ elif modulos == "Análisis Exploratorio de Datos":
         .reset_index()
     )
 
-    tipos_datos.columns = ["Tipo de dato", "Cantidad de columnas"]
+    tipos_datos.columns = [
+        "Tipo de dato",
+        "Cantidad de columnas"
+    ]
 
     st.dataframe(
         tipos_datos,
@@ -274,20 +291,18 @@ elif modulos == "Análisis Exploratorio de Datos":
         hide_index=True
     )
 
-
     # ==========================================================
-    # 3. CONTEO DE VALORES NULOS
+    # 5. CONTEO DE VALORES NULOS
     # ==========================================================
 
-    st.markdown("### 🔹 3. Conteo de valores nulos")
+    st.markdown("### 🔹 5. Conteo de valores nulos")
 
-    nulos = (
-        df.isnull()
-        .sum()
-        .reset_index()
-    )
+    nulos = df.isnull().sum().reset_index()
 
-    nulos.columns = ["Columna", "Valores nulos"]
+    nulos.columns = [
+        "Columna",
+        "Valores nulos"
+    ]
 
     st.dataframe(
         nulos,
@@ -295,13 +310,17 @@ elif modulos == "Análisis Exploratorio de Datos":
         hide_index=True
     )
 
-    # Mensaje general
+    # ==========================================================
+    # MENSAJE GENERAL SOBRE VALORES NULOS
+    # ==========================================================
+
     total_nulos = df.isnull().sum().sum()
 
     if total_nulos == 0:
-        st.success("✅ El dataset no contiene valores nulos.")
+        st.success(
+            "✅ El dataset no contiene valores nulos."
+        )
     else:
         st.warning(
             f"⚠️ El dataset contiene {total_nulos:,} valores nulos."
         )
-
