@@ -398,8 +398,3 @@ with tabs[0]:
             f"⚠️ El dataset contiene "
             f"{total_nulos:,} valores nulos."
         )
-
-                st.warning(
-                    f"⚠️ El dataset contiene "
-                    f"{total_nulos:,} valores nulos."
-                )
