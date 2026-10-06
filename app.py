@@ -93,7 +93,7 @@ if modulos == "Modulo 1: Home":
 
 elif modulos == "Modulo 2: Carga del Dataset":
 
-st.title("📊 Análisis Exploratorio de Datos - Compañía de Seguros")
+st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
 st.write(
     "Carga el archivo para iniciar "
     "el Análisis Exploratorio de Datos (EDA)."
@@ -104,7 +104,7 @@ st.write(
 # ==========================================
 
 archivo = st.file_uploader(
-    "📁 Selecciona el archivo CSV",
+    "Selecciona el archivo CSV",
     type=["csv"],
     help="Carga el archivo"
 )
@@ -145,7 +145,7 @@ if archivo is not None:
 
             with col1:
                 st.metric(
-                    "📊 Filas",
+                    "Filas",
                     f"{filas:,}"
                 )
 
