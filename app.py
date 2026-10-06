@@ -253,7 +253,7 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================
 
         st.title(
-            "📊 Análisis Exploratorio de Datos (EDA)"
+            "Análisis Exploratorio de Datos (EDA)"
         )
 
         st.write(
@@ -266,7 +266,7 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================
 
         tabs = st.tabs([
-            "🔎 Ítem 1: Información general del dataset"
+            " Item 1"
         ])
 
         # ==========================================================
@@ -276,7 +276,7 @@ elif modulos == "Análisis Exploratorio de Datos":
         with tabs[0]:
 
             st.subheader(
-                "🔎 Ítem 1: Información general del dataset"
+                "Información general del dataset"
             )
 
             st.write(
@@ -290,12 +290,12 @@ elif modulos == "Análisis Exploratorio de Datos":
             # ======================================================
 
             st.markdown(
-                "### 1. Información general con `.info()`"
+                "### 1. Información general"
             )
 
             st.write(
-                "El método `.info()` permite conocer la estructura "
-                "del DataFrame, incluyendo el número de registros, "
+                "Se muestra la estructura del DataFrame, "
+                "incluyendo el número de registros, "
                 "las columnas, los valores no nulos, los tipos de "
                 "datos y el uso de memoria."
             )
