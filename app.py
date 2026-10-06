@@ -269,128 +269,135 @@ elif modulos == "Análisis Exploratorio de Datos":
             " Item 1: Información general del dataset"
         ])
 
-        # ==========================================================
-        # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
-        # ==========================================================
+# ==========================================================
+# ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
+# ==========================================================
 
-        with tabs[0]:
+with tabs[0]:
 
-            st.write(
-                "En este análisis se revisa la estructura general "
-                "del dataset, los tipos de datos de sus variables "
-                "y la presencia de valores nulos."
-            )
+    st.write(
+        "En este análisis se revisa la estructura general "
+        "del dataset, los tipos de datos de sus variables "
+        "y la presencia de valores nulos."
+    )
 
-            # ======================================================
-            # 1. INFORMACIÓN GENERAL CON .INFO()
-            # ======================================================
+    # ======================================================
+    # 1. INFORMACIÓN GENERAL
+    # ======================================================
 
-            st.markdown(
-                "### 1. Información general"
-            )
+    st.markdown(
+        "### 1. Información general"
+    )
 
-            st.write(
-                "Se muestra la estructura del DataFrame, "
-                "incluyendo el número de registros, "
-                "las columnas, los valores no nulos, los tipos de "
-                "datos y el uso de memoria."
-            )
+    st.write(
+        "Se muestra la estructura del DataFrame, "
+        "incluyendo el número de registros, "
+        "las columnas, los valores no nulos, los tipos de "
+        "datos y el uso de memoria."
+    )
 
-            buffer = io.StringIO()
+    buffer = io.StringIO()
 
-            df.info(buf=buffer)
+    df.info(buf=buffer)
 
-            st.code(
-                buffer.getvalue(),
-                language="text"
-            )
+    st.code(
+        buffer.getvalue(),
+        language="text"
+    )
 
-            # ======================================================
-            # 2. TIPOS DE DATOS
-            # ======================================================
+    # ======================================================
+    # 2. TIPOS DE DATOS
+    # ======================================================
 
-            st.markdown(
-                "### 2. Tipos de datos"
-            )
+    st.markdown(
+        "### 2. Tipos de datos"
+    )
 
-            st.write(
-                "Se muestra la cantidad de columnas correspondiente "
-                "a cada tipo de dato presente en el dataset."
-            )
+    st.write(
+        "Se muestra la cantidad de columnas correspondiente "
+        "a cada tipo de dato presente en el dataset."
+    )
 
-            tipos_datos = (
-                df.dtypes
-                .astype(str)
-                .value_counts()
-                .reset_index()
-            )
+    tipos_datos = (
+        df.dtypes
+        .astype(str)
+        .value_counts()
+        .reset_index()
+    )
 
-            tipos_datos.columns = [
-                "Tipo de dato",
-                "Cantidad de columnas"
-            ]
+    tipos_datos.columns = [
+        "Tipo de dato",
+        "Cantidad de columnas"
+    ]
 
-            col1, col2 = st.columns(2)
+    st.dataframe(
+        tipos_datos,
+        use_container_width=True,
+        hide_index=True
+    )
 
-            with col1:
+    # ======================================================
+    # 3. CONTEO DE VALORES NULOS
+    # ======================================================
 
-                st.dataframe(
-                    tipos_datos,
-                    use_container_width=True,
-                    hide_index=True
-                )
+    st.markdown(
+        "### 3. Conteo de valores nulos"
+    )
 
-            with col2:
+    st.write(
+        "Se identifica la cantidad de valores nulos "
+        "existentes en cada columna del dataset."
+    )
 
-                st.bar_chart(
-                    tipos_datos.set_index(
-                        "Tipo de dato"
-                    )
-                )
+    nulos = (
+        df.isnull()
+        .sum()
+        .reset_index()
+    )
 
-            # ======================================================
-            # 3. CONTEO DE VALORES NULOS
-            # ======================================================
+    nulos.columns = [
+        "Columna",
+        "Valores nulos"
+    ]
 
-            st.markdown(
-                "### 3. Conteo de valores nulos"
-            )
+    # ------------------------------------------------------
+    # Tabla y gráfico
+    # ------------------------------------------------------
 
-            st.write(
-                "Se identifica la cantidad de valores nulos "
-                "existentes en cada columna del dataset."
-            )
+    col1, col2 = st.columns(2)
 
-            nulos = (
-                df.isnull()
-                .sum()
-                .reset_index()
-            )
+    with col1:
 
-            nulos.columns = [
-                "Columna",
-                "Valores nulos"
-            ]
+        st.dataframe(
+            nulos,
+            use_container_width=True,
+            hide_index=True
+        )
 
-            st.dataframe(
-                nulos,
-                use_container_width=True,
-                hide_index=True
-            )
+    with col2:
 
-            # ======================================================
-            # RESULTADO GENERAL DE VALORES NULOS
-            # ======================================================
+        st.bar_chart(
+            nulos.set_index("Columna")
+        )
 
-            total_nulos = df.isnull().sum().sum()
+    # ======================================================
+    # RESULTADO GENERAL DE VALORES NULOS
+    # ======================================================
 
-            if total_nulos == 0:
+    total_nulos = df.isnull().sum().sum()
 
-                st.success(
-                    "✅ El dataset no contiene valores nulos."
-                )
+    if total_nulos == 0:
 
-            else:
+        st.success(
+            "✅ El dataset no contiene valores nulos."
+        )
+
+    else:
+
+        st.warning(
+            f"⚠️ El dataset contiene "
+            f"{total_nulos:,} valores nulos."
+        )
 
                 st.warning(
                     f"⚠️ El dataset contiene "
