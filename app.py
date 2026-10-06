@@ -21,7 +21,7 @@ modulos = st.sidebar.selectbox(
 )
 
 # ==========================================
-# HOME
+# MODULO 1: HOME
 # ==========================================
 
 if modulos == "Modulo 1: Home":
@@ -53,7 +53,7 @@ if modulos == "Modulo 1: Home":
     ### 📝 Datos del Autor
 
     * Nombre completo: Stefany Salazar Espinoza 
-    * Curso / Especialización: Especialización en Python for Analytics  
+    * Curso: Especialización en Python for Analytics  
     * Año: 2026 """)
 
     st.markdown("""
@@ -84,6 +84,40 @@ if modulos == "Modulo 1: Home":
     with col4:
         st.markdown("<br><br>", unsafe_allow_html=True)
         st.image("streamlit.jpg", width=220)
+
+
+# ==========================================
+# MODULO 2: CARGA DEL DATASET
+# ==========================================
+
+elif modulos == "Modulo 2: Carga del Dataset":
+
+    st.sidebar.markdown("---")
+
+    st.sidebar.image(
+        "image_ejercicio1.jpg",
+        use_container_width=True
+    )
+
+
+    st.markdown("""
+        <div class="custom-data-title">
+            <h1>💰 Flujo de caja con listas</h1>
+        </div>
+    """, unsafe_allow_html=True)
+
+
+    st.markdown("""
+    ### Descripción del ejercicio
+
+    En este ejercicio se desarrolla un módulo para el registro y control de movimientos de flujo de caja,
+    utilizando listas de Python para almacenar y gestionar la información.
+    Permite registrar ingresos y gastos, indicando el concepto y valor de cada movimiento. 
+    A partir de los registros ingresados, se calculan automáticamente el total de ingresos, total de gastos
+    y saldo final, permitiendo conocer el estado del flujo de caja.
+    """)
+
+
     
 
     
