@@ -56,7 +56,7 @@ if modulos == "Home":
     * Curso / Especialización: Especialización en Python for Analytics  
     * Año: 2026 """)
 
-     st.markdown("""
+    st.markdown("""
     ### 💡 Explicación del Dataset
 
      Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
