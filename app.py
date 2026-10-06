@@ -50,14 +50,14 @@ if modulos == "Modulo 1: Home":
     seguro""")
 
     st.markdown("""
-    ### 💡 Datos del Autor
+    ### 📝 Datos del Autor
 
     * Nombre completo: Stefany Salazar Espinoza 
     * Curso / Especialización: Especialización en Python for Analytics  
     * Año: 2026 """)
 
     st.markdown("""
-    ### 💡 Explicación del Dataset
+    ### 👨‍🏫 Explicación del Dataset
 
      Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
     una compañía de seguros. Incluye variables demográficas, económicas, historial de 
