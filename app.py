@@ -544,19 +544,13 @@ elif modulos == "Análisis Exploratorio de Datos":
                 ]
             })
 
-            st.dataframe(
-                resumen_variables,
-                use_container_width=True,
-                hide_index=True
-            )
- 
 # ==========================================================
 # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
 # ==========================================================
 
-    with tabs[2]:
+with tabs[2]:
 
-        st.write(
+    st.write(
         "En este análisis se obtienen las estadísticas descriptivas "
         "de las variables numéricas mediante la función .describe() "
         "y se realiza una interpretación básica de la media, mediana "
@@ -577,10 +571,28 @@ elif modulos == "Análisis Exploratorio de Datos":
     )
 
     # ----------------------------------------------------------
-    # 2. INTERPRETACIÓN DE LA MEDIA
+    # 2. SELECCIÓN DE VARIABLES REPRESENTATIVAS
     # ----------------------------------------------------------
 
-    st.markdown("### 2. Interpretación de la media")
+    st.markdown("### 2. Selección de variables representativas")
+
+    st.write(
+        "Para realizar la interpretación de las estadísticas "
+        "descriptivas se seleccionaron las variables **Income** y "
+        "**premium**, debido a que ambas son variables numéricas "
+        "continuas y representan aspectos económicos relevantes "
+        "del conjunto de datos. **Income** representa el ingreso "
+        "mensual de los clientes, mientras que **premium** representa "
+        "el valor de la prima del seguro. Además, ambas variables "
+        "permiten analizar de manera clara su valor promedio, valor "
+        "central y nivel de variabilidad."
+    )
+
+    # ----------------------------------------------------------
+    # 3. INTERPRETACIÓN DE LA MEDIA
+    # ----------------------------------------------------------
+
+    st.markdown("### 3. Interpretación de la media")
 
     st.write(
         "La media permite identificar el valor promedio de las "
@@ -589,7 +601,7 @@ elif modulos == "Análisis Exploratorio de Datos":
     )
 
     media_income = df["Income"].mean()
-    media_renewal = df["renewal"].mean()
+    media_premium = df["premium"].mean()
 
     st.write(
         f"**Income:** los datos se mueven alrededor de un ingreso "
@@ -597,17 +609,15 @@ elif modulos == "Análisis Exploratorio de Datos":
     )
 
     st.write(
-        f"**Renewal:** al estar codificada como 0 y 1, su media de "
-        f"**{media_renewal:.2f}** indica que aproximadamente el "
-        f"**{media_renewal * 100:.2f}%** de los clientes renovó "
-        f"su póliza."
+        f"**Premium:** los datos se mueven alrededor de una prima "
+        f"promedio de **{media_premium:,.2f}**."
     )
 
     # ----------------------------------------------------------
-    # 3. INTERPRETACIÓN DE LA MEDIANA
+    # 4. INTERPRETACIÓN DE LA MEDIANA
     # ----------------------------------------------------------
 
-    st.markdown("### 3. Interpretación de la mediana")
+    st.markdown("### 4. Interpretación de la mediana")
 
     st.write(
         "La mediana representa el valor central de los datos. "
@@ -617,36 +627,27 @@ elif modulos == "Análisis Exploratorio de Datos":
     )
 
     mediana_income = df["Income"].median()
-    mediana_renewal = df["renewal"].median()
+    mediana_premium = df["premium"].median()
 
     st.write(
         f"**Income:** el valor central de los ingresos mensuales "
         f"es **{mediana_income:,.2f}**, por lo que aproximadamente "
-        f"la mitad de los clientes presenta ingresos por debajo "
-        f"de este valor y la otra mitad por encima."
+        f"la mitad de los clientes presenta ingresos inferiores "
+        f"a este valor y la otra mitad superiores."
     )
-
-    if mediana_renewal == 1:
-        interpretacion_renewal = (
-            "el valor central corresponde a clientes que renovaron "
-            "su póliza."
-        )
-    else:
-        interpretacion_renewal = (
-            "el valor central corresponde a clientes que no renovaron "
-            "su póliza."
-        )
 
     st.write(
-        f"**Renewal:** la mediana es **{mediana_renewal:.0f}**, por lo que "
-        f"{interpretacion_renewal}"
+        f"**Premium:** el valor central de las primas es "
+        f"**{mediana_premium:,.2f}**, por lo que aproximadamente "
+        f"la mitad de las pólizas presenta primas inferiores "
+        f"a este valor y la otra mitad superiores."
     )
 
     # ----------------------------------------------------------
-    # 4. INTERPRETACIÓN DE LA DISPERSIÓN
+    # 5. INTERPRETACIÓN DE LA DISPERSIÓN
     # ----------------------------------------------------------
 
-    st.markdown("### 4. Interpretación de la dispersión")
+    st.markdown("### 5. Interpretación de la dispersión")
 
     st.write(
         "La desviación estándar permite evaluar qué tan dispersos "
@@ -658,14 +659,28 @@ elif modulos == "Análisis Exploratorio de Datos":
     desviacion_income = df["Income"].std()
     desviacion_premium = df["premium"].std()
 
+    st.write(
+        f"**Income:** presenta una desviación estándar de "
+        f"**{desviacion_income:,.2f}**, lo que indica el nivel "
+        f"de variabilidad de los ingresos respecto a su media "
+        f"de **{media_income:,.2f}**."
+    )
+
+    st.write(
+        f"**Premium:** presenta una desviación estándar de "
+        f"**{desviacion_premium:,.2f}**, lo que indica el nivel "
+        f"de variabilidad de las primas respecto a su media "
+        f"de **{media_premium:,.2f}**."
+    )
+
     # ----------------------------------------------------------
-    # 5. VISUALIZACIÓN E INTERPRETACIÓN DE LA DISPERSIÓN
+    # 6. VISUALIZACIÓN DE LA DISPERSIÓN
     # ----------------------------------------------------------
 
-    st.markdown("### 5. Visualización e interpretación de la dispersión")
+    st.markdown("### 6. Visualización e interpretación de la dispersión")
 
     dispersion = pd.DataFrame({
-        "Variable": ["Income", "premium"],
+        "Variable": ["Income", "Premium"],
         "Desviación estándar": [
             desviacion_income,
             desviacion_premium
@@ -673,8 +688,8 @@ elif modulos == "Análisis Exploratorio de Datos":
     })
 
     st.write(
-        "El siguiente gráfico permite visualizar y comparar "
-        "la desviación estándar de las dos variables seleccionadas."
+        "El siguiente gráfico permite visualizar la desviación "
+        "estándar de las dos variables seleccionadas."
     )
 
     st.bar_chart(
@@ -682,15 +697,16 @@ elif modulos == "Análisis Exploratorio de Datos":
     )
 
     st.write(
-        f"**Income:** presenta una desviación estándar de "
+        f"**Income:** la desviación estándar es de "
         f"**{desviacion_income:,.2f}**, lo que indica que los "
-        f"ingresos de los clientes presentan variabilidad alrededor "
-        f"del ingreso promedio de **{media_income:,.2f}**."
+        f"ingresos presentan variabilidad alrededor del ingreso "
+        f"mensual promedio de **{media_income:,.2f}**."
     )
 
     st.write(
-        f"**Premium:** presenta una desviación estándar de "
+        f"**Premium:** la desviación estándar es de "
         f"**{desviacion_premium:,.2f}**, lo que indica que los "
         f"valores de las primas presentan variabilidad alrededor "
-        f"de una prima promedio de **{df['premium'].mean():,.2f}**."
+        f"de la prima promedio de **{media_premium:,.2f}**."
     )
+
