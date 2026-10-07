@@ -658,30 +658,11 @@ with tabs[2]:
     desviacion_income = df["Income"].std()
     desviacion_premium = df["premium"].std()
 
-    st.write(
-        f"**Income:** presenta una desviación estándar de "
-        f"**{desviacion_income:,.2f}**, lo que indica la variabilidad "
-        f"existente entre los ingresos mensuales de los clientes."
-    )
-
-    st.write(
-        f"**Premium:** presenta una desviación estándar de "
-        f"**{desviacion_premium:,.2f}**, reflejando la variabilidad "
-        f"en los valores de las primas de las pólizas."
-    )
-
     # ----------------------------------------------------------
-    # 5. GRÁFICO DE DISPERSIÓN
+    # 5. VISUALIZACIÓN E INTERPRETACIÓN DE LA DISPERSIÓN
     # ----------------------------------------------------------
 
-    st.markdown("### 5. Visualización de la dispersión")
-
-    st.write(
-        "El siguiente gráfico permite comparar visualmente la "
-        "desviación estándar de las variables representativas "
-        "seleccionadas. Un valor mayor representa una mayor "
-        "variabilidad de los datos respecto a su media."
-    )
+    st.markdown("### 5. Visualización e interpretación de la dispersión")
 
     dispersion = pd.DataFrame({
         "Variable": ["Income", "premium"],
@@ -691,37 +672,25 @@ with tabs[2]:
         ]
     })
 
+    st.write(
+        "El siguiente gráfico permite visualizar y comparar "
+        "la desviación estándar de las dos variables seleccionadas."
+    )
+
     st.bar_chart(
         dispersion.set_index("Variable")
     )
 
-    # ----------------------------------------------------------
-    # 6. RESUMEN DE LOS RESULTADOS
-    # ----------------------------------------------------------
+    st.write(
+        f"**Income:** presenta una desviación estándar de "
+        f"**{desviacion_income:,.2f}**, lo que indica que los "
+        f"ingresos de los clientes presentan variabilidad alrededor "
+        f"del ingreso promedio de **{media_income:,.2f}**."
+    )
 
-    st.markdown("### 6. Resumen de las estadísticas")
-
-    resumen_estadistico = pd.DataFrame({
-        "Variable": ["Income", "renewal", "premium"],
-        "Media": [
-            media_income,
-            media_renewal,
-            df["premium"].mean()
-        ],
-        "Mediana": [
-            mediana_income,
-            mediana_renewal,
-            df["premium"].median()
-        ],
-        "Desviación estándar": [
-            desviacion_income,
-            df["renewal"].std(),
-            desviacion_premium
-        ]
-    })
-
-    st.dataframe(
-        resumen_estadistico,
-        use_container_width=True,
-        hide_index=True
+    st.write(
+        f"**Premium:** presenta una desviación estándar de "
+        f"**{desviacion_premium:,.2f}**, lo que indica que los "
+        f"valores de las primas presentan variabilidad alrededor "
+        f"de una prima promedio de **{df['premium'].mean():,.2f}**."
     )
