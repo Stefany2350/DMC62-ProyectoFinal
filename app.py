@@ -406,9 +406,9 @@ elif modulos == "Análisis Exploratorio de Datos":
 # ÍTEM 2: CLASIFICACIÓN DE VARIABLES
 # ==========================================================
 
-with tabs[1]:
+    with tabs[1]:
 
-    st.write(
+        st.write(
         "En este análisis se identifican las variables "
         "numéricas y categóricas del dataset mediante "
         "una función personalizada."
