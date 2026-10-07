@@ -550,7 +550,18 @@ elif modulos == "Análisis Exploratorio de Datos":
                 hide_index=True
             )
 
-# ==========================================================
+
+
+  
+
+    st.dataframe(
+        medianas,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+  # ==========================================================
 # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
 # ==========================================================
 
@@ -558,8 +569,9 @@ with tabs[2]:
 
     st.write(
         "En este análisis se obtienen las estadísticas descriptivas "
-        "de las variables numéricas del dataset mediante la función "
-        ".describe()."
+        "de las variables numéricas mediante la función .describe() "
+        "y se realiza una interpretación básica de las medidas "
+        "de tendencia central y dispersión."
     )
 
     # ======================================================
@@ -572,9 +584,7 @@ with tabs[2]:
 
     st.write(
         "La función .describe() permite obtener un resumen "
-        "estadístico de las variables numéricas, incluyendo "
-        "el número de observaciones, media, desviación estándar, "
-        "valor mínimo, cuartiles y valor máximo."
+        "estadístico de las variables numéricas del dataset."
     )
 
     estadisticas = df.describe()
@@ -593,24 +603,14 @@ with tabs[2]:
         "### 2. Interpretación de la media"
     )
 
-    st.write(
-        "La media representa el valor promedio de cada variable "
-        "numérica. Permite conocer el comportamiento central "
-        "de los datos."
-    )
+    medias = df.describe().loc["mean"]
 
-    medias = df.describe().loc["mean"].reset_index()
+    for variable, media in medias.items():
 
-    medias.columns = [
-        "Variable",
-        "Media"
-    ]
-
-    st.dataframe(
-        medias,
-        use_container_width=True,
-        hide_index=True
-    )
+        st.write(
+            f"**{variable}:** el valor promedio es "
+            f"**{media:,.2f}**."
+        )
 
 
     # ======================================================
@@ -621,48 +621,72 @@ with tabs[2]:
         "### 3. Interpretación de la mediana"
     )
 
-    st.write(
-        "La mediana corresponde al valor central de los datos "
-        "cuando estos se encuentran ordenados. Es útil para "
-        "comparar el comportamiento central con la media y "
-        "detectar posibles efectos de valores extremos."
+    medianas = df.describe().loc["50%"]
+
+    for variable, mediana in medianas.items():
+
+        st.write(
+            f"**{variable}:** el valor central de los datos "
+            f"es **{mediana:,.2f}**."
+        )
+
+
+    # ======================================================
+    # 4. COMPARACIÓN ENTRE MEDIA Y MEDIANA
+    # ======================================================
+
+    st.markdown(
+        "### 4. Comparación entre media y mediana"
     )
 
-    medianas = df.describe().loc["50%"].reset_index()
+    st.write(
+        "La comparación entre la media y la mediana permite "
+        "identificar diferencias en la distribución de los datos. "
+        "Cuando ambas medidas presentan valores similares, la "
+        "distribución es relativamente equilibrada. Una diferencia "
+        "considerable puede indicar asimetría o la presencia de "
+        "valores extremos."
+    )
 
-    medianas.columns = [
-        "Variable",
-        "Mediana"
-    ]
+    medias_medianas = pd.DataFrame({
+        "Variable": medias.index,
+        "Media": medias.values,
+        "Mediana": medianas.values
+    })
+
+    medias_medianas["Diferencia"] = (
+        medias_medianas["Media"]
+        - medias_medianas["Mediana"]
+    )
 
     st.dataframe(
-        medianas,
+        medias_medianas,
         use_container_width=True,
         hide_index=True
     )
 
 
     # ======================================================
-    # 4. INTERPRETACIÓN DE LA DISPERSIÓN
+    # 5. INTERPRETACIÓN DE LA DISPERSIÓN
     # ======================================================
 
     st.markdown(
-        "### 4. Interpretación de la dispersión"
+        "### 5. Interpretación de la dispersión"
     )
 
     st.write(
-        "La desviación estándar permite evaluar qué tan dispersos "
-        "se encuentran los valores respecto a la media. Una "
-        "desviación estándar mayor indica una mayor variabilidad "
+        "La desviación estándar permite evaluar qué tan "
+        "dispersos se encuentran los valores respecto a su media. "
+        "Una desviación estándar mayor indica una mayor variabilidad "
         "de los datos."
     )
 
-    dispersion = df.describe().loc["std"].reset_index()
+    desviacion = df.describe().loc["std"]
 
-    dispersion.columns = [
-        "Variable",
-        "Desviación estándar"
-    ]
+    dispersion = pd.DataFrame({
+        "Variable": desviacion.index,
+        "Desviación estándar": desviacion.values
+    })
 
     st.dataframe(
         dispersion,
@@ -672,11 +696,61 @@ with tabs[2]:
 
 
     # ======================================================
-    # 5. RESUMEN DE MEDIA, MEDIANA Y DISPERSIÓN
+    # 6. GRÁFICO DE DISPERSIÓN
     # ======================================================
 
     st.markdown(
-        "### 5. Resumen estadístico"
+        "### 6. Dispersión de las variables numéricas"
+    )
+
+    st.write(
+        "El siguiente gráfico muestra la desviación estándar "
+        "de cada variable numérica. Las variables con valores "
+        "más altos presentan una mayor dispersión."
+    )
+
+    st.bar_chart(
+        dispersion.set_index("Variable")
+    )
+
+
+    # ======================================================
+    # 7. INTERPRETACIÓN AUTOMÁTICA DE LA DISPERSIÓN
+    # ======================================================
+
+    st.markdown(
+        "### 7. Interpretación de los resultados"
+    )
+
+    # Variable con mayor desviación estándar
+    variable_mayor_dispersion = desviacion.idxmax()
+    mayor_dispersion = desviacion.max()
+
+    # Variable con menor desviación estándar
+    variable_menor_dispersion = desviacion.idxmin()
+    menor_dispersion = desviacion.min()
+
+    st.write(
+        f"**Mayor dispersión:** la variable **{variable_mayor_dispersion}** "
+        f"presenta la mayor desviación estándar, con un valor de "
+        f"**{mayor_dispersion:,.2f}**, por lo que es la variable que "
+        f"presenta mayor variabilidad en sus datos."
+    )
+
+    st.write(
+        f"**Menor dispersión:** la variable **{variable_menor_dispersion}** "
+        f"presenta la menor desviación estándar, con un valor de "
+        f"**{menor_dispersion:,.2f}**, indicando una menor variabilidad "
+        f"respecto a las demás variables numéricas."
+    )
+
+
+    # ======================================================
+    # 8. RESUMEN
+    # ======================================================
+
+    st.markdown(
+        "### 8. Resumen de las estadísticas"
     )
 
     resumen_estadistico = pd.DataFrame({
