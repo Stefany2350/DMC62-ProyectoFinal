@@ -821,3 +821,141 @@ with tabs[3]:
             "dependerá de la cantidad de datos faltantes y de la "
             "importancia de cada variable para el análisis."
         )
+
+# ==========================================================
+# ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
+# ==========================================================
+
+with tabs[4]:
+
+    st.write(
+        "En este análisis se observa la distribución de las variables "
+        "numéricas mediante histogramas, utilizando Matplotlib. "
+        "La visualización permite identificar la concentración de los "
+        "datos, su dispersión y la posible presencia de valores extremos."
+    )
+
+    # ----------------------------------------------------------
+    # 1. IDENTIFICACIÓN DE VARIABLES NUMÉRICAS
+    # ----------------------------------------------------------
+
+    st.markdown("### 1. Variables numéricas")
+
+    variables_numericas = df.select_dtypes(
+        include="number"
+    ).columns.tolist()
+
+    st.write(
+        f"El dataset contiene **{len(variables_numericas)} variables "
+        "numéricas, las cuales pueden ser analizadas mediante "
+        "histogramas."
+    )
+
+    st.write(
+        "Variables numéricas identificadas:"
+    )
+
+    st.write(
+        ", ".join(variables_numericas)
+    )
+
+    # ----------------------------------------------------------
+    # 2. HISTOGRAMAS
+    # ----------------------------------------------------------
+
+    st.markdown("### 2. Histogramas")
+
+    st.write(
+        "Los histogramas permiten observar cómo se distribuyen "
+        "los valores de cada variable numérica y en qué rangos "
+        "se concentra la mayor cantidad de observaciones."
+    )
+
+    # Selección de variables para visualizar
+    variables_histograma = st.multiselect(
+        "Selecciona las variables que deseas visualizar:",
+        variables_numericas,
+        default=variables_numericas[:2]
+    )
+
+    if variables_histograma:
+
+        for variable in variables_histograma:
+
+            fig, ax = plt.subplots(figsize=(8, 4))
+
+            ax.hist(
+                df[variable].dropna(),
+                bins=30,
+                edgecolor="black"
+            )
+
+            ax.set_title(
+                f"Distribución de {variable}"
+            )
+
+            ax.set_xlabel(variable)
+            ax.set_ylabel("Frecuencia")
+
+            ax.grid(
+                axis="y",
+                alpha=0.3
+            )
+
+            st.pyplot(fig)
+
+            plt.close(fig)
+
+    else:
+
+        st.info(
+            "Selecciona al menos una variable para visualizar "
+            "su distribución."
+        )
+
+    # ----------------------------------------------------------
+    # 3. INTERPRETACIÓN VISUAL
+    # ----------------------------------------------------------
+
+    st.markdown("### 3. Interpretación visual")
+
+    st.write(
+        "La interpretación de los histogramas permite identificar "
+        "la forma de la distribución, los rangos donde se concentra "
+        "la mayor cantidad de observaciones, el nivel de dispersión "
+        "y la posible presencia de valores extremos."
+    )
+
+    # Interpretación automática básica de las variables seleccionadas
+    for variable in variables_histograma:
+
+        serie = df[variable].dropna()
+
+        media = serie.mean()
+        mediana = serie.median()
+        desviacion = serie.std()
+
+        if media > mediana:
+            interpretacion = (
+                "La media es mayor que la mediana, lo que puede "
+                "indicar una distribución con sesgo hacia valores altos."
+            )
+
+        elif media < mediana:
+            interpretacion = (
+                "La media es menor que la mediana, lo que puede "
+                "indicar una distribución con sesgo hacia valores bajos."
+            )
+
+        else:
+            interpretacion = (
+                "La media y la mediana presentan valores similares, "
+                "lo que sugiere una distribución relativamente equilibrada."
+            )
+
+        st.write(
+            f"**{variable}:** {interpretacion} "
+            f"La variable presenta una media de **{media:,.2f}**, "
+            f"una mediana de **{mediana:,.2f}** y una desviación "
+            f"estándar de **{desviacion:,.2f}**."
+        )
