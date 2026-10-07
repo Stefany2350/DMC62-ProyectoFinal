@@ -267,7 +267,15 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         tabs = st.tabs([
             "Item 1: Información general del dataset",
-            "Item 2: Clasificación de variables"
+            "Item 2: Clasificación de variables",
+            "Item 3: Estadísticas descriptivas",
+            "Item 4: Análisis de valores faltantes",
+            "Item 5: Distribución de variables numéricas",
+            "Item 6: Análisis de variables categóricas",
+            "Item 7: Análisis bivariado (numérico vs categórico)",
+            "Item 8: Análisis bivariado (categórico vs categórico)",
+            "Item 9: Análisis basado en parámetros seleccionados",
+            "Item 10: Hallazgos clave" 
         ])
 
         # ==========================================================
@@ -541,3 +549,145 @@ elif modulos == "Análisis Exploratorio de Datos":
                 use_container_width=True,
                 hide_index=True
             )
+
+# ==========================================================
+# ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
+# ==========================================================
+
+with tabs[2]:
+
+    st.write(
+        "En este análisis se obtienen las estadísticas descriptivas "
+        "de las variables numéricas del dataset mediante la función "
+        ".describe()."
+    )
+
+    # ======================================================
+    # 1. ESTADÍSTICAS DESCRIPTIVAS
+    # ======================================================
+
+    st.markdown(
+        "### 1. Estadísticas descriptivas"
+    )
+
+    st.write(
+        "La función .describe() permite obtener un resumen "
+        "estadístico de las variables numéricas, incluyendo "
+        "el número de observaciones, media, desviación estándar, "
+        "valor mínimo, cuartiles y valor máximo."
+    )
+
+    estadisticas = df.describe()
+
+    st.dataframe(
+        estadisticas,
+        use_container_width=True
+    )
+
+
+    # ======================================================
+    # 2. INTERPRETACIÓN DE LA MEDIA
+    # ======================================================
+
+    st.markdown(
+        "### 2. Interpretación de la media"
+    )
+
+    st.write(
+        "La media representa el valor promedio de cada variable "
+        "numérica. Permite conocer el comportamiento central "
+        "de los datos."
+    )
+
+    medias = df.describe().loc["mean"].reset_index()
+
+    medias.columns = [
+        "Variable",
+        "Media"
+    ]
+
+    st.dataframe(
+        medias,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+    # ======================================================
+    # 3. INTERPRETACIÓN DE LA MEDIANA
+    # ======================================================
+
+    st.markdown(
+        "### 3. Interpretación de la mediana"
+    )
+
+    st.write(
+        "La mediana corresponde al valor central de los datos "
+        "cuando estos se encuentran ordenados. Es útil para "
+        "comparar el comportamiento central con la media y "
+        "detectar posibles efectos de valores extremos."
+    )
+
+    medianas = df.describe().loc["50%"].reset_index()
+
+    medianas.columns = [
+        "Variable",
+        "Mediana"
+    ]
+
+    st.dataframe(
+        medianas,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+    # ======================================================
+    # 4. INTERPRETACIÓN DE LA DISPERSIÓN
+    # ======================================================
+
+    st.markdown(
+        "### 4. Interpretación de la dispersión"
+    )
+
+    st.write(
+        "La desviación estándar permite evaluar qué tan dispersos "
+        "se encuentran los valores respecto a la media. Una "
+        "desviación estándar mayor indica una mayor variabilidad "
+        "de los datos."
+    )
+
+    dispersion = df.describe().loc["std"].reset_index()
+
+    dispersion.columns = [
+        "Variable",
+        "Desviación estándar"
+    ]
+
+    st.dataframe(
+        dispersion,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+    # ======================================================
+    # 5. RESUMEN DE MEDIA, MEDIANA Y DISPERSIÓN
+    # ======================================================
+
+    st.markdown(
+        "### 5. Resumen estadístico"
+    )
+
+    resumen_estadistico = pd.DataFrame({
+        "Variable": df.describe().columns,
+        "Media": df.describe().loc["mean"].values,
+        "Mediana": df.describe().loc["50%"].values,
+        "Desviación estándar": df.describe().loc["std"].values
+    })
+
+    st.dataframe(
+        resumen_estadistico,
+        use_container_width=True,
+        hide_index=True
+    )
