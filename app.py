@@ -549,19 +549,8 @@ elif modulos == "Análisis Exploratorio de Datos":
                 use_container_width=True,
                 hide_index=True
             )
-
-
-
-  
-
-    st.dataframe(
-        medianas,
-        use_container_width=True,
-        hide_index=True
-    )
-
-
-  # ==========================================================
+ 
+# ==========================================================
 # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
 # ==========================================================
 
