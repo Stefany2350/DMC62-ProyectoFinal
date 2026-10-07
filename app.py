@@ -584,173 +584,70 @@ with tabs[2]:
     )
 
 
-    # ======================================================
-    # 2. INTERPRETACIÓN DE LA MEDIA
-    # ======================================================
+   # ==========================================================
+# 2. INTERPRETACIÓN DE LA MEDIA
+# ==========================================================
 
-    st.markdown(
-        "### 2. Interpretación de la media"
+st.markdown("### 2. Interpretación de la media")
+
+st.write(
+    "La media permite identificar el valor promedio de las "
+    "variables numéricas y proporciona una referencia sobre "
+    "el comportamiento general de los datos. En este análisis "
+    "se destacan las variables Income y renewal por su relevancia "
+    "para caracterizar a los clientes y su comportamiento."
+)
+
+# Media de las variables representativas
+media_income = df["Income"].mean()
+media_renewal = df["renewal"].mean()
+
+st.write(
+    f"**Income:** los datos se mueven alrededor de un ingreso "
+    f"mensual promedio de **{media_income:,.2f}**."
+)
+
+st.write(
+    f"**Renewal:** al estar codificada como 0 y 1, su media de "
+    f"**{media_renewal:.2f}** indica que aproximadamente el "
+    f"**{media_renewal * 100:.2f}%** de los clientes renovó su póliza."
+)
+
+
+# ==========================================================
+# 3. INTERPRETACIÓN DE LA MEDIANA
+# ==========================================================
+
+st.markdown("### 3. Interpretación de la mediana")
+
+st.write(
+    "La mediana representa el valor central de los datos, "
+    "permitiendo identificar el punto que divide las observaciones "
+    "en dos grupos: aproximadamente la mitad se encuentra por "
+    "debajo y la otra mitad por encima de este valor."
+)
+
+# Mediana de las variables representativas
+mediana_income = df["Income"].median()
+mediana_renewal = df["renewal"].median()
+
+st.write(
+    f"**Income:** el valor central de los ingresos mensuales "
+    f"es **{mediana_income:,.2f}**, lo que significa que "
+    f"aproximadamente la mitad de los clientes presenta ingresos "
+    f"por debajo de este valor y la otra mitad por encima."
+)
+
+if mediana_renewal == 1:
+    interpretacion_renewal = (
+        "el valor central corresponde a clientes que renovaron su póliza."
+    )
+else:
+    interpretacion_renewal = (
+        "el valor central corresponde a clientes que no renovaron su póliza."
     )
 
-    medias = df.describe().loc["mean"]
-
-    for variable, media in medias.items():
-
-        st.write(
-            f"**{variable}:** el valor promedio es "
-            f"**{media:,.2f}**."
-        )
-
-
-    # ======================================================
-    # 3. INTERPRETACIÓN DE LA MEDIANA
-    # ======================================================
-
-    st.markdown(
-        "### 3. Interpretación de la mediana"
-    )
-
-    medianas = df.describe().loc["50%"]
-
-    for variable, mediana in medianas.items():
-
-        st.write(
-            f"**{variable}:** el valor central de los datos "
-            f"es **{mediana:,.2f}**."
-        )
-
-
-    # ======================================================
-    # 4. COMPARACIÓN ENTRE MEDIA Y MEDIANA
-    # ======================================================
-
-    st.markdown(
-        "### 4. Comparación entre media y mediana"
-    )
-
-    st.write(
-        "La comparación entre la media y la mediana permite "
-        "identificar diferencias en la distribución de los datos. "
-        "Cuando ambas medidas presentan valores similares, la "
-        "distribución es relativamente equilibrada. Una diferencia "
-        "considerable puede indicar asimetría o la presencia de "
-        "valores extremos."
-    )
-
-    medias_medianas = pd.DataFrame({
-        "Variable": medias.index,
-        "Media": medias.values,
-        "Mediana": medianas.values
-    })
-
-    medias_medianas["Diferencia"] = (
-        medias_medianas["Media"]
-        - medias_medianas["Mediana"]
-    )
-
-    st.dataframe(
-        medias_medianas,
-        use_container_width=True,
-        hide_index=True
-    )
-
-
-    # ======================================================
-    # 5. INTERPRETACIÓN DE LA DISPERSIÓN
-    # ======================================================
-
-    st.markdown(
-        "### 5. Interpretación de la dispersión"
-    )
-
-    st.write(
-        "La desviación estándar permite evaluar qué tan "
-        "dispersos se encuentran los valores respecto a su media. "
-        "Una desviación estándar mayor indica una mayor variabilidad "
-        "de los datos."
-    )
-
-    desviacion = df.describe().loc["std"]
-
-    dispersion = pd.DataFrame({
-        "Variable": desviacion.index,
-        "Desviación estándar": desviacion.values
-    })
-
-    st.dataframe(
-        dispersion,
-        use_container_width=True,
-        hide_index=True
-    )
-
-
-    # ======================================================
-    # 6. GRÁFICO DE DISPERSIÓN
-    # ======================================================
-
-    st.markdown(
-        "### 6. Dispersión de las variables numéricas"
-    )
-
-    st.write(
-        "El siguiente gráfico muestra la desviación estándar "
-        "de cada variable numérica. Las variables con valores "
-        "más altos presentan una mayor dispersión."
-    )
-
-    st.bar_chart(
-        dispersion.set_index("Variable")
-    )
-
-
-    # ======================================================
-    # 7. INTERPRETACIÓN AUTOMÁTICA DE LA DISPERSIÓN
-    # ======================================================
-
-    st.markdown(
-        "### 7. Interpretación de los resultados"
-    )
-
-    # Variable con mayor desviación estándar
-    variable_mayor_dispersion = desviacion.idxmax()
-    mayor_dispersion = desviacion.max()
-
-    # Variable con menor desviación estándar
-    variable_menor_dispersion = desviacion.idxmin()
-    menor_dispersion = desviacion.min()
-
-    st.write(
-        f"**Mayor dispersión:** la variable **{variable_mayor_dispersion}** "
-        f"presenta la mayor desviación estándar, con un valor de "
-        f"**{mayor_dispersion:,.2f}**, por lo que es la variable que "
-        f"presenta mayor variabilidad en sus datos."
-    )
-
-    st.write(
-        f"**Menor dispersión:** la variable **{variable_menor_dispersion}** "
-        f"presenta la menor desviación estándar, con un valor de "
-        f"**{menor_dispersion:,.2f}**, indicando una menor variabilidad "
-        f"respecto a las demás variables numéricas."
-    )
-
-
-    # ======================================================
-    # 8. RESUMEN
-    # ======================================================
-
-    st.markdown(
-        "### 8. Resumen de las estadísticas"
-    )
-
-    resumen_estadistico = pd.DataFrame({
-        "Variable": df.describe().columns,
-        "Media": df.describe().loc["mean"].values,
-        "Mediana": df.describe().loc["50%"].values,
-        "Desviación estándar": df.describe().loc["std"].values
-    })
-
-    st.dataframe(
-        resumen_estadistico,
-        use_container_width=True,
-        hide_index=True
-    )
+st.write(
+    f"**Renewal:** la mediana es **{mediana_renewal:.0f}**, por lo que "
+    f"{interpretacion_renewal}"
+)
