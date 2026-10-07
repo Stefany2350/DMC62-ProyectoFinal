@@ -277,7 +277,7 @@ elif modulos == "Análisis Exploratorio de Datos":
 
     with tabs[0]:
 
-    st.write(
+        st.write(
         "En este análisis se revisa la estructura general "
         "del dataset, los tipos de datos de sus variables "
         "y la presencia de valores nulos."
