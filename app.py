@@ -266,8 +266,10 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================
 
         tabs = st.tabs([
-            " Item 1: Información general del dataset"
+            " Item 1: Información general del dataset",
+            " Item 2: Clasificación de variables"
         ])
+
 
 # ==========================================================
 # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
@@ -398,3 +400,145 @@ with tabs[0]:
             f"⚠️ El dataset contiene "
             f"{total_nulos:,} valores nulos."
         )
+
+
+# ==========================================================
+# ÍTEM 2: CLASIFICACIÓN DE VARIABLES
+# ==========================================================
+
+with tabs[1]:
+
+    st.write(
+        "En este análisis se identifican las variables "
+        "numéricas y categóricas del dataset mediante "
+        "una función personalizada."
+    )
+
+    # ======================================================
+    # FUNCIÓN PERSONALIZADA
+    # ======================================================
+
+    def clasificar_variables(df):
+
+        variables_numericas = []
+        variables_categoricas = []
+
+        for columna in df.columns:
+
+            if pd.api.types.is_numeric_dtype(df[columna]):
+
+                variables_numericas.append(columna)
+
+            else:
+
+                variables_categoricas.append(columna)
+
+        return variables_numericas, variables_categoricas
+
+
+    # ======================================================
+    # APLICAR FUNCIÓN PERSONALIZADA
+    # ======================================================
+
+    variables_numericas, variables_categoricas = (
+        clasificar_variables(df)
+    )
+
+
+    # ======================================================
+    # 1. CONTEO DE VARIABLES
+    # ======================================================
+
+    st.markdown(
+        "### 1. Conteo de variables"
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.metric(
+            "🔢 Variables numéricas",
+            len(variables_numericas)
+        )
+
+    with col2:
+
+        st.metric(
+            "🔤 Variables categóricas",
+            len(variables_categoricas)
+        )
+
+
+    # ======================================================
+    # 2. VARIABLES NUMÉRICAS
+    # ======================================================
+
+    st.markdown(
+        "### 2. Variables numéricas"
+    )
+
+    st.write(
+        "Listado de las variables identificadas como "
+        "numéricas según el tipo de dato."
+    )
+
+    tabla_numericas = pd.DataFrame({
+        "Variable": variables_numericas
+    })
+
+    st.dataframe(
+        tabla_numericas,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+    # ======================================================
+    # 3. VARIABLES CATEGÓRICAS
+    # ======================================================
+
+    st.markdown(
+        "### 3. Variables categóricas"
+    )
+
+    st.write(
+        "Listado de las variables identificadas como "
+        "categóricas según el tipo de dato."
+    )
+
+    tabla_categoricas = pd.DataFrame({
+        "Variable": variables_categoricas
+    })
+
+    st.dataframe(
+        tabla_categoricas,
+        use_container_width=True,
+        hide_index=True
+    )
+
+
+    # ======================================================
+    # 4. RESUMEN DEL CONTEO
+    # ======================================================
+
+    st.markdown(
+        "### 4. Resumen de la clasificación"
+    )
+
+    resumen_variables = pd.DataFrame({
+        "Tipo de variable": [
+            "Numéricas",
+            "Categóricas"
+        ],
+        "Cantidad": [
+            len(variables_numericas),
+            len(variables_categoricas)
+        ]
+    })
+
+    st.dataframe(
+        resumen_variables,
+        use_container_width=True,
+        hide_index=True
+    )
