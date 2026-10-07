@@ -3,398 +3,535 @@ import numpy as np
 import pandas as pd
 import io
 
-# ==========================================
+
+# ==========================================================
 # CONFIGURACIÓN DE LA PÁGINA
-# ==========================================
+# ==========================================================
 
 st.set_page_config(
     page_title="Análisis Exploratorio de Datos",
     layout="wide"
 )
 
-# ==========================================
-# INICIALIZAR SESSION STATE
-# ==========================================
+
+# ==========================================================
+# INICIALIZACIÓN DEL SESSION STATE
+# ==========================================================
 
 if "df" not in st.session_state:
     st.session_state.df = None
 
-# ==========================================
-# BARRA LATERAL
-# ==========================================
 
-st.sidebar.markdown("""
-    <div class="sidebar-custom-title">
-        <h2>🎛️ Panel de Navegación</h2>
-    </div>
-""", unsafe_allow_html=True)
+# ==========================================================
+# FUNCIÓN PERSONALIZADA
+# ÍTEM 2: CLASIFICACIÓN DE VARIABLES
+# ==========================================================
 
-modulos = st.sidebar.selectbox(
-    "Seleccione la sección a consultar",
+def clasificar_variables(df):
+    """
+    Clasifica las variables del DataFrame en:
+    - Numéricas
+    - Categóricas
+
+    La clasificación se realiza según el tipo
+    de dato de cada columna.
+    """
+
+    variables_numericas = []
+    variables_categoricas = []
+
+    for columna in df.columns:
+
+        if pd.api.types.is_numeric_dtype(df[columna]):
+            variables_numericas.append(columna)
+
+        else:
+            variables_categoricas.append(columna)
+
+    return variables_numericas, variables_categoricas
+
+
+# ==========================================================
+# SIDEBAR
+# ==========================================================
+
+st.sidebar.title("🎛️ Panel de Navegación")
+
+opcion = st.sidebar.radio(
+    "Seleccione una opción:",
     [
         "Home",
         "Carga del Dataset",
-        "Análisis Exploratorio de Datos",
+        "Análisis Exploratorio de Datos"
     ]
 )
 
-# ==========================================
-# MODULO 1: HOME
-# ==========================================
 
-if modulos == "Home":
+# ==========================================================
+# HOME
+# ==========================================================
 
-    st.sidebar.markdown("---")
+if opcion == "Home":
 
-    st.sidebar.image(
-        "image_home.png",
-        use_container_width=True
+    st.markdown(
+        """
+        <h1 style="
+            text-align: center;
+            background: linear-gradient(90deg, #1E293B, #334155, #38BDF8);
+            padding: 20px;
+            border-radius: 15px;
+            color: white;
+        ">
+            📊 Análisis Exploratorio de Datos
+        </h1>
+        """,
+        unsafe_allow_html=True
     )
 
-    st.markdown("""
-        <div class="custom-data-title">
-            <h1>Aplicación interactiva en Streamlit orientada al Análisis Exploratorio de Datos (EDA)</h1>
-        </div>
-    """, unsafe_allow_html=True)
+    st.write("")
 
-    st.markdown("---")
+    st.image("image_home.png", use_container_width=True)
 
-    st.markdown("""
-    ### 💡 Objeto de Análisis
-
-    El objetivo principal es analizar los factores que influyen en la renovación de una 
-    póliza de seguro, utilizando la variable renewal como variable objetivo. Este 
-    conjunto de datos permite aplicar análisis exploratorio, visualización de datos y 
-    modelos predictivos para identificar patrones de clientes que renuevan o no su 
-    seguro.
-    """)
-
-    st.markdown("""
-    ### 📝 Datos del Autor
-
-    * Nombre completo: Stefany Salazar Espinoza 
-    * Curso: Especialización en Python for Analytics  
-    * Año: 2026
-    """)
-
-    st.markdown("""
-    ### 👨‍🏫 Explicación del Dataset
-
-    Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
-    una compañía de seguros. Incluye variables demográficas, económicas, historial de 
-    pagos, comportamiento de morosidad, canal de captación, tipo de residencia, valor 
-    de la prima y puntaje de evaluación del cliente.
-
-    ### 🛠️ Tecnologías utilizadas
-    """)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        st.image("Python_logo.png", width=220)
-
-    with col2:
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        st.image("GitHub.png", width=220)
-
-    col3, col4 = st.columns(2)
-
-    with col3:
-        st.image("Numpy.png", width=220)
-
-    with col4:
-        st.markdown("<br><br>", unsafe_allow_html=True)
-        st.image("streamlit.jpg", width=220)
-
-
-# ==========================================
-# MODULO 2: CARGA DEL DATASET
-# ==========================================
-
-elif modulos == "Carga del Dataset":
-
-    st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
+    st.markdown("## 🐍 Python for Analytics")
 
     st.write(
-        "Carga el archivo para iniciar "
-        "el Análisis Exploratorio de Datos (EDA)."
+        """
+        Aplicación desarrollada en Python y Streamlit para realizar
+        un análisis exploratorio de un dataset de una compañía de seguros.
+        """
     )
 
-    # ==========================================
-    # CARGA DEL ARCHIVO
-    # ==========================================
+    st.write(
+        """
+        El análisis permitirá conocer la estructura de los datos,
+        clasificar las variables y posteriormente analizar su
+        comportamiento mediante diferentes técnicas estadísticas
+        y visualizaciones.
+        """
+    )
+
+    st.markdown("### 🛠️ Herramientas utilizadas")
+
+    col1, col2, col3, col4 = st.columns(4)
+
+    with col1:
+        st.image("Python_logo.png", width=100)
+        st.write("**Python**")
+
+    with col2:
+        st.image("Numpy.png", width=100)
+        st.write("**NumPy**")
+
+    with col3:
+        st.image("streamlit.jpg", width=100)
+        st.write("**Streamlit**")
+
+    with col4:
+        st.image("GitHub.png", width=100)
+        st.write("**GitHub**")
+
+
+# ==========================================================
+# CARGA DEL DATASET
+# ==========================================================
+
+elif opcion == "Carga del Dataset":
+
+    st.title("📂 Carga del Dataset")
+
+    st.write(
+        """
+        En esta sección se puede cargar el archivo CSV que será
+        utilizado posteriormente para realizar el análisis exploratorio.
+        """
+    )
 
     archivo = st.file_uploader(
-        "Selecciona el archivo CSV",
-        type=["csv"],
-        help="Carga el archivo"
+        "Seleccione el archivo CSV",
+        type=["csv"]
     )
-
-    # ==========================================
-    # VALIDACIÓN Y LECTURA DEL DATASET
-    # ==========================================
 
     if archivo is not None:
 
         try:
 
-            # Leer el archivo CSV
+            # Leer archivo CSV
             df = pd.read_csv(archivo)
 
-            # Validar que el dataset tenga información
+            # Validar si el dataset está vacío
             if df.empty:
 
-                st.warning(
-                    "⚠️ El archivo fue cargado, "
-                    "pero el dataset no contiene registros."
+                st.error(
+                    "❌ El archivo seleccionado no contiene datos."
                 )
-
-                # Limpiar session state
-                st.session_state.df = None
 
             else:
 
-                # Guardar dataset en session_state
+                # Guardar DataFrame en session_state
                 st.session_state.df = df
 
-                # Mensaje de carga exitosa
                 st.success(
-                    f"✅ El archivo **{archivo.name}** "
-                    "fue cargado correctamente."
+                    "✅ Dataset cargado correctamente."
                 )
 
-                # ==========================================
-                # DIMENSIONES DEL DATASET
-                # ==========================================
+                # ==================================================
+                # INFORMACIÓN GENERAL
+                # ==================================================
 
-                filas, columnas = df.shape
-
-                st.subheader("Dimensiones del Dataset")
+                st.markdown("### 📊 Información del dataset")
 
                 col1, col2 = st.columns(2)
 
                 with col1:
                     st.metric(
-                        "Filas",
-                        f"{filas:,}"
+                        "Número de filas",
+                        df.shape[0]
                     )
 
                 with col2:
                     st.metric(
-                        "Columnas",
-                        f"{columnas:,}"
+                        "Número de columnas",
+                        df.shape[1]
                     )
 
-                # ==========================================
-                # VISTA PREVIA DEL DATASET
-                # ==========================================
+                # ==================================================
+                # PRIMEROS REGISTROS
+                # ==================================================
 
-                st.subheader("Vista previa del Dataset")
-
-                st.write("Primeras 5 filas del dataset:")
+                st.markdown("### 👀 Primeros 5 registros")
 
                 st.dataframe(
                     df.head(),
-                    use_container_width=True
+                    use_container_width=True,
+                    hide_index=True
                 )
 
         except Exception as e:
 
             st.error(
-                f"❌ Ocurrió un error al cargar el archivo: {e}"
-            )
-
-    else:
-
-        # ==========================================
-        # SI YA EXISTE UN DATASET CARGADO
-        # ==========================================
-
-        if st.session_state.df is not None:
-
-            st.info(
-                "ℹ️ Ya existe un dataset cargado. "
-                "Puedes continuar con el análisis."
-            )
-
-        else:
-
-            st.info(
-                "ℹ️ Debes cargar el archivo "
-                "para continuar con el análisis."
+                f"❌ Se produjo un error al cargar el archivo: {e}"
             )
 
 
-# ==========================================
-# MODULO 3: ANÁLISIS EXPLORATORIO DE DATOS
-# ==========================================
+# ==========================================================
+# ANÁLISIS EXPLORATORIO DE DATOS
+# ==========================================================
 
-elif modulos == "Análisis Exploratorio de Datos":
+elif opcion == "Análisis Exploratorio de Datos":
 
-    # ==========================================
+    # ==========================================================
     # VERIFICAR SI EXISTE DATASET
-    # ==========================================
+    # ==========================================================
 
     if st.session_state.df is None:
 
         st.warning(
-            "⚠️ Primero debes cargar el dataset "
-            "en la sección 'Carga del Dataset'."
+            "⚠️ Primero debe cargar un dataset en la sección "
+            "'Carga del Dataset'."
         )
 
     else:
 
-        # Recuperar dataset
+        # Recuperar DataFrame
         df = st.session_state.df
 
-        # ==========================================
-        # TÍTULO DEL MÓDULO
-        # ==========================================
-
-        st.title(
-            "Análisis Exploratorio de Datos (EDA)"
-        )
+        st.title("📊 Análisis Exploratorio de Datos")
 
         st.write(
-            "En este módulo se desarrolla el análisis exploratorio "
-            "del dataset de la compañía de seguros."
+            """
+            En esta sección se realiza el análisis exploratorio
+            del dataset para conocer su estructura, características
+            y clasificación de variables.
+            """
         )
 
-        # ==========================================
-        # TABS DEL EDA
-        # ==========================================
+        # ======================================================
+        # TABS
+        # ======================================================
 
-        tabs = st.tabs([
-            " Item 1: Información general del dataset"
-        ])
-
-# ==========================================================
-# ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
-# ==========================================================
-
-with tabs[0]:
-
-    st.write(
-        "En este análisis se revisa la estructura general "
-        "del dataset, los tipos de datos de sus variables "
-        "y la presencia de valores nulos."
-    )
-
-    # ======================================================
-    # 1. INFORMACIÓN GENERAL
-    # ======================================================
-
-    st.markdown(
-        "### 1. Información general"
-    )
-
-    st.write(
-        "Se muestra la estructura del DataFrame, "
-        "incluyendo el número de registros, "
-        "las columnas, los valores no nulos, los tipos de "
-        "datos y el uso de memoria."
-    )
-
-    buffer = io.StringIO()
-
-    df.info(buf=buffer)
-
-    st.code(
-        buffer.getvalue(),
-        language="text"
-    )
-
-    # ======================================================
-    # 2. TIPOS DE DATOS
-    # ======================================================
-
-    st.markdown(
-        "### 2. Tipos de datos"
-    )
-
-    st.write(
-        "Se muestra la cantidad de columnas correspondiente "
-        "a cada tipo de dato presente en el dataset."
-    )
-
-    tipos_datos = (
-        df.dtypes
-        .astype(str)
-        .value_counts()
-        .reset_index()
-    )
-
-    tipos_datos.columns = [
-        "Tipo de dato",
-        "Cantidad de columnas"
-    ]
-
-    st.dataframe(
-        tipos_datos,
-        use_container_width=True,
-        hide_index=True
-    )
-
-    # ======================================================
-    # 3. CONTEO DE VALORES NULOS
-    # ======================================================
-
-    st.markdown(
-        "### 3. Conteo de valores nulos"
-    )
-
-    st.write(
-        "Se identifica la cantidad de valores nulos "
-        "existentes en cada columna del dataset."
-    )
-
-    nulos = (
-        df.isnull()
-        .sum()
-        .reset_index()
-    )
-
-    nulos.columns = [
-        "Columna",
-        "Valores nulos"
-    ]
-
-    # ------------------------------------------------------
-    # Tabla y gráfico
-    # ------------------------------------------------------
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        st.dataframe(
-            nulos,
-            use_container_width=True,
-            hide_index=True
+        tabs = st.tabs(
+            [
+                "Ítem 1: Información general del dataset",
+                "Ítem 2: Clasificación de variables"
+            ]
         )
 
-    with col2:
 
-        st.bar_chart(
-            nulos.set_index("Columna")
-        )
+        # ==========================================================
+        # ÍTEM 1: INFORMACIÓN GENERAL DEL DATASET
+        # ==========================================================
 
-    # ======================================================
-    # RESULTADO GENERAL DE VALORES NULOS
-    # ======================================================
+        with tabs[0]:
 
-    total_nulos = df.isnull().sum().sum()
+            st.write(
+                "En este análisis se revisa la estructura general "
+                "del dataset, los tipos de datos de sus variables "
+                "y la presencia de valores nulos."
+            )
 
-    if total_nulos == 0:
+            # ==================================================
+            # 1. INFORMACIÓN GENERAL
+            # ==================================================
 
-        st.success(
-            "✅ El dataset no contiene valores nulos."
-        )
+            st.markdown("### 1. Información general")
 
-    else:
+            st.write(
+                "Se muestra la estructura del DataFrame, incluyendo "
+                "el número de registros, las columnas, los valores "
+                "no nulos, los tipos de datos y el uso de memoria."
+            )
 
-        st.warning(
-            f"⚠️ El dataset contiene "
-            f"{total_nulos:,} valores nulos."
-        )
+            # Capturar la información generada por df.info()
+            buffer = io.StringIO()
+
+            df.info(buf=buffer)
+
+            # Mostrar información en Streamlit
+            st.code(
+                buffer.getvalue(),
+                language="text"
+            )
+
+
+            # ==================================================
+            # 2. TIPOS DE DATOS
+            # ==================================================
+
+            st.markdown("### 2. Tipos de datos")
+
+            st.write(
+                "Se presenta el conteo de columnas según el tipo "
+                "de dato que contienen."
+            )
+
+            tipos_datos = (
+                df.dtypes
+                .astype(str)
+                .value_counts()
+                .reset_index()
+            )
+
+            tipos_datos.columns = [
+                "Tipo de dato",
+                "Cantidad de columnas"
+            ]
+
+            st.dataframe(
+                tipos_datos,
+                use_container_width=True,
+                hide_index=True
+            )
+
+
+            # ==================================================
+            # 3. VALORES NULOS
+            # ==================================================
+
+            st.markdown("### 3. Valores nulos")
+
+            st.write(
+                "Se identifica la cantidad de valores nulos "
+                "existentes en cada columna."
+            )
+
+            nulos = (
+                df.isnull()
+                .sum()
+                .reset_index()
+            )
+
+            nulos.columns = [
+                "Columna",
+                "Valores nulos"
+            ]
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+
+                st.dataframe(
+                    nulos,
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+            with col2:
+
+                st.bar_chart(
+                    nulos.set_index("Columna")
+                )
+
+
+            # ==================================================
+            # RESUMEN DE VALORES NULOS
+            # ==================================================
+
+            total_nulos = df.isnull().sum().sum()
+
+            if total_nulos == 0:
+
+                st.success(
+                    "✅ El dataset no contiene valores nulos."
+                )
+
+            else:
+
+                st.warning(
+                    f"⚠️ El dataset contiene "
+                    f"{total_nulos:,} valores nulos."
+                )
+
+
+        # ==========================================================
+        # ÍTEM 2: CLASIFICACIÓN DE VARIABLES
+        # ==========================================================
+
+        with tabs[1]:
+
+            st.write(
+                "En este análisis se identifican y clasifican "
+                "las variables del dataset en numéricas y categóricas, "
+                "utilizando una función personalizada."
+            )
+
+
+            # ==================================================
+            # 1. CLASIFICACIÓN DE VARIABLES
+            # ==================================================
+
+            st.markdown("### 1. Identificación de variables")
+
+            st.write(
+                """
+                Las variables son clasificadas de acuerdo con
+                el tipo de dato almacenado en cada columna:
+
+                - **Numéricas:** variables cuyos valores son números.
+                - **Categóricas:** variables cuyos valores representan
+                  categorías o características.
+                """
+            )
+
+
+            # Ejecutar función personalizada
+            variables_numericas, variables_categoricas = (
+                clasificar_variables(df)
+            )
+
+
+            # ==================================================
+            # 2. CONTEO DE VARIABLES
+            # ==================================================
+
+            st.markdown("### 2. Conteo de variables")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+
+                st.metric(
+                    "🔢 Variables numéricas",
+                    len(variables_numericas)
+                )
+
+            with col2:
+
+                st.metric(
+                    "🔤 Variables categóricas",
+                    len(variables_categoricas)
+                )
+
+
+            # ==================================================
+            # 3. VARIABLES NUMÉRICAS
+            # ==================================================
+
+            st.markdown("### 3. Variables numéricas")
+
+            if len(variables_numericas) > 0:
+
+                tabla_numericas = pd.DataFrame(
+                    {
+                        "Variable numérica":
+                            variables_numericas
+                    }
+                )
+
+                st.dataframe(
+                    tabla_numericas,
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+            else:
+
+                st.info(
+                    "No se encontraron variables numéricas."
+                )
+
+
+            # ==================================================
+            # 4. VARIABLES CATEGÓRICAS
+            # ==================================================
+
+            st.markdown("### 4. Variables categóricas")
+
+            if len(variables_categoricas) > 0:
+
+                tabla_categoricas = pd.DataFrame(
+                    {
+                        "Variable categórica":
+                            variables_categoricas
+                    }
+                )
+
+                st.dataframe(
+                    tabla_categoricas,
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+            else:
+
+                st.info(
+                    "No se encontraron variables categóricas."
+                )
+
+
+            # ==================================================
+            # 5. RESUMEN
+            # ==================================================
+
+            st.markdown("### 5. Resumen de la clasificación")
+
+            resumen_variables = pd.DataFrame(
+                {
+                    "Tipo de variable": [
+                        "Numéricas",
+                        "Categóricas"
+                    ],
+                    "Cantidad": [
+                        len(variables_numericas),
+                        len(variables_categoricas)
+                    ]
+                }
+            )
+
+            st.dataframe(
+                resumen_variables,
+                use_container_width=True,
+                hide_index=True
+            )
+
+
+            # ==================================================
+            # 6. GRÁFICO DEL CONTEO
+            # ==================================================
+
+            st.markdown("### 6. Distribución de variables")
+
+            st.bar_chart(
+                resumen_variables.set_index(
+                    "Tipo de variable"
+                )
+            )
