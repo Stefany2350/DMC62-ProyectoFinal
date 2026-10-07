@@ -710,3 +710,114 @@ with tabs[2]:
         f"de la prima promedio de **{media_premium:,.2f}**."
     )
 
+# ==========================================================
+# ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
+# ==========================================================
+
+with tabs[3]:
+
+    st.write(
+        "En este análisis se identifican y contabilizan los valores "
+        "faltantes presentes en el dataset. Además, se presenta una "
+        "visualización simple para facilitar su identificación y se "
+        "realiza una breve discusión sobre su impacto en el análisis."
+    )
+
+    # ----------------------------------------------------------
+    # 1. CONTEO DE VALORES FALTANTES
+    # ----------------------------------------------------------
+
+    st.markdown("### 1. Conteo de valores faltantes")
+
+    valores_faltantes = df.isnull().sum()
+
+    tabla_faltantes = pd.DataFrame({
+        "Variable": valores_faltantes.index,
+        "Valores faltantes": valores_faltantes.values
+    })
+
+    st.dataframe(
+        tabla_faltantes,
+        use_container_width=True
+    )
+
+    total_faltantes = valores_faltantes.sum()
+
+    if total_faltantes == 0:
+        st.success(
+            "El dataset no presenta valores faltantes."
+        )
+    else:
+        st.warning(
+            f"Se identificaron **{total_faltantes:,} valores faltantes "
+            f"en el dataset."
+        )
+
+    # ----------------------------------------------------------
+    # 2. VISUALIZACIÓN SIMPLE
+    # ----------------------------------------------------------
+
+    st.markdown("### 2. Visualización de valores faltantes")
+
+    if total_faltantes > 0:
+
+        faltantes_grafico = tabla_faltantes[
+            tabla_faltantes["Valores faltantes"] > 0
+        ].copy()
+
+        st.write(
+            "El siguiente gráfico muestra la cantidad de valores "
+            "faltantes encontrados en las variables que presentan "
+            "datos ausentes."
+        )
+
+        st.bar_chart(
+            faltantes_grafico.set_index("Variable")
+        )
+
+    else:
+
+        st.info(
+            "No se genera una visualización de valores faltantes "
+            "debido a que todas las variables contienen datos completos."
+        )
+
+    # ----------------------------------------------------------
+    # 3. DISCUSIÓN BREVE
+    # ----------------------------------------------------------
+
+    st.markdown("### 3. Discusión breve")
+
+    if total_faltantes == 0:
+
+        st.write(
+            "El análisis muestra que el dataset no contiene valores "
+            "faltantes. Esto facilita el procesamiento y análisis "
+            "posterior de las variables, ya que no es necesario "
+            "aplicar técnicas de imputación ni eliminar registros "
+            "por ausencia de información."
+        )
+
+    else:
+
+        variables_con_faltantes = (
+            valores_faltantes[valores_faltantes > 0]
+            .sort_values(ascending=False)
+        )
+
+        cantidad_variables = len(variables_con_faltantes)
+
+        st.write(
+            f"El análisis muestra que existen valores faltantes en "
+            f"**{cantidad_variables} variable(s)**, con un total de "
+            f"**{total_faltantes:,} registros faltantes**. Estos "
+            f"valores deben ser considerados antes de realizar análisis "
+            f"posteriores, ya que su presencia puede afectar algunos "
+            f"cálculos estadísticos y modelos."
+        )
+
+        st.write(
+            "La decisión de mantener, eliminar o imputar estos valores "
+            "dependerá de la cantidad de datos faltantes y de la "
+            "importancia de cada variable para el análisis."
+        )
