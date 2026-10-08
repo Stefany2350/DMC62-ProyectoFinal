@@ -54,6 +54,4 @@ Para ejecutar la aplicación en Streamlit:
 ##  Links relevantes
 
 - **Aplicación en Streamlit Cloud:** https://stefanysalazar-proyectofinal.streamlit.app/
-- **Repositorio en GitHub:** [Agregar enlace al repositorio]
-
-
+- **Repositorio en GitHub:** https://github.com/Stefany2350/DMC62-ProyectoFinal
