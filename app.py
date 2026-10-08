@@ -186,6 +186,7 @@ modulos = st.sidebar.selectbox(
         "Home",
         "Carga del Dataset",
         "Análisis Exploratorio de Datos",
+        "Conclusiones Finales",
     ]
 )
 
@@ -2237,3 +2238,146 @@ elif modulos == "Análisis Exploratorio de Datos":
                 "representan asociaciones observadas en los datos y "
                 "no implican necesariamente una relación causal."
             )
+
+# ==========================================
+# MODULO 3: CONCLUSIONES FINALES
+# ==========================================
+
+elif modulos == "Conclusiones Finales":
+
+    st.sidebar.image(
+        "modulo3.jpg",
+        use_container_width=True
+    )
+
+    st.title("Conclusiones Finales")
+
+    st.write(
+        "A partir del análisis exploratorio realizado sobre el dataset de seguros, "
+        "se presentan las principales conclusiones orientadas a la interpretación "
+        "de la información y a la toma de decisiones."
+    )
+
+    st.markdown("---")
+
+    # ==========================================
+    # CONCLUSIÓN 1
+    # ==========================================
+
+    st.subheader("1. Características económicas de los clientes")
+
+    st.write(
+        "El análisis de variables como Income y premium permite identificar "
+        "diferencias en las características económicas de los clientes. "
+        "La comparación entre medidas como la media y la mediana evidencia "
+        "que la distribución de los ingresos puede presentar diferencias "
+        "entre los valores centrales y los valores extremos."
+    )
+
+    st.info(
+        "Implicancia para la toma de decisiones: "
+        "la compañía puede utilizar esta información para segmentar mejor "
+        "sus estrategias comerciales y evaluar si las características "
+        "económicas de los clientes deben considerarse al diseñar productos "
+        "o condiciones de renovación."
+    )
+
+    # ==========================================
+    # CONCLUSIÓN 2
+    # ==========================================
+
+    st.subheader("2. El comportamiento de pago es relevante para el análisis")
+
+    st.write(
+        "Las variables relacionadas con el historial de pagos y los periodos "
+        "de atraso permiten identificar diferentes comportamientos entre los "
+        "clientes. La presencia de registros con distintos niveles de atraso "
+        "muestra que el comportamiento histórico de pago constituye una "
+        "característica importante dentro del análisis de la cartera."
+    )
+
+    st.info(
+        "Implicancia para la toma de decisiones: "
+        "es recomendable fortalecer el seguimiento de los clientes según "
+        "su comportamiento de pago, priorizando acciones de comunicación "
+        "y gestión para aquellos segmentos que presenten mayores señales "
+        "de incumplimiento."
+    )
+
+    # ==========================================
+    # CONCLUSIÓN 3
+    # ==========================================
+
+    st.subheader("3. Existen diferencias entre los grupos según renewal")
+
+    st.write(
+        "El análisis bivariado permitió comparar variables numéricas entre "
+        "clientes con renewal igual a 0 y renewal igual a 1. Las diferencias "
+        "observadas en variables como Income y no_of_premiums_paid muestran "
+        "que los grupos presentan características distintas en términos "
+        "económicos y de comportamiento dentro de la cartera."
+    )
+
+    st.info(
+        "Implicancia para la toma de decisiones: "
+        "estas diferencias pueden ser utilizadas como insumo para diseñar "
+        "estrategias diferenciadas de atención, comunicación y fidelización "
+        "para los distintos grupos de clientes."
+    )
+
+    # ==========================================
+    # CONCLUSIÓN 4
+    # ==========================================
+
+    st.subheader("4. El canal de captación y el tipo de residencia muestran diferencias")
+
+    st.write(
+        "El análisis de variables categóricas permitió observar diferencias "
+        "en la distribución de renewal según el sourcing_channel y "
+        "residence_area_type. Esto indica que las características del canal "
+        "de captación y del tipo de residencia pueden estar asociadas con "
+        "distintos comportamientos dentro de la cartera analizada."
+    )
+
+    st.info(
+        "Implicancia para la toma de decisiones: "
+        "la compañía puede evaluar el desempeño de sus canales de captación "
+        "y adaptar sus estrategias de comunicación y fidelización considerando "
+        "las características de los diferentes segmentos."
+    )
+
+    # ==========================================
+    # CONCLUSIÓN 5
+    # ==========================================
+
+    st.subheader("5. La calidad de los datos debe considerarse en la gestión")
+
+    st.write(
+        "El análisis de valores faltantes evidenció que algunas variables "
+        "presentan registros incompletos, principalmente aquellas relacionadas "
+        "con el historial de atrasos y el application_underwriting_score. "
+        "Esto representa un aspecto importante al momento de interpretar los "
+        "resultados obtenidos."
+    )
+
+    st.info(
+        "Implicancia para la toma de decisiones: "
+        "se recomienda fortalecer los procesos de captura, validación y "
+        "mantenimiento de la información para mejorar la calidad de los datos "
+        "y facilitar análisis posteriores que sirvan como soporte para la "
+        "gestión de la cartera."
+    )
+
+    # ==========================================
+    # CIERRE
+    # ==========================================
+
+    st.markdown("---")
+
+    st.success(
+        "En conjunto, el análisis exploratorio permite identificar diferencias "
+        "económicas, de comportamiento de pago y de características de los "
+        "clientes. Estos resultados constituyen información de apoyo para "
+        "la toma de decisiones comerciales y de gestión de la cartera, "
+        "sin establecer relaciones de causalidad."
+    )
