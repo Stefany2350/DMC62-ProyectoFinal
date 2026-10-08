@@ -1602,23 +1602,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                     f"menor proporción, con **{porcentaje_canal_menor:.2f}%**."
                 )
         
-            # ----------------------------------------------------------
-            # 5. CONCLUSIÓN
-            # ----------------------------------------------------------
-        
-            st.markdown("### 5. Conclusión")
-        
-            st.write(
-                "El análisis categórico vs categórico permite identificar "
-                "diferencias en la proporción de renovación entre las "
-                "distintas categorías de residencia y los diferentes "
-                "canales de captación. Las proporciones facilitan la "
-                "comparación entre grupos de distinto tamaño y permiten "
-                "identificar categorías con una mayor o menor proporción "
-                "de renovación. Estas diferencias representan asociaciones "
-                "observadas en el dataset y no implican necesariamente "
-                "una relación causal."
-            )   
         # ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
