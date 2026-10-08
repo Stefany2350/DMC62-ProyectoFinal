@@ -1380,7 +1380,245 @@ elif modulos == "Análisis Exploratorio de Datos":
                 f"{interpretacion_primas}"
             )
         
-           
+        # ==========================================================
+        # ÍTEM 8: ANÁLISIS BIVARIADO (CATEGÓRICO VS CATEGÓRICO)
+        # ==========================================================
+        
+        with tabs[7]:
+        
+            st.markdown(
+                "### Ítem 8: Análisis bivariado (categórico vs categórico)"
+            )
+        
+            st.write(
+                "En este análisis se estudia la relación entre dos variables "
+                "categóricas. Se comparan las categorías de "
+                "**residence_area_type** y **sourcing_channel** según la "
+                "condición de **renewal**, con el objetivo de identificar "
+                "diferencias en la distribución de los clientes que renovaron "
+                "y los que no renovaron."
+            )
+        
+            # ----------------------------------------------------------
+            # 1. VARIABLES ANALIZADAS
+            # ----------------------------------------------------------
+        
+            st.markdown("### 1. Variables analizadas")
+        
+            variables_categoricas_bivariado = [
+                "residence_area_type",
+                "sourcing_channel"
+            ]
+        
+            variable_objetivo = "renewal"
+        
+            st.write(
+                "Se analizarán las siguientes variables categóricas "
+                "en relación con **renewal**:"
+            )
+        
+            st.write(
+                "- **residence_area_type**: tipo de área de residencia."
+            )
+        
+            st.write(
+                "- **sourcing_channel**: canal de captación o adquisición."
+            )
+        
+            # ----------------------------------------------------------
+            # 2. RESIDENCE_AREA_TYPE VS RENEWAL
+            # ----------------------------------------------------------
+        
+            st.markdown("### 2. residence_area_type vs renewal")
+        
+            st.write(
+                "Se analiza cómo se distribuye la renovación según el "
+                "tipo de área de residencia."
+            )
+        
+            # Conteos
+            tabla_residencia = pd.crosstab(
+                df["residence_area_type"],
+                df["renewal"]
+            )
+        
+            tabla_residencia.columns = [
+                "No renovó (0)",
+                "Renovó (1)"
+            ]
+        
+            st.markdown("#### Conteos")
+        
+            st.dataframe(
+                tabla_residencia,
+                use_container_width=True
+            )
+        
+            # Proporciones dentro de cada tipo de residencia
+            proporciones_residencia = pd.crosstab(
+                df["residence_area_type"],
+                df["renewal"],
+                normalize="index"
+            ) * 100
+        
+            proporciones_residencia.columns = [
+                "No renovó (0) %",
+                "Renovó (1) %"
+            ]
+        
+            proporciones_residencia = proporciones_residencia.round(2)
+        
+            st.markdown("#### Proporciones por tipo de residencia")
+        
+            st.dataframe(
+                proporciones_residencia,
+                use_container_width=True
+            )
+        
+            # Gráfico
+            st.markdown("#### Distribución de renewal según residencia")
+        
+            st.bar_chart(
+                proporciones_residencia
+            )
+        
+            # ----------------------------------------------------------
+            # 3. SOURCING_CHANNEL VS RENEWAL
+            # ----------------------------------------------------------
+        
+            st.markdown("### 3. sourcing_channel vs renewal")
+        
+            st.write(
+                "Se analiza cómo se distribuye la renovación según "
+                "el canal de captación del cliente."
+            )
+        
+            # Conteos
+            tabla_canal = pd.crosstab(
+                df["sourcing_channel"],
+                df["renewal"]
+            )
+        
+            tabla_canal.columns = [
+                "No renovó (0)",
+                "Renovó (1)"
+            ]
+        
+            st.markdown("#### Conteos")
+        
+            st.dataframe(
+                tabla_canal,
+                use_container_width=True
+            )
+        
+            # Proporciones dentro de cada canal
+            proporciones_canal = pd.crosstab(
+                df["sourcing_channel"],
+                df["renewal"],
+                normalize="index"
+            ) * 100
+        
+            proporciones_canal.columns = [
+                "No renovó (0) %",
+                "Renovó (1) %"
+            ]
+        
+            proporciones_canal = proporciones_canal.round(2)
+        
+            st.markdown("#### Proporciones por canal")
+        
+            st.dataframe(
+                proporciones_canal,
+                use_container_width=True
+            )
+        
+            # Gráfico
+            st.markdown("#### Distribución de renewal según canal")
+        
+            st.bar_chart(
+                proporciones_canal
+            )
+        
+            # ----------------------------------------------------------
+            # 4. INTERPRETACIÓN
+            # ----------------------------------------------------------
+        
+            st.markdown("### 4. Interpretación")
+        
+            # ----------------------------------------------------------
+            # residence_area_type
+            # ----------------------------------------------------------
+        
+            renovacion_residencia = (
+                df.groupby("residence_area_type")["renewal"]
+                .mean()
+                .mul(100)
+                .round(2)
+                .sort_values(ascending=False)
+            )
+        
+            if len(renovacion_residencia) > 0:
+        
+                residencia_mayor = renovacion_residencia.index[0]
+                porcentaje_mayor = renovacion_residencia.iloc[0]
+        
+                residencia_menor = renovacion_residencia.index[-1]
+                porcentaje_menor = renovacion_residencia.iloc[-1]
+        
+                st.write(
+                    f"**residence_area_type vs renewal:** el tipo de área "
+                    f"de residencia con mayor proporción de renovación es "
+                    f"**{residencia_mayor}**, con **{porcentaje_mayor:.2f}%** "
+                    f"de clientes que renovaron. En contraste, "
+                    f"**{residencia_menor}** presenta la menor proporción, "
+                    f"con **{porcentaje_menor:.2f}%**."
+                )
+        
+            # ----------------------------------------------------------
+            # sourcing_channel
+            # ----------------------------------------------------------
+        
+            renovacion_canal = (
+                df.groupby("sourcing_channel")["renewal"]
+                .mean()
+                .mul(100)
+                .round(2)
+                .sort_values(ascending=False)
+            )
+        
+            if len(renovacion_canal) > 0:
+        
+                canal_mayor = renovacion_canal.index[0]
+                porcentaje_canal_mayor = renovacion_canal.iloc[0]
+        
+                canal_menor = renovacion_canal.index[-1]
+                porcentaje_canal_menor = renovacion_canal.iloc[-1]
+        
+                st.write(
+                    f"**sourcing_channel vs renewal:** el canal con mayor "
+                    f"proporción de renovación es **{canal_mayor}**, con "
+                    f"**{porcentaje_canal_mayor:.2f}%** de clientes que "
+                    f"renovaron. El canal **{canal_menor}** presenta la "
+                    f"menor proporción, con **{porcentaje_canal_menor:.2f}%**."
+                )
+        
+            # ----------------------------------------------------------
+            # 5. CONCLUSIÓN
+            # ----------------------------------------------------------
+        
+            st.markdown("### 5. Conclusión")
+        
+            st.write(
+                "El análisis categórico vs categórico permite identificar "
+                "diferencias en la proporción de renovación entre las "
+                "distintas categorías de residencia y los diferentes "
+                "canales de captación. Las proporciones facilitan la "
+                "comparación entre grupos de distinto tamaño y permiten "
+                "identificar categorías con una mayor o menor proporción "
+                "de renovación. Estas diferencias representan asociaciones "
+                "observadas en el dataset y no implican necesariamente "
+                "una relación causal."
+            )   
         # ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
