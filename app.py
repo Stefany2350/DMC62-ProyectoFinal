@@ -996,8 +996,174 @@ elif modulos == "Análisis Exploratorio de Datos":
                     f"**{maximo:,.2f}**. El 50% central de las observaciones "
                     f"se concentra aproximadamente entre **{q1:,.2f}** y "
                     f"**{q3:,.2f}**."
-                )          
-               
+                )     
+
+        # ==========================================================
+        # ÍTEM 6: ANÁLISIS DE VARIABLES CATEGÓRICAS
+        # ==========================================================
+        
+        with tabs[5]:
+        
+            st.markdown("### Ítem 6: Análisis de variables categóricas")
+        
+            st.write(
+                "En este análisis se estudia la distribución de las variables "
+                "categóricas mediante conteos y proporciones. Los gráficos de "
+                "barras permiten identificar visualmente las categorías con "
+                "mayor y menor frecuencia."
+            )
+        
+            # ----------------------------------------------------------
+            # 1. IDENTIFICACIÓN DE VARIABLES CATEGÓRICAS
+            # ----------------------------------------------------------
+        
+            st.markdown("### 1. Variables categóricas")
+        
+            if len(variables_categoricas) == 0:
+        
+                st.info(
+                    "El dataset no contiene variables categóricas "
+                    "para realizar este análisis."
+                )
+        
+            else:
+        
+                st.write(
+                    f"Se identificaron **{len(variables_categoricas)} "
+                    f"variables categóricas** en el dataset."
+                )
+        
+                st.dataframe(
+                    pd.DataFrame({
+                        "Variables categóricas": variables_categoricas
+                    }),
+                    use_container_width=True,
+                    hide_index=True
+                )
+        
+                # ------------------------------------------------------
+                # 2. CONTEOS
+                # ------------------------------------------------------
+        
+                st.markdown("### 2. Conteos por categoría")
+        
+                st.write(
+                    "El conteo permite conocer cuántas observaciones "
+                    "pertenecen a cada categoría de las variables seleccionadas."
+                )
+        
+                for variable in variables_categoricas:
+        
+                    st.markdown(f"#### {variable}")
+        
+                    conteos = (
+                        df[variable]
+                        .value_counts(dropna=False)
+                        .reset_index()
+                    )
+        
+                    conteos.columns = [
+                        "Categoría",
+                        "Cantidad"
+                    ]
+        
+                    st.dataframe(
+                        conteos,
+                        use_container_width=True,
+                        hide_index=True
+                    )
+        
+                # ------------------------------------------------------
+                # 3. GRÁFICOS DE BARRAS
+                # ------------------------------------------------------
+        
+                st.markdown("### 3. Gráficos de barras")
+        
+                st.write(
+                    "Los gráficos de barras permiten comparar visualmente "
+                    "la frecuencia de las diferentes categorías."
+                )
+        
+                for variable in variables_categoricas:
+        
+                    st.markdown(f"#### Distribución de {variable}")
+        
+                    conteos_grafico = (
+                        df[variable]
+                        .value_counts(dropna=False)
+                    )
+        
+                    st.bar_chart(
+                        conteos_grafico
+                    )
+        
+                # ------------------------------------------------------
+                # 4. PROPORCIONES
+                # ------------------------------------------------------
+        
+                st.markdown("### 4. Proporciones")
+        
+                st.write(
+                    "Las proporciones muestran qué porcentaje del total "
+                    "de observaciones corresponde a cada categoría."
+                )
+        
+                for variable in variables_categoricas:
+        
+                    st.markdown(f"#### Proporciones de {variable}")
+        
+                    proporciones = (
+                        df[variable]
+                        .value_counts(normalize=True, dropna=False)
+                        .mul(100)
+                        .round(2)
+                        .reset_index()
+                    )
+        
+                    proporciones.columns = [
+                        "Categoría",
+                        "Proporción (%)"
+                    ]
+        
+                    st.dataframe(
+                        proporciones,
+                        use_container_width=True,
+                        hide_index=True
+                    )
+        
+                # ------------------------------------------------------
+                # 5. INTERPRETACIÓN
+                # ------------------------------------------------------
+        
+                st.markdown("### 5. Interpretación")
+        
+                st.write(
+                    "El análisis de las variables categóricas permite "
+                    "identificar qué categorías tienen mayor representación "
+                    "dentro del dataset. Los conteos muestran la cantidad "
+                    "de observaciones por categoría, mientras que las "
+                    "proporciones permiten comparar su participación "
+                    "relativa respecto al total."
+                )
+        
+                for variable in variables_categoricas:
+        
+                    conteos = df[variable].value_counts(dropna=False)
+        
+                    categoria_mayor = conteos.index[0]
+                    cantidad_mayor = conteos.iloc[0]
+        
+                    proporcion_mayor = (
+                        cantidad_mayor / len(df)
+                    ) * 100
+        
+                    st.write(
+                        f"**{variable}:** la categoría con mayor frecuencia "
+                        f"es **{categoria_mayor}**, con **{cantidad_mayor:,} "
+                        f"observaciones**, equivalente al **"
+                        f"{proporcion_mayor:.2f}%** del total."
+                    )
+                       
 
         # ==========================================================
         # ÍTEMS 6 AL 10
