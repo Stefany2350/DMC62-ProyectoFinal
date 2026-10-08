@@ -1603,6 +1603,191 @@ elif modulos == "Análisis Exploratorio de Datos":
                 )
         
         # ==========================================================
+# ÍTEM 9: ANÁLISIS BASADO EN PARÁMETROS SELECCIONADOS
+# ==========================================================
+
+with tabs[8]:
+
+    st.markdown(
+        "### Ítem 9: Análisis basado en parámetros seleccionados"
+    )
+
+    st.write(
+        "En este apartado el usuario puede seleccionar las variables "
+        "que desea analizar mediante controles interactivos. "
+        "El análisis se actualiza dinámicamente de acuerdo con "
+        "las columnas seleccionadas."
+    )
+
+    # ----------------------------------------------------------
+    # 1. SELECCIÓN DE VARIABLES
+    # ----------------------------------------------------------
+
+    st.markdown("### 1. Selección de parámetros")
+
+    # Variables categóricas disponibles
+    variables_categoricas_parametros = [
+        columna
+        for columna in df.columns
+        if not pd.api.types.is_numeric_dtype(df[columna])
+    ]
+
+    # Variables numéricas disponibles
+    variables_numericas_parametros = [
+        columna
+        for columna in df.columns
+        if pd.api.types.is_numeric_dtype(df[columna])
+    ]
+
+    # Selectbox para variable categórica
+    variable_categorica_seleccionada = st.selectbox(
+        "Seleccione una variable categórica:",
+        variables_categoricas_parametros
+    )
+
+    # Multiselect para variables numéricas
+    variables_numericas_seleccionadas = st.multiselect(
+        "Seleccione una o más variables numéricas:",
+        variables_numericas_parametros,
+        default=variables_numericas_parametros[:2]
+    )
+
+    # Selectbox para tipo de análisis
+    tipo_analisis = st.selectbox(
+        "Seleccione el tipo de análisis:",
+        [
+            "Promedio por categoría",
+            "Mediana por categoría",
+            "Mínimo por categoría",
+            "Máximo por categoría"
+        ]
+    )
+
+    # ----------------------------------------------------------
+    # 2. VALIDACIÓN
+    # ----------------------------------------------------------
+
+    if len(variables_numericas_seleccionadas) == 0:
+
+        st.warning(
+            "Seleccione al menos una variable numérica "
+            "para realizar el análisis."
+        )
+
+    else:
+
+        # ------------------------------------------------------
+        # 3. ANÁLISIS DINÁMICO
+        # ------------------------------------------------------
+
+        st.markdown("### 2. Resultado del análisis")
+
+        st.write(
+            f"Variable categórica seleccionada: "
+            f"**{variable_categorica_seleccionada}**"
+        )
+
+        st.write(
+            "Variables numéricas seleccionadas: "
+            + ", ".join(
+                f"**{variable}**"
+                for variable in variables_numericas_seleccionadas
+            )
+        )
+
+        # Determinar la función estadística
+        if tipo_analisis == "Promedio por categoría":
+            funcion_agrupacion = "mean"
+
+        elif tipo_analisis == "Mediana por categoría":
+            funcion_agrupacion = "median"
+
+        elif tipo_analisis == "Mínimo por categoría":
+            funcion_agrupacion = "min"
+
+        else:
+            funcion_agrupacion = "max"
+
+        # ------------------------------------------------------
+        # 4. TABLA DINÁMICA
+        # ------------------------------------------------------
+
+        columnas_analisis = [
+            variable_categorica_seleccionada
+        ] + variables_numericas_seleccionadas
+
+        datos_analisis = df[columnas_analisis].copy()
+
+        resultado = (
+            datos_analisis
+            .groupby(variable_categorica_seleccionada)
+            [variables_numericas_seleccionadas]
+            .agg(funcion_agrupacion)
+            .round(2)
+        )
+
+        st.dataframe(
+            resultado,
+            use_container_width=True
+        )
+
+        # ------------------------------------------------------
+        # 5. GRÁFICOS
+        # ------------------------------------------------------
+
+        st.markdown("### 3. Visualización")
+
+        for variable in variables_numericas_seleccionadas:
+
+            datos_grafico = (
+                df.groupby(variable_categorica_seleccionada)[variable]
+                .agg(funcion_agrupacion)
+                .round(2)
+            )
+
+            st.markdown(
+                f"#### {variable} según "
+                f"{variable_categorica_seleccionada}"
+            )
+
+            st.bar_chart(
+                datos_grafico
+            )
+
+        # ------------------------------------------------------
+        # 6. INTERPRETACIÓN DINÁMICA
+        # ------------------------------------------------------
+
+        st.markdown("### 4. Interpretación")
+
+        for variable in variables_numericas_seleccionadas:
+
+            datos_interpretacion = (
+                df.groupby(variable_categorica_seleccionada)[variable]
+                .agg(funcion_agrupacion)
+                .dropna()
+                .sort_values(ascending=False)
+            )
+
+            if len(datos_interpretacion) > 0:
+
+                categoria_mayor = datos_interpretacion.index[0]
+                valor_mayor = datos_interpretacion.iloc[0]
+
+                categoria_menor = datos_interpretacion.index[-1]
+                valor_menor = datos_interpretacion.iloc[-1]
+
+                st.write(
+                    f"**{variable}:** según el análisis seleccionado "
+                    f"(**{tipo_analisis.lower()}**), la categoría "
+                    f"**{categoria_mayor}** presenta el valor más alto "
+                    f"con **{valor_mayor:,.2f}**, mientras que "
+                    f"**{categoria_menor}** presenta el valor más bajo "
+                    f"con **{valor_menor:,.2f}**."
+                )
+
+
+# ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
         # Aquí puedes colocar posteriormente el código correspondiente
