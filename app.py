@@ -549,11 +549,11 @@ elif modulos == "Análisis Exploratorio de Datos":
                 ]
             })
 
-# ==========================================================
-# ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
-# ==========================================================
+        # ==========================================================
+        # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
+        # ==========================================================
 
-    with tabs[2]:
+        with tabs[2]:
 
         st.write(
         "En este análisis se obtienen las estadísticas descriptivas "
@@ -715,11 +715,11 @@ elif modulos == "Análisis Exploratorio de Datos":
         f"de la prima promedio de **{media_premium:,.2f}**."
     )
 
-# ==========================================================
-# ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
-# ==========================================================
+        # ==========================================================
+        # ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
+        # ==========================================================
 
-    with tabs[3]:
+        with tabs[3]:
 
         st.write(
         "En este análisis se identifican y contabilizan los valores "
@@ -827,11 +827,11 @@ elif modulos == "Análisis Exploratorio de Datos":
             "importancia de cada variable para el análisis."
         )
 
-# ==========================================================
-# ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
-# ==========================================================
+        # ==========================================================
+        # ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
+        # ==========================================================
 
-    with tabs[4]:
+        with tabs[4]:
 
         st.write(
         "En este análisis se observa la distribución de las variables "
