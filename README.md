@@ -1,4 +1,3 @@
-# DMC62-Proyecto02
 # 🐍 Especialización Python for Analytics
 
 Proyecto final desarrollado como parte de la **Especialización en Python for Analytics**, orientado a la aplicación práctica de conceptos de programación en Python mediante una aplicación web interactiva desarrollada con **Streamlit**.
