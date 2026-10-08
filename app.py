@@ -2183,27 +2183,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                 "los grupos de renovación."
             )
 
-            # ----------------------------------------------------------
-            # 3. CONCLUSIÓN GENERAL
-            # ----------------------------------------------------------
-
-            st.markdown(
-                "### 3. Conclusión general"
-            )
-
-            st.write(
-                "El análisis exploratorio permitió conocer la estructura "
-                "del dataset, identificar los tipos de variables, revisar "
-                "la calidad de los datos y analizar la distribución y "
-                "relación entre diferentes variables. Los resultados "
-                "muestran que variables como **Income**, "
-                "**no_of_premiums_paid**, **residence_area_type** y "
-                "**sourcing_channel** presentan diferencias según el "
-                "comportamiento de renovación. Estas diferencias "
-                "representan asociaciones observadas en los datos y "
-                "no implican necesariamente una relación causal."
-            )
-
 # ==========================================
 # MODULO 3: CONCLUSIONES FINALES
 # ==========================================
