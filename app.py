@@ -217,9 +217,8 @@ if modulos == "Home":
 
     El objetivo principal es analizar los factores que influyen en la renovación de una 
     póliza de seguro, utilizando la variable renewal como variable objetivo. Este 
-    conjunto de datos permite aplicar análisis exploratorio, visualización de datos y 
-    modelos predictivos para identificar patrones de clientes que renuevan o no su 
-    seguro.
+    conjunto de datos permite aplicar análisis exploratorio y visualización de datos para identificar 
+    patrones de clientes que renuevan o no su seguro.
     """)
 
     st.markdown("""
@@ -233,7 +232,7 @@ if modulos == "Home":
     st.markdown("""
     ### 👨‍🏫 Explicación del Dataset
 
-    Este dataset InsuranceCompany.csv contiene información histórica de clientes de 
+    El dataset escogido, InsuranceCompany.csv, contiene información histórica de clientes de 
     una compañía de seguros. Incluye variables demográficas, económicas, historial de 
     pagos, comportamiento de morosidad, canal de captación, tipo de residencia, valor 
     de la prima y puntaje de evaluación del cliente.
@@ -259,6 +258,15 @@ if modulos == "Home":
     with col4:
         st.markdown("<br><br>", unsafe_allow_html=True)
         st.image("streamlit.jpg", width=220)
+
+    col5, col6 = st.columns(2)
+
+    with col5:
+        st.image("Pandas_python.png", width=220)
+
+    with col6:
+        st.markdown("<br><br>", unsafe_allow_html=True)
+        st.image("matplot_logo.png", width=220)
 
 
 # ==========================================
