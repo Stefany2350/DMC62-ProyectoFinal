@@ -268,7 +268,6 @@ if modulos == "Home":
         st.markdown("<br><br>", unsafe_allow_html=True)
         st.image("matplot_logo.png", width=220)
 
-
 # ==========================================
 # MODULO 2: CARGA DEL DATASET
 # ==========================================
@@ -278,7 +277,7 @@ elif modulos == "Carga del Dataset":
     st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
 
     st.write(
-        "Carga el archivo para iniciar "
+        "Carga el archivo InsuranceCompany.csv para iniciar "
         "el Análisis Exploratorio de Datos (EDA)."
     )
 
