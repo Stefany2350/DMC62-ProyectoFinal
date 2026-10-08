@@ -1376,10 +1376,6 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         with tabs[6]:
 
-            st.markdown(
-                "### Ítem 7: Análisis bivariado (numérico vs categórico)"
-            )
-
             st.write(
                 "En este análisis se estudia la relación entre variables "
                 "numéricas y la variable categórica **renewal**. "
@@ -1568,10 +1564,6 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================================
 
         with tabs[7]:
-
-            st.markdown(
-                "### Ítem 8: Análisis bivariado (categórico vs categórico)"
-            )
 
             st.write(
                 "En este análisis se estudia la relación entre dos variables "
@@ -1791,10 +1783,6 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================================
 
         with tabs[8]:
-
-            st.markdown(
-                "### Ítem 9: Análisis basado en parámetros seleccionados"
-            )
 
             st.write(
                 "En este apartado el usuario puede seleccionar las variables "
@@ -2037,10 +2025,6 @@ elif modulos == "Análisis Exploratorio de Datos":
         # ==========================================================
 
         with tabs[9]:
-
-            st.markdown(
-                "### Ítem 10: Hallazgos clave"
-            )
 
             st.write(
                 "En este apartado se resumen los principales hallazgos "
