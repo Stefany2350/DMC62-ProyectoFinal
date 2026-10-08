@@ -1155,7 +1155,251 @@ elif modulos == "Análisis Exploratorio de Datos":
                         f"{proporcion_mayor:.2f}%** del total."
                     )
                        
-
+        # ==========================================================
+        # ÍTEM 7: ANÁLISIS BIVARIADO (NUMÉRICO VS CATEGÓRICO)
+        # ==========================================================
+        
+        with tabs[6]:
+        
+            st.markdown(
+                "### Ítem 7: Análisis bivariado (numérico vs categórico)"
+            )
+        
+            st.write(
+                "En este análisis se estudia la relación entre variables "
+                "numéricas y una variable categórica. Para ello, se comparan "
+                "los valores de las variables numéricas según las categorías "
+                "de **renewal**, con el objetivo de identificar diferencias "
+                "en sus niveles y comportamiento."
+            )
+        
+            # ----------------------------------------------------------
+            # 1. VARIABLES SELECCIONADAS
+            # ----------------------------------------------------------
+        
+            st.markdown("### 1. Variables analizadas")
+        
+            variables_numericas_bivariado = [
+                "Income",
+                "agent_effort_hours"
+            ]
+        
+            variable_categorica = "renewal"
+        
+            st.write(
+                "Se analizarán las variables numéricas **Income** y "
+                "**agent_effort_hours** en función de la variable "
+                "categórica **renewal**."
+            )
+        
+            # ----------------------------------------------------------
+            # 2. INCOME VS RENEWAL
+            # ----------------------------------------------------------
+        
+            st.markdown("### 2. Income vs renewal")
+        
+            resumen_income = (
+                df.groupby("renewal", as_index=False)["Income"]
+                .agg(
+                    Media="mean",
+                    Mediana="median",
+                    Mínimo="min",
+                    Máximo="max"
+                )
+                .round(2)
+            )
+        
+            st.write(
+                "La siguiente tabla permite comparar los principales "
+                "estadísticos de **Income** entre los clientes que "
+                "renovaron y los que no renovaron."
+            )
+        
+            st.dataframe(
+                resumen_income,
+                use_container_width=True,
+                hide_index=True
+            )
+        
+            # Gráfico de barras
+            promedio_income = (
+                df.groupby("renewal")["Income"]
+                .mean()
+                .round(2)
+                .reset_index()
+            )
+        
+            promedio_income.columns = [
+                "renewal",
+                "Ingreso promedio"
+            ]
+        
+            st.markdown("#### Ingreso promedio según renewal")
+        
+            st.bar_chart(
+                promedio_income.set_index("renewal")
+            )
+        
+            # ----------------------------------------------------------
+            # 3. AGENT_EFFORT_HOURS VS RENEWAL
+            # ----------------------------------------------------------
+        
+            st.markdown("### 3. agent_effort_hours vs renewal")
+        
+            resumen_esfuerzo = (
+                df.groupby("renewal", as_index=False)["agent_effort_hours"]
+                .agg(
+                    Media="mean",
+                    Mediana="median",
+                    Mínimo="min",
+                    Máximo="max"
+                )
+                .round(2)
+            )
+        
+            st.write(
+                "La siguiente tabla permite comparar el esfuerzo promedio "
+                "de los agentes entre los clientes que renovaron y los "
+                "que no renovaron."
+            )
+        
+            st.dataframe(
+                resumen_esfuerzo,
+                use_container_width=True,
+                hide_index=True
+            )
+        
+            # Gráfico de barras
+            promedio_esfuerzo = (
+                df.groupby("renewal")["agent_effort_hours"]
+                .mean()
+                .round(2)
+                .reset_index()
+            )
+        
+            promedio_esfuerzo.columns = [
+                "renewal",
+                "Horas promedio"
+            ]
+        
+            st.markdown("#### Horas de esfuerzo promedio según renewal")
+        
+            st.bar_chart(
+                promedio_esfuerzo.set_index("renewal")
+            )
+        
+            # ----------------------------------------------------------
+            # 4. INTERPRETACIÓN
+            # ----------------------------------------------------------
+        
+            st.markdown("### 4. Interpretación")
+        
+            # ---- Income ----
+        
+            income_0 = df.loc[
+                df["renewal"] == 0,
+                "Income"
+            ].mean()
+        
+            income_1 = df.loc[
+                df["renewal"] == 1,
+                "Income"
+            ].mean()
+        
+            diferencia_income = income_1 - income_0
+        
+            if diferencia_income > 0:
+        
+                interpretacion_income = (
+                    f"Los clientes con **renewal = 1** presentan un "
+                    f"ingreso promedio mayor que aquellos con **renewal = 0**. "
+                    f"El ingreso promedio es de **{income_1:,.2f}** para "
+                    f"los clientes que renovaron, frente a **{income_0:,.2f}** "
+                    f"para quienes no renovaron."
+                )
+        
+            elif diferencia_income < 0:
+        
+                interpretacion_income = (
+                    f"Los clientes con **renewal = 1** presentan un "
+                    f"ingreso promedio menor que aquellos con **renewal = 0**. "
+                    f"El ingreso promedio es de **{income_1:,.2f}** para "
+                    f"los clientes que renovaron, frente a **{income_0:,.2f}** "
+                    f"para quienes no renovaron."
+                )
+        
+            else:
+        
+                interpretacion_income = (
+                    "El ingreso promedio es prácticamente igual entre "
+                    "ambas categorías de renewal."
+                )
+        
+            st.write(
+                f"**Income vs renewal:** {interpretacion_income}"
+            )
+        
+            # ---- agent_effort_hours ----
+        
+            esfuerzo_0 = df.loc[
+                df["renewal"] == 0,
+                "agent_effort_hours"
+            ].mean()
+        
+            esfuerzo_1 = df.loc[
+                df["renewal"] == 1,
+                "agent_effort_hours"
+            ].mean()
+        
+            diferencia_esfuerzo = esfuerzo_1 - esfuerzo_0
+        
+            if diferencia_esfuerzo > 0:
+        
+                interpretacion_esfuerzo = (
+                    f"Los clientes con **renewal = 1** presentan un "
+                    f"mayor nivel promedio de esfuerzo por parte del agente. "
+                    f"El promedio es de **{esfuerzo_1:,.2f} horas**, frente a "
+                    f"**{esfuerzo_0:,.2f} horas** para los clientes con "
+                    f"**renewal = 0**."
+                )
+        
+            elif diferencia_esfuerzo < 0:
+        
+                interpretacion_esfuerzo = (
+                    f"Los clientes con **renewal = 1** presentan un "
+                    f"menor nivel promedio de esfuerzo por parte del agente. "
+                    f"El promedio es de **{esfuerzo_1:,.2f} horas**, frente a "
+                    f"**{esfuerzo_0:,.2f} horas** para los clientes con "
+                    f"**renewal = 0**."
+                )
+        
+            else:
+        
+                interpretacion_esfuerzo = (
+                    "El esfuerzo promedio de los agentes es prácticamente "
+                    "igual entre ambas categorías de renewal."
+                )
+        
+            st.write(
+                f"**agent_effort_hours vs renewal:** "
+                f"{interpretacion_esfuerzo}"
+            )
+        
+            # ----------------------------------------------------------
+            # 5. CONCLUSIÓN DEL ANÁLISIS
+            # ----------------------------------------------------------
+        
+            st.markdown("### 5. Conclusión")
+        
+            st.write(
+                "El análisis bivariado permite identificar diferencias en "
+                "las variables numéricas según la condición de renovación. "
+                "Las comparaciones de promedios permiten observar patrones "
+                "entre los clientes que renovaron y los que no renovaron; "
+                "sin embargo, estas diferencias describen asociaciones "
+                "entre las variables y no implican necesariamente una "
+                "relación causal."
+            )
         # ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
