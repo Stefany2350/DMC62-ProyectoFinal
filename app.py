@@ -979,32 +979,32 @@ elif modulos == "Análisis Exploratorio de Datos":
                     "lo que sugiere una distribución relativamente equilibrada."
                     )
 
-               st.write(
-                f"**{variable}:** {forma_distribucion}"
-                )
+                   st.write(
+                    f"**{variable}:** {forma_distribucion}"
+                    )
 
-                st.write(
-                f"Los valores se encuentran entre **{minimo:,.2f}** y "
-                f"**{maximo:,.2f}**. El 50% central de las observaciones "
-                f"se concentra aproximadamente entre **{q1:,.2f}** y "
-                f"**{q3:,.2f}**."
-                )
-            
-                st.write(
-                    f"La variable presenta una desviación estándar de "
-                    f"**{desviacion:,.2f}**, lo que indica una dispersión "
-                    f"considerable de los datos alrededor de la media de "
-                    f"**{media:,.2f}**."
-                )
-            
-                st.write(
-                    f"Visualmente, el histograma permite identificar si existen "
-                    f"observaciones alejadas de la concentración principal de "
-                    f"los datos, las cuales podrían corresponder a posibles "
-                    f"valores extremos. Estos casos deben verificarse "
-                    f"directamente en la distribución antes de considerarlos "
-                    f"como valores atípicos."
-                )
+                    st.write(
+                    f"Los valores se encuentran entre **{minimo:,.2f}** y "
+                    f"**{maximo:,.2f}**. El 50% central de las observaciones "
+                    f"se concentra aproximadamente entre **{q1:,.2f}** y "
+                    f"**{q3:,.2f}**."
+                    )
+                
+                    st.write(
+                        f"La variable presenta una desviación estándar de "
+                        f"**{desviacion:,.2f}**, lo que indica una dispersión "
+                        f"considerable de los datos alrededor de la media de "
+                        f"**{media:,.2f}**."
+                    )
+                
+                    st.write(
+                        f"Visualmente, el histograma permite identificar si existen "
+                        f"observaciones alejadas de la concentración principal de "
+                        f"los datos, las cuales podrían corresponder a posibles "
+                        f"valores extremos. Estos casos deben verificarse "
+                        f"directamente en la distribución antes de considerarlos "
+                        f"como valores atípicos."
+                    )
 
         # ==========================================================
         # ÍTEMS 6 AL 10
