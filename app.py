@@ -931,80 +931,88 @@ elif modulos == "Análisis Exploratorio de Datos":
             # ----------------------------------------------------------
             # 3. INTERPRETACIÓN VISUAL
             # ----------------------------------------------------------
-
+            
             st.markdown("### 3. Interpretación visual")
-
+            
             st.write(
                 "La interpretación de los histogramas permite identificar "
                 "la forma de la distribución, los rangos donde se concentra "
                 "la mayor cantidad de observaciones, el nivel de dispersión "
                 "y la posible presencia de valores extremos."
             )
-
-            # Interpretación automática básica de las variables seleccionadas
+            
+            # Interpretación automática de las variables seleccionadas
             for variable in variables_histograma:
-
+            
                 serie = df[variable].dropna()
-
+            
                 media = serie.mean()
                 mediana = serie.median()
                 desviacion = serie.std()
                 minimo = serie.min()
                 maximo = serie.max()
-
-            # Rango intercuartílico
+            
+                # Rango intercuartílico
                 q1 = serie.quantile(0.25)
                 q3 = serie.quantile(0.75)
-
+            
+                # ------------------------------------------------------
+                # Forma de la distribución
+                # ------------------------------------------------------
+            
                 if media > mediana:
-
+            
                     forma_distribucion = (
-                    "La media es mayor que la mediana, lo que sugiere "
-                    "una distribución con cierta concentración de valores "
-                    "hacia niveles más altos."
+                        "La media es mayor que la mediana, lo que sugiere "
+                        "una distribución con cierta asimetría hacia valores "
+                        "altos."
                     )
-
+            
                 elif media < mediana:
-
-                     forma_distribucion = (
-                    "La media es menor que la mediana, lo que sugiere "
-                    "una distribución con cierta concentración de valores "
-                    "hacia niveles más bajos."
-                    )
-
-                else:
-
+            
                     forma_distribucion = (
-                    "La media y la mediana presentan valores similares, "
-                    "lo que sugiere una distribución relativamente equilibrada."
+                        "La media es menor que la mediana, lo que sugiere "
+                        "una distribución con cierta asimetría hacia valores "
+                        "bajos."
                     )
-
-                   st.write(
+            
+                else:
+            
+                    forma_distribucion = (
+                        "La media y la mediana presentan valores similares, "
+                        "lo que sugiere una distribución relativamente equilibrada."
+                    )
+            
+                # ------------------------------------------------------
+                # Interpretación de resultados
+                # ------------------------------------------------------
+            
+                st.write(
                     f"**{variable}:** {forma_distribucion}"
-                    )
-
-                    st.write(
+                )
+            
+                st.write(
                     f"Los valores se encuentran entre **{minimo:,.2f}** y "
                     f"**{maximo:,.2f}**. El 50% central de las observaciones "
                     f"se concentra aproximadamente entre **{q1:,.2f}** y "
                     f"**{q3:,.2f}**."
-                    )
-                
-                    st.write(
-                        f"La variable presenta una desviación estándar de "
-                        f"**{desviacion:,.2f}**, lo que indica una dispersión "
-                        f"considerable de los datos alrededor de la media de "
-                        f"**{media:,.2f}**."
-                    )
-                
-                    st.write(
-                        f"Visualmente, el histograma permite identificar si existen "
-                        f"observaciones alejadas de la concentración principal de "
-                        f"los datos, las cuales podrían corresponder a posibles "
-                        f"valores extremos. Estos casos deben verificarse "
-                        f"directamente en la distribución antes de considerarlos "
-                        f"como valores atípicos."
-                    )
+                )
+            
+                st.write(
+                    f"La variable presenta una desviación estándar de "
+                    f"**{desviacion:,.2f}**, lo que indica el nivel de "
+                    f"dispersión de los datos alrededor de la media de "
+                    f"**{media:,.2f}**."
+                )
+            
+                st.write(
+                    f"Visualmente, el histograma permite identificar si existen "
+                    f"observaciones alejadas de la concentración principal de "
+                    f"los datos, las cuales podrían corresponder a posibles "
+                    f"valores extremos. Estos casos deben verificarse "
+                    f"directamente en la distribución antes de considerarlos "
+                    f"como valores atípicos."
+                )
 
         # ==========================================================
         # ÍTEMS 6 AL 10
