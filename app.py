@@ -1136,16 +1136,7 @@ elif modulos == "Análisis Exploratorio de Datos":
                 # ------------------------------------------------------
         
                 st.markdown("### 5. Interpretación")
-        
-                st.write(
-                    "El análisis de las variables categóricas permite "
-                    "identificar qué categorías tienen mayor representación "
-                    "dentro del dataset. Los conteos muestran la cantidad "
-                    "de observaciones por categoría, mientras que las "
-                    "proporciones permiten comparar su participación "
-                    "relativa respecto al total."
-                )
-        
+             
                 for variable in variables_categoricas:
         
                     conteos = df[variable].value_counts(dropna=False)
