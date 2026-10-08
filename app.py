@@ -115,6 +115,11 @@ if modulos == "Home":
 
 elif modulos == "Carga del Dataset":
 
+    st.sidebar.image(
+        "modulo2.png",
+        use_container_width=True
+    )
+
     st.title("Análisis Exploratorio de Datos - Compañía de Seguros")
 
     st.write(
