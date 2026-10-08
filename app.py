@@ -1238,10 +1238,6 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         with tabs[5]:
 
-            st.markdown(
-                "### Ítem 6: Análisis de variables categóricas"
-            )
-
             st.write(
                 "En este análisis se estudia la distribución de las variables "
                 "categóricas mediante conteos y proporciones. Los gráficos de "
@@ -1371,48 +1367,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                         proporciones,
                         use_container_width=True,
                         hide_index=True
-                    )
-
-                # ------------------------------------------------------
-                # 5. MODA E INTERPRETACIÓN
-                # ------------------------------------------------------
-
-                st.markdown(
-                    "### 5. Moda e interpretación"
-                )
-
-                for variable in variables_categoricas:
-
-                    conteos = (
-                        df[variable]
-                        .value_counts(
-                            dropna=False
-                        )
-                    )
-
-                    moda = analizador.moda(
-                        variable
-                    )
-
-                    categoria_mayor = conteos.index[0]
-                    cantidad_mayor = conteos.iloc[0]
-
-                    proporcion_mayor = (
-                        cantidad_mayor /
-                        len(df)
-                    ) * 100
-
-                    st.write(
-                        f"**{variable}:** la moda es "
-                        f"**{moda.iloc[0]}**."
-                    )
-
-                    st.write(
-                        f"La categoría con mayor frecuencia es "
-                        f"**{categoria_mayor}**, con "
-                        f"**{cantidad_mayor:,} observaciones**, "
-                        f"equivalente al **{proporcion_mayor:.2f}%** "
-                        f"del total."
                     )
 
 
