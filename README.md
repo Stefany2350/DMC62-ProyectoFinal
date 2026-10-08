@@ -25,7 +25,7 @@ La aplicación cuenta con una interfaz de navegación que permite acceder a los 
 
 ## 🖥️ Capturas de la aplicación
 
-### 🏠 Página principal
+### Home: captura_app1.png
 
 ![Página principal](images/inicio.png)
 
