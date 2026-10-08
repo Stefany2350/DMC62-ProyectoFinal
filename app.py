@@ -553,14 +553,14 @@ elif modulos == "Análisis Exploratorio de Datos":
 # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
 # ==========================================================
 
-with tabs[2]:
+    with tabs[2]:
 
-    st.write(
+        st.write(
         "En este análisis se obtienen las estadísticas descriptivas "
         "de las variables numéricas mediante la función .describe() "
         "y se realiza una interpretación básica de la media, mediana "
         "y dispersión de las variables más representativas."
-    )
+        )
 
     # ----------------------------------------------------------
     # 1. ESTADÍSTICAS DESCRIPTIVAS
