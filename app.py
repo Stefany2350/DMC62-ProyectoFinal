@@ -719,14 +719,14 @@ elif modulos == "Análisis Exploratorio de Datos":
 # ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
 # ==========================================================
 
-with tabs[3]:
+    with tabs[3]:
 
-    st.write(
+        st.write(
         "En este análisis se identifican y contabilizan los valores "
         "faltantes presentes en el dataset. Además, se presenta una "
         "visualización simple para facilitar su identificación y se "
         "realiza una breve discusión sobre su impacto en el análisis."
-    )
+        )
 
     # ----------------------------------------------------------
     # 1. CONTEO DE VALORES FALTANTES
@@ -831,14 +831,14 @@ with tabs[3]:
 # ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
 # ==========================================================
 
-with tabs[4]:
+    with tabs[4]:
 
-    st.write(
+        st.write(
         "En este análisis se observa la distribución de las variables "
         "numéricas mediante histogramas, utilizando Matplotlib. "
         "La visualización permite identificar la concentración de los "
         "datos, su dispersión y la posible presencia de valores extremos."
-    )
+        )
 
     # ----------------------------------------------------------
     # 1. IDENTIFICACIÓN DE VARIABLES NUMÉRICAS
