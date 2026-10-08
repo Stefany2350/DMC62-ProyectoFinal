@@ -1062,11 +1062,11 @@ elif modulos == "Análisis Exploratorio de Datos":
             # ----------------------------------------------------------
             # 1. VARIABLES NUMÉRICAS
             # ----------------------------------------------------------
-
+            
             st.markdown(
                 "### 1. Variables numéricas"
             )
-
+            
             variables_numericas = (
                 df.select_dtypes(
                     include="number"
@@ -1074,14 +1074,22 @@ elif modulos == "Análisis Exploratorio de Datos":
                 .columns
                 .tolist()
             )
-
+            
             st.write(
                 f"El dataset contiene **{len(variables_numericas)} "
                 "variables numéricas."
             )
-
-            st.write(
-                ", ".join(variables_numericas)
+            
+            # Tabla de variables numéricas
+            tabla_numericas = pd.DataFrame({
+                "N°": range(1, len(variables_numericas) + 1),
+                "Variable numérica": variables_numericas
+            })
+            
+            st.dataframe(
+                tabla_numericas,
+                use_container_width=True,
+                hide_index=True
             )
 
             # ----------------------------------------------------------
