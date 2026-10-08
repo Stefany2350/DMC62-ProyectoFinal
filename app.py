@@ -643,57 +643,8 @@ elif modulos == "Análisis Exploratorio de Datos":
                 tabla_numericas,
                 use_container_width=True,
                 hide_index=True
-            )
-
-            # ======================================================
-            # 3. VARIABLES CATEGÓRICAS
-            # ======================================================
-
-            st.markdown(
-                "### 3. Variables categóricas"
-            )
-
-            st.write(
-                "Listado de las variables identificadas como "
-                "categóricas mediante la clase DataAnalyzer."
-            )
-
-            tabla_categoricas = pd.DataFrame({
-                "Variable": variables_categoricas
-            })
-
-            st.dataframe(
-                tabla_categoricas,
-                use_container_width=True,
-                hide_index=True
-            )
-
-            # ======================================================
-            # 4. RESUMEN DEL CONTEO
-            # ======================================================
-
-            st.markdown(
-                "### 4. Resumen de la clasificación"
-            )
-
-            resumen_variables = pd.DataFrame({
-                "Tipo de variable": [
-                    "Numéricas",
-                    "Categóricas"
-                ],
-                "Cantidad": [
-                    len(variables_numericas),
-                    len(variables_categoricas)
-                ]
-            })
-
-            st.dataframe(
-                resumen_variables,
-                use_container_width=True,
-                hide_index=True
-            )
-
-
+            )         
+     
         # ==========================================================
         # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
         # ==========================================================
