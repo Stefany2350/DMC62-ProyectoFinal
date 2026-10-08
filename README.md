@@ -4,8 +4,6 @@ Proyecto final desarrollado como parte de la **Especialización en Python for An
 
 ---
 
-##Descripción del proyecto
-
 La aplicación integra diferentes ejercicios desarrollados durante la especialización, aplicando conceptos fundamentales de Python y programación orientada al análisis de datos.
 
 El proyecto busca demostrar el uso práctico de Python para la resolución de problemas, procesamiento de información y desarrollo de aplicaciones interactivas.
