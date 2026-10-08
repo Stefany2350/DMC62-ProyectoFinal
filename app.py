@@ -1380,22 +1380,7 @@ elif modulos == "Análisis Exploratorio de Datos":
                 f"{interpretacion_primas}"
             )
         
-            # ----------------------------------------------------------
-            # 5. CONCLUSIÓN
-            # ----------------------------------------------------------
-        
-            st.markdown("### 5. Conclusión")
-        
-            st.write(
-                "El análisis bivariado permite identificar diferencias "
-                "en las variables numéricas según la condición de renovación. "
-                "En este caso, la comparación de **Income** y "
-                "**no_of_premiums_paid** permite observar si existen "
-                "diferencias entre los clientes que renovaron y los que "
-                "no renovaron. Estas diferencias representan asociaciones "
-                "observadas en el dataset y no implican necesariamente "
-                "una relación causal."
-            )
+           
         # ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
