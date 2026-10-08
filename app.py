@@ -232,10 +232,11 @@ elif modulos == "Carga del Dataset":
 # ==========================================
 
 elif modulos == "Análisis Exploratorio de Datos":
-   
+
     st.sidebar.image(
         "modulo2.jpg",
-        use_container_width=True)
+        use_container_width=True
+    )
 
     # ==========================================
     # VERIFICAR SI EXISTE DATASET
@@ -280,7 +281,7 @@ elif modulos == "Análisis Exploratorio de Datos":
             "Item 7: Análisis bivariado (numérico vs categórico)",
             "Item 8: Análisis bivariado (categórico vs categórico)",
             "Item 9: Análisis basado en parámetros seleccionados",
-            "Item 10: Hallazgos clave" 
+            "Item 10: Hallazgos clave"
         ])
 
         # ==========================================================
@@ -447,7 +448,6 @@ elif modulos == "Análisis Exploratorio de Datos":
 
                 return variables_numericas, variables_categoricas
 
-
             # ======================================================
             # APLICAR FUNCIÓN PERSONALIZADA
             # ======================================================
@@ -455,7 +455,6 @@ elif modulos == "Análisis Exploratorio de Datos":
             variables_numericas, variables_categoricas = (
                 clasificar_variables(df)
             )
-
 
             # ======================================================
             # 1. CONTEO DE VARIABLES
@@ -481,7 +480,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                     len(variables_categoricas)
                 )
 
-
             # ======================================================
             # 2. VARIABLES NUMÉRICAS
             # ======================================================
@@ -504,7 +502,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                 use_container_width=True,
                 hide_index=True
             )
-
 
             # ======================================================
             # 3. VARIABLES CATEGÓRICAS
@@ -529,7 +526,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                 hide_index=True
             )
 
-
             # ======================================================
             # 4. RESUMEN DEL CONTEO
             # ======================================================
@@ -549,6 +545,13 @@ elif modulos == "Análisis Exploratorio de Datos":
                 ]
             })
 
+            st.dataframe(
+                resumen_variables,
+                use_container_width=True,
+                hide_index=True
+            )
+
+
         # ==========================================================
         # ÍTEM 3: ESTADÍSTICAS DESCRIPTIVAS
         # ==========================================================
@@ -556,164 +559,167 @@ elif modulos == "Análisis Exploratorio de Datos":
         with tabs[2]:
 
             st.write(
-        "En este análisis se obtienen las estadísticas descriptivas "
-        "de las variables numéricas mediante la función .describe() "
-        "y se realiza una interpretación básica de la media, mediana "
-        "y dispersión de las variables más representativas."
-        )
+                "En este análisis se obtienen las estadísticas descriptivas "
+                "de las variables numéricas mediante la función .describe() "
+                "y se realiza una interpretación básica de la media, mediana "
+                "y dispersión de las variables más representativas."
+            )
 
-    # ----------------------------------------------------------
-    # 1. ESTADÍSTICAS DESCRIPTIVAS
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 1. ESTADÍSTICAS DESCRIPTIVAS
+            # ----------------------------------------------------------
 
-    st.markdown("### 1. Estadísticas descriptivas")
+            st.markdown("### 1. Estadísticas descriptivas")
 
-    estadisticas = df.describe()
+            estadisticas = df.describe()
 
-    st.dataframe(
-        estadisticas,
-        use_container_width=True
-    )
+            st.dataframe(
+                estadisticas,
+                use_container_width=True
+            )
 
-    # ----------------------------------------------------------
-    # 2. SELECCIÓN DE VARIABLES REPRESENTATIVAS
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 2. SELECCIÓN DE VARIABLES REPRESENTATIVAS
+            # ----------------------------------------------------------
 
-    st.markdown("### 2. Selección de variables representativas")
+            st.markdown("### 2. Selección de variables representativas")
 
-    st.write(
-        "Para realizar la interpretación de las estadísticas "
-        "descriptivas se seleccionaron las variables **Income** y "
-        "**premium**, debido a que ambas son variables numéricas "
-        "continuas y representan aspectos económicos relevantes "
-        "del conjunto de datos. **Income** representa el ingreso "
-        "mensual de los clientes, mientras que **premium** representa "
-        "el valor de la prima del seguro. Además, ambas variables "
-        "permiten analizar de manera clara su valor promedio, valor "
-        "central y nivel de variabilidad."
-    )
+            st.write(
+                "Para realizar la interpretación de las estadísticas "
+                "descriptivas se seleccionaron las variables **Income** y "
+                "**premium**, debido a que ambas son variables numéricas "
+                "continuas y representan aspectos económicos relevantes "
+                "del conjunto de datos. **Income** representa el ingreso "
+                "mensual de los clientes, mientras que **premium** representa "
+                "el valor de la prima del seguro. Además, ambas variables "
+                "permiten analizar de manera clara su valor promedio, valor "
+                "central y nivel de variabilidad."
+            )
 
-    # ----------------------------------------------------------
-    # 3. INTERPRETACIÓN DE LA MEDIA
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 3. INTERPRETACIÓN DE LA MEDIA
+            # ----------------------------------------------------------
 
-    st.markdown("### 3. Interpretación de la media")
+            st.markdown("### 3. Interpretación de la media")
 
-    st.write(
-        "La media permite identificar el valor promedio de las "
-        "variables numéricas y proporciona una referencia sobre "
-        "el comportamiento general de los datos."
-    )
+            st.write(
+                "La media permite identificar el valor promedio de las "
+                "variables numéricas y proporciona una referencia sobre "
+                "el comportamiento general de los datos."
+            )
 
-    media_income = df["Income"].mean()
-    media_premium = df["premium"].mean()
+            media_income = df["Income"].mean()
+            media_premium = df["premium"].mean()
 
-    st.write(
-        f"**Income:** los datos se mueven alrededor de un ingreso "
-        f"mensual promedio de **{media_income:,.2f}**."
-    )
+            st.write(
+                f"**Income:** los datos se mueven alrededor de un ingreso "
+                f"mensual promedio de **{media_income:,.2f}**."
+            )
 
-    st.write(
-        f"**Premium:** los datos se mueven alrededor de una prima "
-        f"promedio de **{media_premium:,.2f}**."
-    )
+            st.write(
+                f"**Premium:** los datos se mueven alrededor de una prima "
+                f"promedio de **{media_premium:,.2f}**."
+            )
 
-    # ----------------------------------------------------------
-    # 4. INTERPRETACIÓN DE LA MEDIANA
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 4. INTERPRETACIÓN DE LA MEDIANA
+            # ----------------------------------------------------------
 
-    st.markdown("### 4. Interpretación de la mediana")
+            st.markdown("### 4. Interpretación de la mediana")
 
-    st.write(
-        "La mediana representa el valor central de los datos. "
-        "Su comparación con la media permite identificar posibles "
-        "diferencias en la distribución y la influencia de valores "
-        "extremos."
-    )
+            st.write(
+                "La mediana representa el valor central de los datos. "
+                "Su comparación con la media permite identificar posibles "
+                "diferencias en la distribución y la influencia de valores "
+                "extremos."
+            )
 
-    mediana_income = df["Income"].median()
-    mediana_premium = df["premium"].median()
+            mediana_income = df["Income"].median()
+            mediana_premium = df["premium"].median()
 
-    st.write(
-        f"**Income:** el valor central de los ingresos mensuales "
-        f"es **{mediana_income:,.2f}**, por lo que aproximadamente "
-        f"la mitad de los clientes presenta ingresos inferiores "
-        f"a este valor y la otra mitad superiores."
-    )
+            st.write(
+                f"**Income:** el valor central de los ingresos mensuales "
+                f"es **{mediana_income:,.2f}**, por lo que aproximadamente "
+                f"la mitad de los clientes presenta ingresos inferiores "
+                f"a este valor y la otra mitad superiores."
+            )
 
-    st.write(
-        f"**Premium:** el valor central de las primas es "
-        f"**{mediana_premium:,.2f}**, por lo que aproximadamente "
-        f"la mitad de las pólizas presenta primas inferiores "
-        f"a este valor y la otra mitad superiores."
-    )
+            st.write(
+                f"**Premium:** el valor central de las primas es "
+                f"**{mediana_premium:,.2f}**, por lo que aproximadamente "
+                f"la mitad de las pólizas presenta primas inferiores "
+                f"a este valor y la otra mitad superiores."
+            )
 
-    # ----------------------------------------------------------
-    # 5. INTERPRETACIÓN DE LA DISPERSIÓN
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 5. INTERPRETACIÓN DE LA DISPERSIÓN
+            # ----------------------------------------------------------
 
-    st.markdown("### 5. Interpretación de la dispersión")
+            st.markdown("### 5. Interpretación de la dispersión")
 
-    st.write(
-        "La desviación estándar permite evaluar qué tan dispersos "
-        "se encuentran los datos respecto a su media. Una mayor "
-        "desviación estándar indica una mayor variabilidad de los "
-        "datos."
-    )
+            st.write(
+                "La desviación estándar permite evaluar qué tan dispersos "
+                "se encuentran los datos respecto a su media. Una mayor "
+                "desviación estándar indica una mayor variabilidad de los "
+                "datos."
+            )
 
-    desviacion_income = df["Income"].std()
-    desviacion_premium = df["premium"].std()
+            desviacion_income = df["Income"].std()
+            desviacion_premium = df["premium"].std()
 
-    st.write(
-        f"**Income:** presenta una desviación estándar de "
-        f"**{desviacion_income:,.2f}**, lo que indica el nivel "
-        f"de variabilidad de los ingresos respecto a su media "
-        f"de **{media_income:,.2f}**."
-    )
+            st.write(
+                f"**Income:** presenta una desviación estándar de "
+                f"**{desviacion_income:,.2f}**, lo que indica el nivel "
+                f"de variabilidad de los ingresos respecto a su media "
+                f"de **{media_income:,.2f}**."
+            )
 
-    st.write(
-        f"**Premium:** presenta una desviación estándar de "
-        f"**{desviacion_premium:,.2f}**, lo que indica el nivel "
-        f"de variabilidad de las primas respecto a su media "
-        f"de **{media_premium:,.2f}**."
-    )
+            st.write(
+                f"**Premium:** presenta una desviación estándar de "
+                f"**{desviacion_premium:,.2f}**, lo que indica el nivel "
+                f"de variabilidad de las primas respecto a su media "
+                f"de **{media_premium:,.2f}**."
+            )
 
-    # ----------------------------------------------------------
-    # 6. VISUALIZACIÓN DE LA DISPERSIÓN
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 6. VISUALIZACIÓN DE LA DISPERSIÓN
+            # ----------------------------------------------------------
 
-    st.markdown("### 6. Visualización e interpretación de la dispersión")
+            st.markdown(
+                "### 6. Visualización e interpretación de la dispersión"
+            )
 
-    dispersion = pd.DataFrame({
-        "Variable": ["Income", "Premium"],
-        "Desviación estándar": [
-            desviacion_income,
-            desviacion_premium
-        ]
-    })
+            dispersion = pd.DataFrame({
+                "Variable": ["Income", "Premium"],
+                "Desviación estándar": [
+                    desviacion_income,
+                    desviacion_premium
+                ]
+            })
 
-    st.write(
-        "El siguiente gráfico permite visualizar la desviación "
-        "estándar de las dos variables seleccionadas."
-    )
+            st.write(
+                "El siguiente gráfico permite visualizar la desviación "
+                "estándar de las dos variables seleccionadas."
+            )
 
-    st.bar_chart(
-        dispersion.set_index("Variable")
-    )
+            st.bar_chart(
+                dispersion.set_index("Variable")
+            )
 
-    st.write(
-        f"**Income:** la desviación estándar es de "
-        f"**{desviacion_income:,.2f}**, lo que indica que los "
-        f"ingresos presentan variabilidad alrededor del ingreso "
-        f"mensual promedio de **{media_income:,.2f}**."
-    )
+            st.write(
+                f"**Income:** la desviación estándar es de "
+                f"**{desviacion_income:,.2f}**, lo que indica que los "
+                f"ingresos presentan variabilidad alrededor del ingreso "
+                f"mensual promedio de **{media_income:,.2f}**."
+            )
 
-    st.write(
-        f"**Premium:** la desviación estándar es de "
-        f"**{desviacion_premium:,.2f}**, lo que indica que los "
-        f"valores de las primas presentan variabilidad alrededor "
-        f"de la prima promedio de **{media_premium:,.2f}**."
-    )
+            st.write(
+                f"**Premium:** la desviación estándar es de "
+                f"**{desviacion_premium:,.2f}**, lo que indica que los "
+                f"valores de las primas presentan variabilidad alrededor "
+                f"de la prima promedio de **{media_premium:,.2f}**."
+            )
+
 
         # ==========================================================
         # ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
@@ -721,111 +727,115 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         with tabs[3]:
 
-        st.write(
-        "En este análisis se identifican y contabilizan los valores "
-        "faltantes presentes en el dataset. Además, se presenta una "
-        "visualización simple para facilitar su identificación y se "
-        "realiza una breve discusión sobre su impacto en el análisis."
-        )
+            st.write(
+                "En este análisis se identifican y contabilizan los valores "
+                "faltantes presentes en el dataset. Además, se presenta una "
+                "visualización simple para facilitar su identificación y se "
+                "realiza una breve discusión sobre su impacto en el análisis."
+            )
 
-    # ----------------------------------------------------------
-    # 1. CONTEO DE VALORES FALTANTES
-    # ----------------------------------------------------------
+            # ----------------------------------------------------------
+            # 1. CONTEO DE VALORES FALTANTES
+            # ----------------------------------------------------------
 
-    st.markdown("### 1. Conteo de valores faltantes")
+            st.markdown("### 1. Conteo de valores faltantes")
 
-    valores_faltantes = df.isnull().sum()
+            valores_faltantes = df.isnull().sum()
 
-    tabla_faltantes = pd.DataFrame({
-        "Variable": valores_faltantes.index,
-        "Valores faltantes": valores_faltantes.values
-    })
+            tabla_faltantes = pd.DataFrame({
+                "Variable": valores_faltantes.index,
+                "Valores faltantes": valores_faltantes.values
+            })
 
-    st.dataframe(
-        tabla_faltantes,
-        use_container_width=True
-    )
+            st.dataframe(
+                tabla_faltantes,
+                use_container_width=True
+            )
 
-    total_faltantes = valores_faltantes.sum()
+            total_faltantes = valores_faltantes.sum()
 
-    if total_faltantes == 0:
-        st.success(
-            "El dataset no presenta valores faltantes."
-        )
-    else:
-        st.warning(
-            f"Se identificaron **{total_faltantes:,} valores faltantes "
-            f"en el dataset."
-        )
+            if total_faltantes == 0:
 
-    # ----------------------------------------------------------
-    # 2. VISUALIZACIÓN SIMPLE
-    # ----------------------------------------------------------
+                st.success(
+                    "El dataset no presenta valores faltantes."
+                )
 
-    st.markdown("### 2. Visualización de valores faltantes")
+            else:
 
-    if total_faltantes > 0:
+                st.warning(
+                    f"Se identificaron **{total_faltantes:,} valores faltantes "
+                    f"en el dataset."
+                )
 
-        faltantes_grafico = tabla_faltantes[
-            tabla_faltantes["Valores faltantes"] > 0
-        ].copy()
+            # ----------------------------------------------------------
+            # 2. VISUALIZACIÓN SIMPLE
+            # ----------------------------------------------------------
 
-        st.write(
-            "El siguiente gráfico muestra la cantidad de valores "
-            "faltantes encontrados en las variables que presentan "
-            "datos ausentes."
-        )
+            st.markdown("### 2. Visualización de valores faltantes")
 
-        st.bar_chart(
-            faltantes_grafico.set_index("Variable")
-        )
+            if total_faltantes > 0:
 
-    else:
+                faltantes_grafico = tabla_faltantes[
+                    tabla_faltantes["Valores faltantes"] > 0
+                ].copy()
 
-        st.info(
-            "No se genera una visualización de valores faltantes "
-            "debido a que todas las variables contienen datos completos."
-        )
+                st.write(
+                    "El siguiente gráfico muestra la cantidad de valores "
+                    "faltantes encontrados en las variables que presentan "
+                    "datos ausentes."
+                )
 
-    # ----------------------------------------------------------
-    # 3. DISCUSIÓN BREVE
-    # ----------------------------------------------------------
+                st.bar_chart(
+                    faltantes_grafico.set_index("Variable")
+                )
 
-    st.markdown("### 3. Discusión breve")
+            else:
 
-    if total_faltantes == 0:
+                st.info(
+                    "No se genera una visualización de valores faltantes "
+                    "debido a que todas las variables contienen datos completos."
+                )
 
-        st.write(
-            "El análisis muestra que el dataset no contiene valores "
-            "faltantes. Esto facilita el procesamiento y análisis "
-            "posterior de las variables, ya que no es necesario "
-            "aplicar técnicas de imputación ni eliminar registros "
-            "por ausencia de información."
-        )
+            # ----------------------------------------------------------
+            # 3. DISCUSIÓN BREVE
+            # ----------------------------------------------------------
 
-    else:
+            st.markdown("### 3. Discusión breve")
 
-        variables_con_faltantes = (
-            valores_faltantes[valores_faltantes > 0]
-            .sort_values(ascending=False)
-        )
+            if total_faltantes == 0:
 
-        cantidad_variables = len(variables_con_faltantes)
+                st.write(
+                    "El análisis muestra que el dataset no contiene valores "
+                    "faltantes. Esto facilita el procesamiento y análisis "
+                    "posterior de las variables, ya que no es necesario "
+                    "aplicar técnicas de imputación ni eliminar registros "
+                    "por ausencia de información."
+                )
 
-        st.write(
-            f"El análisis muestra que existen valores faltantes en "
-            f"**{cantidad_variables} variable(s)**, con un total de "
-            f"**{total_faltantes:,} registros faltantes**. Estos "
-            f"valores deben ser considerados antes de realizar análisis "
-            f"posteriores, ya que su presencia puede afectar algunos "
-            f"cálculos estadísticos y modelos."
-        )
+            else:
 
-        st.write(
-            "La decisión de mantener, eliminar o imputar estos valores "
-            "dependerá de la cantidad de datos faltantes y de la "
-            "importancia de cada variable para el análisis."
-        )
+                variables_con_faltantes = (
+                    valores_faltantes[valores_faltantes > 0]
+                    .sort_values(ascending=False)
+                )
+
+                cantidad_variables = len(variables_con_faltantes)
+
+                st.write(
+                    f"El análisis muestra que existen valores faltantes en "
+                    f"**{cantidad_variables} variable(s)**, con un total de "
+                    f"**{total_faltantes:,} registros faltantes**. Estos "
+                    f"valores deben ser considerados antes de realizar análisis "
+                    f"posteriores, ya que su presencia puede afectar algunos "
+                    f"cálculos estadísticos y modelos."
+                )
+
+                st.write(
+                    "La decisión de mantener, eliminar o imputar estos valores "
+                    "dependerá de la cantidad de datos faltantes y de la "
+                    "importancia de cada variable para el análisis."
+                )
+
 
         # ==========================================================
         # ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
@@ -833,134 +843,159 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         with tabs[4]:
 
-        st.write(
-        "En este análisis se observa la distribución de las variables "
-        "numéricas mediante histogramas, utilizando Matplotlib. "
-        "La visualización permite identificar la concentración de los "
-        "datos, su dispersión y la posible presencia de valores extremos."
-        )
-
-    # ----------------------------------------------------------
-    # 1. IDENTIFICACIÓN DE VARIABLES NUMÉRICAS
-    # ----------------------------------------------------------
-
-    st.markdown("### 1. Variables numéricas")
-
-    variables_numericas = df.select_dtypes(
-        include="number"
-    ).columns.tolist()
-
-    st.write(
-        f"El dataset contiene **{len(variables_numericas)} variables "
-        "numéricas, las cuales pueden ser analizadas mediante "
-        "histogramas."
-    )
-
-    st.write(
-        "Variables numéricas identificadas:"
-    )
-
-    st.write(
-        ", ".join(variables_numericas)
-    )
-
-    # ----------------------------------------------------------
-    # 2. HISTOGRAMAS
-    # ----------------------------------------------------------
-
-    st.markdown("### 2. Histogramas")
-
-    st.write(
-        "Los histogramas permiten observar cómo se distribuyen "
-        "los valores de cada variable numérica y en qué rangos "
-        "se concentra la mayor cantidad de observaciones."
-    )
-
-    # Selección de variables para visualizar
-    variables_histograma = st.multiselect(
-        "Selecciona las variables que deseas visualizar:",
-        variables_numericas,
-        default=variables_numericas[:2]
-    )
-
-    if variables_histograma:
-
-        for variable in variables_histograma:
-
-            fig, ax = plt.subplots(figsize=(8, 4))
-
-            ax.hist(
-                df[variable].dropna(),
-                bins=30,
-                edgecolor="black"
+            st.write(
+                "En este análisis se observa la distribución de las variables "
+                "numéricas mediante histogramas, utilizando Matplotlib. "
+                "La visualización permite identificar la concentración de los "
+                "datos, su dispersión y la posible presencia de valores extremos."
             )
 
-            ax.set_title(
-                f"Distribución de {variable}"
+            # ----------------------------------------------------------
+            # 1. IDENTIFICACIÓN DE VARIABLES NUMÉRICAS
+            # ----------------------------------------------------------
+
+            st.markdown("### 1. Variables numéricas")
+
+            variables_numericas = df.select_dtypes(
+                include="number"
+            ).columns.tolist()
+
+            st.write(
+                f"El dataset contiene **{len(variables_numericas)} variables "
+                "numéricas, las cuales pueden ser analizadas mediante "
+                "histogramas."
             )
 
-            ax.set_xlabel(variable)
-            ax.set_ylabel("Frecuencia")
-
-            ax.grid(
-                axis="y",
-                alpha=0.3
+            st.write(
+                "Variables numéricas identificadas:"
             )
 
-            st.pyplot(fig)
-
-            plt.close(fig)
-
-    else:
-
-        st.info(
-            "Selecciona al menos una variable para visualizar "
-            "su distribución."
-        )
-
-    # ----------------------------------------------------------
-    # 3. INTERPRETACIÓN VISUAL
-    # ----------------------------------------------------------
-
-    st.markdown("### 3. Interpretación visual")
-
-    st.write(
-        "La interpretación de los histogramas permite identificar "
-        "la forma de la distribución, los rangos donde se concentra "
-        "la mayor cantidad de observaciones, el nivel de dispersión "
-        "y la posible presencia de valores extremos."
-    )
-
-    # Interpretación automática básica de las variables seleccionadas
-    for variable in variables_histograma:
-
-        serie = df[variable].dropna()
-
-        media = serie.mean()
-        mediana = serie.median()
-        desviacion = serie.std()
-
-        if media > mediana:
-            interpretacion = (
-                "La media es mayor que la mediana, lo que puede "
-                "indicar una distribución con sesgo hacia valores altos."
+            st.write(
+                ", ".join(variables_numericas)
             )
 
-        elif media < mediana:
-            interpretacion = (
-                "La media es menor que la mediana, lo que puede "
-                "indicar una distribución con sesgo hacia valores bajos."
+            # ----------------------------------------------------------
+            # 2. HISTOGRAMAS
+            # ----------------------------------------------------------
+
+            st.markdown("### 2. Histogramas")
+
+            st.write(
+                "Los histogramas permiten observar cómo se distribuyen "
+                "los valores de cada variable numérica y en qué rangos "
+                "se concentra la mayor cantidad de observaciones."
             )
 
-        else:
-            interpretacion = (
-                "La media y la mediana presentan valores similares, "
-                "lo que sugiere una distribución relativamente equilibrada."
+            # Selección de variables para visualizar
+            variables_histograma = st.multiselect(
+                "Selecciona las variables que deseas visualizar:",
+                variables_numericas,
+                default=variables_numericas[:2]
             )
 
-        st.write(
-            f"**{variable}:** {interpretacion} "
-            f"La variable presenta una media de **{media:,.2f}**, "
-            f"una mediana de **{mediana:,.2f}** y una desviación "
-            f"estándar de **{desviacion:,.2f}**."
-        )
+            if variables_histograma:
+
+                for variable in variables_histograma:
+
+                    fig, ax = plt.subplots(figsize=(8, 4))
+
+                    ax.hist(
+                        df[variable].dropna(),
+                        bins=30,
+                        edgecolor="black"
+                    )
+
+                    ax.set_title(
+                        f"Distribución de {variable}"
+                    )
+
+                    ax.set_xlabel(variable)
+                    ax.set_ylabel("Frecuencia")
+
+                    ax.grid(
+                        axis="y",
+                        alpha=0.3
+                    )
+
+                    st.pyplot(fig)
+
+                    plt.close(fig)
+
+            else:
+
+                st.info(
+                    "Selecciona al menos una variable para visualizar "
+                    "su distribución."
+                )
+
+            # ----------------------------------------------------------
+            # 3. INTERPRETACIÓN VISUAL
+            # ----------------------------------------------------------
+
+            st.markdown("### 3. Interpretación visual")
+
+            st.write(
+                "La interpretación de los histogramas permite identificar "
+                "la forma de la distribución, los rangos donde se concentra "
+                "la mayor cantidad de observaciones, el nivel de dispersión "
+                "y la posible presencia de valores extremos."
+            )
+
+            # Interpretación automática básica de las variables seleccionadas
+            for variable in variables_histograma:
+
+                serie = df[variable].dropna()
+
+                media = serie.mean()
+                mediana = serie.median()
+                desviacion = serie.std()
+
+                if media > mediana:
+
+                    interpretacion = (
+                        "La media es mayor que la mediana, lo que puede "
+                        "indicar una distribución con sesgo hacia valores altos."
+                    )
+
+                elif media < mediana:
+
+                    interpretacion = (
+                        "La media es menor que la mediana, lo que puede "
+                        "indicar una distribución con sesgo hacia valores bajos."
+                    )
+
+                else:
+
+                    interpretacion = (
+                        "La media y la mediana presentan valores similares, "
+                        "lo que sugiere una distribución relativamente equilibrada."
+                    )
+
+                st.write(
+                    f"**{variable}:** {interpretacion} "
+                    f"La variable presenta una media de **{media:,.2f}**, "
+                    f"una mediana de **{mediana:,.2f}** y una desviación "
+                    f"estándar de **{desviacion:,.2f}**."
+                )
+
+
+        # ==========================================================
+        # ÍTEMS 6 AL 10
+        # ==========================================================
+        # Aquí puedes colocar posteriormente el código correspondiente
+        # a los Items 6, 7, 8, 9 y 10, manteniendo la misma estructura:
+        #
+        # with tabs[5]:
+        #     ...
+        #
+        # with tabs[6]:
+        #     ...
+        #
+        # with tabs[7]:
+        #     ...
+        #
+        # with tabs[8]:
+        #     ...
+        #
+        # with tabs[9]:
+        #     ...
