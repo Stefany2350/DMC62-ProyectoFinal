@@ -1786,7 +1786,179 @@ with tabs[8]:
                     f"con **{valor_menor:,.4f}**."
                 )
 
-
+        # ==========================================================
+        # ÍTEM 10: HALLAZGOS CLAVE
+        # ==========================================================
+        
+        with tabs[9]:
+        
+            st.markdown(
+                "### Ítem 10: Hallazgos clave"
+            )
+        
+            st.write(
+                "En este apartado se resumen los principales hallazgos "
+                "obtenidos durante el análisis exploratorio de datos. "
+                "Los resultados permiten identificar características "
+                "relevantes del dataset y posibles relaciones entre "
+                "las variables analizadas."
+            )
+        
+            # ----------------------------------------------------------
+            # 1. VISUALIZACIÓN RESUMEN
+            # ----------------------------------------------------------
+        
+            st.markdown("### 1. Visualización resumen")
+        
+            # Cantidad de registros
+            total_registros = len(df)
+        
+            # Cantidad de variables
+            total_variables = len(df.columns)
+        
+            # Variables con valores faltantes
+            variables_con_nulos = df.isnull().sum()
+            cantidad_variables_nulos = (
+                variables_con_nulos[variables_con_nulos > 0].count()
+            )
+        
+            # Promedio de renovación
+            porcentaje_renovacion = (
+                df["renewal"].mean() * 100
+            )
+        
+            # Promedio de primas pagadas
+            promedio_primas = (
+                df["no_of_premiums_paid"].mean()
+            )
+        
+            # Mostrar indicadores principales
+            col1, col2, col3, col4 = st.columns(4)
+        
+            with col1:
+                st.metric(
+                    "Registros",
+                    f"{total_registros:,}"
+                )
+        
+            with col2:
+                st.metric(
+                    "Variables",
+                    total_variables
+                )
+        
+            with col3:
+                st.metric(
+                    "Variables con nulos",
+                    cantidad_variables_nulos
+                )
+        
+            with col4:
+                st.metric(
+                    "Renovación",
+                    f"{porcentaje_renovacion:.2f}%"
+                )
+        
+            # ----------------------------------------------------------
+            # 2. PRINCIPALES INSIGHTS
+            # ----------------------------------------------------------
+        
+            st.markdown("### 2. Insights principales derivados del EDA")
+        
+            # Insight 1: estructura
+            st.write(
+                f"**• Estructura del dataset:** el conjunto de datos contiene "
+                f"**{total_registros:,} registros y {total_variables} variables**, "
+                "lo que proporciona una base amplia para realizar análisis "
+                "descriptivos y explorar patrones de comportamiento."
+            )
+        
+            # Insight 2: valores faltantes
+            if cantidad_variables_nulos > 0:
+        
+                variables_nulas_lista = (
+                    variables_con_nulos[
+                        variables_con_nulos > 0
+                    ]
+                    .index
+                    .tolist()
+                )
+        
+                st.write(
+                    f"**• Valores faltantes:** se identificaron valores faltantes "
+                    f"en **{cantidad_variables_nulos} variables**: "
+                    f"**{', '.join(variables_nulas_lista)}**. "
+                    "Estos valores deben considerarse antes de realizar "
+                    "modelos predictivos o análisis que requieran información completa."
+                )
+        
+            else:
+        
+                st.write(
+                    "**• Valores faltantes:** no se identificaron valores "
+                    "faltantes en las variables del dataset."
+                )
+        
+            # Insight 3: distribución de Income
+            media_income = df["Income"].mean()
+            mediana_income = df["Income"].median()
+        
+            if media_income > mediana_income:
+                interpretacion_income = (
+                    "La media es superior a la mediana, lo que indica "
+                    "una distribución con cierta concentración de valores "
+                    "altos o una posible asimetría hacia la derecha."
+                )
+            elif media_income < mediana_income:
+                interpretacion_income = (
+                    "La media es inferior a la mediana, lo que indica "
+                    "una posible asimetría hacia valores bajos."
+                )
+            else:
+                interpretacion_income = (
+                    "La media y la mediana presentan valores similares, "
+                    "lo que indica una distribución relativamente equilibrada."
+                )
+        
+            st.write(
+                f"**• Income:** el ingreso promedio es de "
+                f"**{media_income:,.2f}**, mientras que la mediana es "
+                f"**{mediana_income:,.2f}**. {interpretacion_income}"
+            )
+        
+            # Insight 4: renovación
+            st.write(
+                f"**• Renovación:** aproximadamente el "
+                f"**{porcentaje_renovacion:.2f}%** de los registros corresponde "
+                "a clientes que renovaron, mientras que el porcentaje restante "
+                "corresponde a clientes que no renovaron."
+            )
+        
+            # Insight 5: primas pagadas
+            st.write(
+                f"**• Primas pagadas:** en promedio, los clientes han pagado "
+                f"**{promedio_primas:.2f} primas**. Esta variable mostró "
+                "diferencias al comparar los grupos de renovación, por lo que "
+                "puede ser relevante para analizar el comportamiento de los clientes."
+            )
+        
+            # ----------------------------------------------------------
+            # 3. CONCLUSIÓN GENERAL
+            # ----------------------------------------------------------
+        
+            st.markdown("### 3. Conclusión general")
+        
+            st.write(
+                "El análisis exploratorio permitió conocer la estructura del "
+                "dataset, identificar los tipos de variables, revisar la "
+                "calidad de los datos y analizar la distribución y relación "
+                "entre diferentes variables. Los resultados muestran que "
+                "variables como **Income**, **no_of_premiums_paid**, "
+                "**residence_area_type** y **sourcing_channel** presentan "
+                "diferencias según el comportamiento de renovación. "
+                "Estas diferencias representan asociaciones observadas en "
+                "los datos y no implican necesariamente una relación causal."
+            )
 # ==========================================================
         # ÍTEMS 6 AL 10
         # ==========================================================
