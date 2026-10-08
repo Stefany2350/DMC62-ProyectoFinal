@@ -1723,7 +1723,7 @@ with tabs[8]:
             .groupby(variable_categorica_seleccionada)
             [variables_numericas_seleccionadas]
             .agg(funcion_agrupacion)
-            .round(2)
+            .round(4)
         )
 
         st.dataframe(
@@ -1742,7 +1742,7 @@ with tabs[8]:
             datos_grafico = (
                 df.groupby(variable_categorica_seleccionada)[variable]
                 .agg(funcion_agrupacion)
-                .round(2)
+                .round(4)
             )
 
             st.markdown(
@@ -1781,9 +1781,9 @@ with tabs[8]:
                     f"**{variable}:** según el análisis seleccionado "
                     f"(**{tipo_analisis.lower()}**), la categoría "
                     f"**{categoria_mayor}** presenta el valor más alto "
-                    f"con **{valor_mayor:,.2f}**, mientras que "
+                    f"con **{valor_mayor:,.4f}**, mientras que "
                     f"**{categoria_menor}** presenta el valor más bajo "
-                    f"con **{valor_menor:,.2f}**."
+                    f"con **{valor_menor:,.4f}**."
                 )
 
 
