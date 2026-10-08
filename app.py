@@ -555,7 +555,7 @@ elif modulos == "Análisis Exploratorio de Datos":
 
         with tabs[2]:
 
-        st.write(
+            st.write(
         "En este análisis se obtienen las estadísticas descriptivas "
         "de las variables numéricas mediante la función .describe() "
         "y se realiza una interpretación básica de la media, mediana "
