@@ -1553,12 +1553,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                     "El promedio de primas pagadas es igual entre ambos grupos."
                 )
 
-            st.caption(
-                "Las diferencias observadas representan asociaciones "
-                "entre grupos y no implican necesariamente causalidad."
-            )
-
-
         # ==========================================================
         # ÍTEM 8: ANÁLISIS BIVARIADO CATEGÓRICO VS CATEGÓRICO
         # ==========================================================
@@ -1770,12 +1764,6 @@ elif modulos == "Análisis Exploratorio de Datos":
                     f"**{canal_menor}** presenta la menor, "
                     f"con **{porcentaje_canal_menor:.2f}%**."
                 )
-
-            st.caption(
-                "Las diferencias observadas representan asociaciones "
-                "entre variables y no permiten establecer causalidad "
-                "por sí solas."
-            )
 
 
         # ==========================================================
