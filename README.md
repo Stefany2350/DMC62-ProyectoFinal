@@ -25,35 +25,17 @@ La aplicación cuenta con una interfaz de navegación que permite acceder a los 
 
 ## 🖥️ Capturas de la aplicación
 
-### Home: captura_app1.png
+### Home: 
+https://github.com/Stefany2350/DMC62-ProyectoFinal/blob/b4c341efeac9a802ad973e5bb160f16ac9ce0c14/captura_app1.png
 
-![Página principal](images/inicio.png)
+### Carga del Dataset: 
+https://github.com/Stefany2350/DMC62-ProyectoFinal/blob/b4c341efeac9a802ad973e5bb160f16ac9ce0c14/captura_app2.png
 
-Vista principal de la aplicación, donde se presenta la información del proyecto y el panel de navegación.
+### Análisis Exploratorio de Datos:
+https://github.com/Stefany2350/DMC62-ProyectoFinal/blob/b4c341efeac9a802ad973e5bb160f16ac9ce0c14/captura_app3.png
 
-### 📋 Módulo de Listas
-
-![Módulo de Listas](images/listas.png)
-
-Sección destinada a la aplicación de operaciones y ejercicios utilizando estructuras de tipo lista.
-
-### 🔢 Módulo de Arreglos
-
-![Módulo de Arreglos](images/arreglos.png)
-
-Aplicación de arreglos mediante **NumPy**, incluyendo operaciones y procesamiento de datos.
-
-### ⚙️ Módulo de Funciones
-
-![Módulo de Funciones](images/funciones.png)
-
-Ejercicios orientados a la creación y utilización de funciones para resolver problemas específicos.
-
-### 👤 Módulo de Programación Orientada a Objetos
-
-![Módulo de POO](images/poo.png)
-
-Aplicación de conceptos de **Programación Orientada a Objetos**, mediante la creación y utilización de clases y objetos.
+### Conclusiones Finales:
+https://github.com/Stefany2350/DMC62-ProyectoFinal/blob/b4c341efeac9a802ad973e5bb160f16ac9ce0c14/captura_app4.png
 
 
 ##  Instrucciones de ejecución
