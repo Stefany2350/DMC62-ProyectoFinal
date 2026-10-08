@@ -2190,7 +2190,7 @@ elif modulos == "Análisis Exploratorio de Datos":
 elif modulos == "Conclusiones Finales":
 
     st.sidebar.image(
-        "modulo3.jpg",
+        "image_final.jpg",
         use_container_width=True
     )
 
