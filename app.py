@@ -1167,28 +1167,21 @@ elif modulos == "Análisis Exploratorio de Datos":
         
             st.write(
                 "En este análisis se estudia la relación entre variables "
-                "numéricas y una variable categórica. Para ello, se comparan "
-                "los valores de las variables numéricas según las categorías "
-                "de **renewal**, con el objetivo de identificar diferencias "
-                "en sus niveles y comportamiento."
+                "numéricas y la variable categórica **renewal**. "
+                "Se comparan los valores de las variables numéricas según "
+                "las categorías de renovación, con el objetivo de identificar "
+                "diferencias en su comportamiento."
             )
         
             # ----------------------------------------------------------
-            # 1. VARIABLES SELECCIONADAS
+            # 1. VARIABLES ANALIZADAS
             # ----------------------------------------------------------
         
             st.markdown("### 1. Variables analizadas")
         
-            variables_numericas_bivariado = [
-                "Income",
-                "agent_effort_hours"
-            ]
-        
-            variable_categorica = "renewal"
-        
             st.write(
                 "Se analizarán las variables numéricas **Income** y "
-                "**agent_effort_hours** en función de la variable "
+                "**no_of_premiums_paid** en función de la variable "
                 "categórica **renewal**."
             )
         
@@ -1241,13 +1234,13 @@ elif modulos == "Análisis Exploratorio de Datos":
             )
         
             # ----------------------------------------------------------
-            # 3. AGENT_EFFORT_HOURS VS RENEWAL
+            # 3. NO_OF_PREMIUMS_PAID VS RENEWAL
             # ----------------------------------------------------------
         
-            st.markdown("### 3. agent_effort_hours vs renewal")
+            st.markdown("### 3. no_of_premiums_paid vs renewal")
         
-            resumen_esfuerzo = (
-                df.groupby("renewal", as_index=False)["agent_effort_hours"]
+            resumen_primas = (
+                df.groupby("renewal", as_index=False)["no_of_premiums_paid"]
                 .agg(
                     Media="mean",
                     Mediana="median",
@@ -1258,34 +1251,36 @@ elif modulos == "Análisis Exploratorio de Datos":
             )
         
             st.write(
-                "La siguiente tabla permite comparar el esfuerzo promedio "
-                "de los agentes entre los clientes que renovaron y los "
+                "La siguiente tabla permite comparar la cantidad de "
+                "primas pagadas entre los clientes que renovaron y los "
                 "que no renovaron."
             )
         
             st.dataframe(
-                resumen_esfuerzo,
+                resumen_primas,
                 use_container_width=True,
                 hide_index=True
             )
         
             # Gráfico de barras
-            promedio_esfuerzo = (
-                df.groupby("renewal")["agent_effort_hours"]
+            promedio_primas = (
+                df.groupby("renewal")["no_of_premiums_paid"]
                 .mean()
                 .round(2)
                 .reset_index()
             )
         
-            promedio_esfuerzo.columns = [
+            promedio_primas.columns = [
                 "renewal",
-                "Horas promedio"
+                "Primas pagadas promedio"
             ]
         
-            st.markdown("#### Horas de esfuerzo promedio según renewal")
+            st.markdown(
+                "#### Promedio de primas pagadas según renewal"
+            )
         
             st.bar_chart(
-                promedio_esfuerzo.set_index("renewal")
+                promedio_primas.set_index("renewal")
             )
         
             # ----------------------------------------------------------
@@ -1294,7 +1289,9 @@ elif modulos == "Análisis Exploratorio de Datos":
         
             st.markdown("### 4. Interpretación")
         
-            # ---- Income ----
+            # ----------------------------------------------------------
+            # Income
+            # ----------------------------------------------------------
         
             income_0 = df.loc[
                 df["renewal"] == 0,
@@ -1306,9 +1303,7 @@ elif modulos == "Análisis Exploratorio de Datos":
                 "Income"
             ].mean()
         
-            diferencia_income = income_1 - income_0
-        
-            if diferencia_income > 0:
+            if income_1 > income_0:
         
                 interpretacion_income = (
                     f"Los clientes con **renewal = 1** presentan un "
@@ -1318,7 +1313,7 @@ elif modulos == "Análisis Exploratorio de Datos":
                     f"para quienes no renovaron."
                 )
         
-            elif diferencia_income < 0:
+            elif income_1 < income_0:
         
                 interpretacion_income = (
                     f"Los clientes con **renewal = 1** presentan un "
@@ -1339,66 +1334,67 @@ elif modulos == "Análisis Exploratorio de Datos":
                 f"**Income vs renewal:** {interpretacion_income}"
             )
         
-            # ---- agent_effort_hours ----
+            # ----------------------------------------------------------
+            # no_of_premiums_paid
+            # ----------------------------------------------------------
         
-            esfuerzo_0 = df.loc[
+            primas_0 = df.loc[
                 df["renewal"] == 0,
-                "agent_effort_hours"
+                "no_of_premiums_paid"
             ].mean()
         
-            esfuerzo_1 = df.loc[
+            primas_1 = df.loc[
                 df["renewal"] == 1,
-                "agent_effort_hours"
+                "no_of_premiums_paid"
             ].mean()
         
-            diferencia_esfuerzo = esfuerzo_1 - esfuerzo_0
+            if primas_1 > primas_0:
         
-            if diferencia_esfuerzo > 0:
-        
-                interpretacion_esfuerzo = (
+                interpretacion_primas = (
                     f"Los clientes con **renewal = 1** presentan un "
-                    f"mayor nivel promedio de esfuerzo por parte del agente. "
-                    f"El promedio es de **{esfuerzo_1:,.2f} horas**, frente a "
-                    f"**{esfuerzo_0:,.2f} horas** para los clientes con "
-                    f"**renewal = 0**."
+                    f"mayor promedio de primas pagadas. El promedio es de "
+                    f"**{primas_1:,.2f}** primas para los clientes que "
+                    f"renovaron, frente a **{primas_0:,.2f}** para quienes "
+                    f"no renovaron."
                 )
         
-            elif diferencia_esfuerzo < 0:
+            elif primas_1 < primas_0:
         
-                interpretacion_esfuerzo = (
+                interpretacion_primas = (
                     f"Los clientes con **renewal = 1** presentan un "
-                    f"menor nivel promedio de esfuerzo por parte del agente. "
-                    f"El promedio es de **{esfuerzo_1:,.2f} horas**, frente a "
-                    f"**{esfuerzo_0:,.2f} horas** para los clientes con "
-                    f"**renewal = 0**."
+                    f"menor promedio de primas pagadas. El promedio es de "
+                    f"**{primas_1:,.2f}** primas para los clientes que "
+                    f"renovaron, frente a **{primas_0:,.2f}** para quienes "
+                    f"no renovaron."
                 )
         
             else:
         
-                interpretacion_esfuerzo = (
-                    "El esfuerzo promedio de los agentes es prácticamente "
-                    "igual entre ambas categorías de renewal."
+                interpretacion_primas = (
+                    "El promedio de primas pagadas es prácticamente igual "
+                    "entre ambas categorías de renewal."
                 )
         
             st.write(
-                f"**agent_effort_hours vs renewal:** "
-                f"{interpretacion_esfuerzo}"
+                f"**no_of_premiums_paid vs renewal:** "
+                f"{interpretacion_primas}"
             )
         
             # ----------------------------------------------------------
-            # 5. CONCLUSIÓN DEL ANÁLISIS
+            # 5. CONCLUSIÓN
             # ----------------------------------------------------------
         
             st.markdown("### 5. Conclusión")
         
             st.write(
-                "El análisis bivariado permite identificar diferencias en "
-                "las variables numéricas según la condición de renovación. "
-                "Las comparaciones de promedios permiten observar patrones "
-                "entre los clientes que renovaron y los que no renovaron; "
-                "sin embargo, estas diferencias describen asociaciones "
-                "entre las variables y no implican necesariamente una "
-                "relación causal."
+                "El análisis bivariado permite identificar diferencias "
+                "en las variables numéricas según la condición de renovación. "
+                "En este caso, la comparación de **Income** y "
+                "**no_of_premiums_paid** permite observar si existen "
+                "diferencias entre los clientes que renovaron y los que "
+                "no renovaron. Estas diferencias representan asociaciones "
+                "observadas en el dataset y no implican necesariamente "
+                "una relación causal."
             )
         # ==========================================================
         # ÍTEMS 6 AL 10
