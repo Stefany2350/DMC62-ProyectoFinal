@@ -769,67 +769,7 @@ elif modulos == "Análisis Exploratorio de Datos":
                 )
 
             # ----------------------------------------------------------
-            # 4. INTERPRETACIÓN
-            # ----------------------------------------------------------
-
-            st.markdown(
-                "### 4. Interpretación"
-            )
-
-            st.write(
-                f"**Income:** los datos presentan un ingreso mensual "
-                f"promedio de **{media_income:,.2f}**, mientras que "
-                f"el valor central es **{mediana_income:,.2f}**."
-            )
-
-            if media_income > mediana_income:
-
-                st.write(
-                    "La media es superior a la mediana, lo que puede "
-                    "indicar cierta asimetría hacia valores altos."
-                )
-
-            elif media_income < mediana_income:
-
-                st.write(
-                    "La media es inferior a la mediana, lo que puede "
-                    "indicar cierta asimetría hacia valores bajos."
-                )
-
-            else:
-
-                st.write(
-                    "La media y la mediana presentan valores similares."
-                )
-
-            st.write(
-                f"**Premium:** los datos presentan una prima promedio "
-                f"de **{media_premium:,.2f}**, mientras que el valor "
-                f"central es **{mediana_premium:,.2f}**."
-            )
-
-            if media_premium > mediana_premium:
-
-                st.write(
-                    "La media es superior a la mediana, lo que puede "
-                    "indicar cierta asimetría hacia valores altos."
-                )
-
-            elif media_premium < mediana_premium:
-
-                st.write(
-                    "La media es inferior a la mediana, lo que puede "
-                    "indicar cierta asimetría hacia valores bajos."
-                )
-
-            else:
-
-                st.write(
-                    "La media y la mediana presentan valores similares."
-                )
-
-            # ----------------------------------------------------------
-            # 5. MODA
+            # 4. MODA
             # ----------------------------------------------------------
 
             st.markdown(
@@ -861,32 +801,93 @@ elif modulos == "Análisis Exploratorio de Datos":
                     st.write(
                         f"La categoría con mayor frecuencia es "
                         f"**{moda.iloc[0]}**."
-                    )
+                    )      
 
             # ----------------------------------------------------------
-            # 6. VISUALIZACIÓN DE DISPERSIÓN
+            # 5. INTERPRETACIÓN
             # ----------------------------------------------------------
-
+            
             st.markdown(
-                "### 6. Visualización de la dispersión"
+                "### 4. Interpretación"
             )
-
-            dispersion = pd.DataFrame({
-                "Variable": [
-                    "Income",
-                    "Premium"
-                ],
-                "Desviación estándar": [
-                    desviacion_income,
-                    desviacion_premium
-                ]
-            })
-
-            st.bar_chart(
-                dispersion.set_index("Variable")
+            
+            # Desviación estándar
+            desviacion_income = df["Income"].std()
+            desviacion_premium = df["premium"].std()
+            
+            # ==========================================================
+            # INTERPRETACIÓN DE INCOME
+            # ==========================================================
+            
+            st.write(
+                f"**Income:** los datos presentan un ingreso mensual "
+                f"promedio de **{media_income:,.2f}**, una mediana de "
+                f"**{mediana_income:,.2f}** y una desviación estándar de "
+                f"**{desviacion_income:,.2f}**."
             )
-
-
+            
+            if media_income > mediana_income:
+            
+                st.write(
+                    "La media es superior a la mediana, lo que puede indicar "
+                    "cierta asimetría hacia valores altos."
+                )
+            
+            elif media_income < mediana_income:
+            
+                st.write(
+                    "La media es inferior a la mediana, lo que puede indicar "
+                    "cierta asimetría hacia valores bajos."
+                )
+            
+            else:
+            
+                st.write(
+                    "La media y la mediana presentan valores similares."
+                )
+            
+            st.write(
+                f"La desviación estándar de **{desviacion_income:,.2f}** "
+                f"indica la dispersión de los ingresos respecto a su promedio. "
+                f"Un valor mayor representa una mayor variabilidad entre los ingresos."
+            )
+            
+            
+            # ==========================================================
+            # INTERPRETACIÓN DE PREMIUM
+            # ==========================================================
+            
+            st.write(
+                f"**Premium:** los datos presentan una prima promedio de "
+                f"**{media_premium:,.2f}**, una mediana de **{mediana_premium:,.2f}** "
+                f"y una desviación estándar de **{desviacion_premium:,.2f}**."
+            )
+            
+            if media_premium > mediana_premium:
+            
+                st.write(
+                    "La media es superior a la mediana, lo que puede indicar "
+                    "cierta asimetría hacia valores altos."
+                )
+            
+            elif media_premium < mediana_premium:
+            
+                st.write(
+                    "La media es inferior a la mediana, lo que puede indicar "
+                    "cierta asimetría hacia valores bajos."
+                )
+            
+            else:
+            
+                st.write(
+                    "La media y la mediana presentan valores similares."
+                )
+            
+            st.write(
+                f"La desviación estándar de **{desviacion_premium:,.2f}** "
+                f"indica la dispersión de las primas respecto a su promedio. "
+                f"Un valor mayor representa una mayor variabilidad en las primas."
+            )
         # ==========================================================
         # ÍTEM 4: ANÁLISIS DE VALORES FALTANTES
         # ==========================================================
