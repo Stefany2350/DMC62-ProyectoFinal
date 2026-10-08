@@ -967,20 +967,20 @@ elif modulos == "Análisis Exploratorio de Datos":
             # ----------------------------------------------------------
             # 3. DISCUSIÓN
             # ----------------------------------------------------------
-
+            
             st.markdown(
                 "### 3. Discusión breve"
             )
-
+            
             if total_faltantes == 0:
-
+            
                 st.write(
                     "El dataset no contiene valores faltantes, lo cual "
                     "facilita el procesamiento y análisis posterior."
                 )
-
+            
             else:
-
+            
                 variables_con_faltantes = (
                     valores_faltantes[
                         valores_faltantes > 0
@@ -989,15 +989,63 @@ elif modulos == "Análisis Exploratorio de Datos":
                         ascending=False
                     )
                 )
-
+            
                 st.write(
                     f"Se identificaron valores faltantes en "
-                    f"**{len(variables_con_faltantes)} variable(s)**. "
-                    "Estos valores deben considerarse antes de realizar "
-                    "análisis estadísticos o modelos predictivos."
+                    f"**{len(variables_con_faltantes)} variable(s)**."
                 )
-
-
+            
+                st.write(
+                    "Las variables que presentan valores faltantes son:"
+                )
+            
+                # Tabla de variables con valores faltantes
+                tabla_faltantes = pd.DataFrame({
+                    "Variable": variables_con_faltantes.index,
+                    "Valores faltantes": variables_con_faltantes.values,
+                    "Porcentaje faltante (%)": (
+                        variables_con_faltantes.values / len(df) * 100
+                    ).round(2)
+                })
+            
+                st.dataframe(
+                    tabla_faltantes,
+                    use_container_width=True,
+                    hide_index=True
+                )
+            
+                st.markdown(
+                    "#### 💡 Posibles acciones"
+                )
+            
+                st.write(
+                    "El tratamiento de los valores faltantes dependerá del tipo "
+                    "de variable y de la cantidad de información ausente:"
+                )
+            
+                st.write(
+                    "• **Variables numéricas:** se puede evaluar la imputación "
+                    "utilizando medidas como la mediana o la media, especialmente "
+                    "cuando el porcentaje de datos faltantes es reducido."
+                )
+            
+                st.write(
+                    "• **Porcentaje elevado de faltantes:** antes de imputar, "
+                    "se debe analizar si la variable aporta información suficiente "
+                    "para justificar su conservación."
+                )
+            
+                st.write(
+                    "• **Registros con pocos datos faltantes:** se puede evaluar "
+                    "la eliminación de determinados registros, siempre que esto "
+                    "no genere una pérdida significativa de información."
+                )
+            
+                st.write(
+                    "• **Antes de realizar análisis posteriores:** se recomienda "
+                    "evaluar el origen de los valores faltantes y aplicar un "
+                    "tratamiento consistente para evitar distorsionar los resultados."
+                )
         # ==========================================================
         # ÍTEM 5: DISTRIBUCIÓN DE VARIABLES NUMÉRICAS
         # ==========================================================
